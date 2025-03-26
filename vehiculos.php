@@ -37,9 +37,10 @@
             <label for="marca" class="form-label">Marca</label>
             <select id="marca" name="marca" class="form-select">
                 <option value="">Todas</option>
-                <option value="Marca A">Marca A</option>
-                <option value="Marca B">Marca B</option>
-                <option value="Marca C">Marca C</option>
+                <option value="Marca A">Mercedes</option>
+                <option value="Marca B">BMW</option>
+                <option value="Marca C">Audi</option>
+                <option value="Marca D">Toyota</option>
             </select>
         </div>
         <div class="col-md-3">
