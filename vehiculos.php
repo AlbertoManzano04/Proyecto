@@ -21,14 +21,71 @@
         .vehicle-card .vehicle-info {
             text-align: center;
         }
+        header {
+            background: url('./images/vehiculos2.jpg') no-repeat center/cover;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        footer{
+            background: url('./images/vehiculos3.avif') no-repeat center/cover;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        body {
+            background-color: lightgray;
+        }
+        /* Estilos para el nav */
+        nav {
+            background-color: #004A99; /* Fondo azul */
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 15px 20px;
+            display: inline-block;
+        }
+        nav a:hover {
+            background-color: #0066CC;
+            border-radius: 5px;
+        }
+        /* Estilos para hacer el nav responsivo */
+        @media (max-width: 768px) {
+            nav {
+                text-align: center;
+            }
+            nav a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
     </style>
 </head>
 <body>
 
-<header class="bg-primary text-white text-center py-5">
+<header>
     <h1>Filtra nuestros Vehículos</h1>
     <p>Encuentra el coche de tus sueños según tus preferencias</p>
 </header>
+
+<!-- Menú de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.php">Concesionario</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a href="index.php" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
+                <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
+                <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <main class="container my-4">
     <!-- Filtros -->
@@ -41,6 +98,7 @@
                 <option value="Marca B">BMW</option>
                 <option value="Marca C">Audi</option>
                 <option value="Marca D">Toyota</option>
+                <option value="Marca D">Otros</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -51,6 +109,7 @@
                 <option value="Azul">Azul</option>
                 <option value="Negro">Negro</option>
                 <option value="Blanco">Blanco</option>
+                <option value="Otro">Otros</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -73,9 +132,8 @@
         </div>
     </form>
 
-    <!-- Resultados de Vehículos (Se llenarán dinámicamente por el servidor) -->
+    <!-- Resultados de Vehículos -->
     <div class="row" id="vehicle-results">
-        
         <div class="col-md-4">
             <div class="vehicle-card">
                 <img src="coche1.avif" alt="Vehículo 1">
@@ -86,11 +144,10 @@
                 </div>
             </div>
         </div>
-        <!-- Se agregarían más vehículos según la consulta al backend -->
     </div>
 </main>
 
-<footer class="bg-primary text-white text-center py-3">
+<footer>
     <p>&copy; 2025 Concesionario. Todos los derechos reservados.</p>
 </footer>
 
