@@ -56,10 +56,11 @@
             text-align: center;
         }
         footer {
-            background-color: #004A99;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
+        background: url('./images/contacto1.avif') no-repeat center/cover;
+        color: darkblue;
+        font-weight: bold;
+        padding: 2rem 0;
+        text-align: center;
         }
         h1, h2 {
             color: darkblue;

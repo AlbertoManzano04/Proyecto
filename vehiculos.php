@@ -136,7 +136,7 @@
     <div class="row" id="vehicle-results">
         <div class="col-md-4">
             <div class="vehicle-card">
-                <img src="coche1.avif" alt="Vehículo 1">
+                <img src="./images/coche1.avif" alt="Vehículo 1">
                 <div class="vehicle-info">
                     <h5>Marca A - SUV</h5>
                     <p>Color: Rojo</p>

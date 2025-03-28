@@ -9,6 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+        h2{
+            color: darkblue;
+
+        }
         body {
             font-family: Arial, sans-serif;
             color: #333;
@@ -65,7 +69,8 @@
             color: darkblue;
         }
         p {
-            color: white;
+            color: dark;
+            font-weight: bold;
         }
         .carousel-container {
             max-width: 100%; 
@@ -172,6 +177,7 @@
     <section id="financiacion">
         <h2>Opciones de Financiación</h2>
         <p>Te ofrecemos planes de financiamiento a tu medida.</p>
+        <p>Nuestro proyecto se financia a través de aportes voluntarios, subvenciones y colaboraciones estratégicas. Gracias a este apoyo, podemos seguir innovando y ofreciendo soluciones de calidad. ¡Tu contribución hace la diferencia!</p>
         <img src="./images/hombreFinanciero.avif" alt="Financias">
     </section>
 
