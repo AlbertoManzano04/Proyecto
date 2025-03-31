@@ -107,8 +107,9 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a href="index.php" class="nav-link">Inicio</a></li>
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
+                <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
-                <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">sube tu coche</a></li>
+                <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
             </ul>
         </div>

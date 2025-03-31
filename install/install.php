@@ -34,12 +34,16 @@ if ($conn->query($sql) === TRUE) {
 }
 
 // Crear tabla Coche_km0
-$sql = "CREATE TABLE IF NOT EXISTS Coche_km0 (
+$sql = "CREATE TABLE vehiculos_km0 (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    marca VARCHAR(50) NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
-    color VARCHAR(30) NOT NULL,
-    tipo VARCHAR(50) NOT NULL
+    marca VARCHAR(50),
+    modelo VARCHAR(50),
+    anio INT,
+    color VARCHAR(30),
+    tipo VARCHAR(30),
+    presupuesto DECIMAL(10,2),
+    kilometros INT,
+    imagen VARCHAR(255)
 )";
 if ($conn->query($sql) === TRUE) {
     echo "Tabla Coche_km0 creada con éxito.<br>";
@@ -48,12 +52,16 @@ if ($conn->query($sql) === TRUE) {
 }
 
 // Crear tabla Coche_Usuario
-$sql = "CREATE TABLE IF NOT EXISTS Coche_Usuario (
+$sql = "CREATE TABLE coche_usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    marca VARCHAR(50) NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
-    color VARCHAR(30) NOT NULL,
-    kilometros INT NOT NULL
+    marca VARCHAR(50),
+    modelo VARCHAR(50),
+    anio INT,
+    color VARCHAR(30),
+    tipo VARCHAR(30),
+    presupuesto DECIMAL(10,2),
+    kilometros INT,
+    imagen VARCHAR(255)
 )";
 if ($conn->query($sql) === TRUE) {
     echo "Tabla Coche_Usuario creada con éxito.<br>";

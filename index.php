@@ -9,8 +9,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        h2{
+        .subtitulo {
             color: darkblue;
+        }
+        h2{
+            color: white;
 
         }
         body {
@@ -113,6 +116,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a href="index.php" class="nav-link">Inicio</a></li>
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
+                <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
                 <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
@@ -123,7 +127,7 @@
 
 <main>
 <section id="vehiculos">
-        <h2>Algunos De Nuestros Vehículos</h2>
+        <h2 class="subtitulo">Algunos De Nuestros Vehículos</h2>
 
         <div class="carousel-container">
             <div id="vehiculosCarrusel" class="carousel slide mt-4" data-bs-ride="carousel">
@@ -175,20 +179,20 @@
     </section>
 
     <section id="financiacion">
-        <h2>Opciones de Financiación</h2>
+        <h2 class="subtitulo">Opciones de Financiación</h2>
         <p>Te ofrecemos planes de financiamiento a tu medida.</p>
         <p>Nuestro proyecto se financia a través de aportes voluntarios, subvenciones y colaboraciones estratégicas. Gracias a este apoyo, podemos seguir innovando y ofreciendo soluciones de calidad. ¡Tu contribución hace la diferencia!</p>
         <img src="./images/hombreFinanciero.avif" alt="Financias">
     </section>
 
     <section id="servicios">
-        <h2>Servicios Exclusivos</h2>
+        <h2 class="subtitulo">Servicios Exclusivos</h2>
         <p>Desde asesoramiento hasta mantenimiento, estamos para ayudarte.</p>
         <img src="./images/asesoramiento.avif" alt="asesoramineto">
     </section>
 
     <section id="contacto">
-        <h2>Contáctanos</h2>
+        <h2 class="subtitulo">Contáctanos</h2>
         <p>Visítanos o llámanos para recibir atención personalizada.</p>
         <img src="./images/instalaciones.avif" alt="instalaciones">
     </section>
