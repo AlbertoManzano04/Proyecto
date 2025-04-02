@@ -26,7 +26,6 @@ if (!$result) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehículos Km0 - Filtrar por Marca, Modelo, Año, Color, Tipo y Presupuesto</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .vehicle-card {
@@ -35,14 +34,46 @@ if (!$result) {
             border-radius: 8px;
             margin-bottom: 15px;
             background-color: white;
+            text-align: center;
         }
         .vehicle-card img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
         }
-        .vehicle-card .vehicle-info {
+        .contact-info {
+            margin-top: 10px;
+        }
+        .contact-btn {
+            display: block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .contact-btn:hover {
+            background-color: #0056b3;
+        }
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            font-size: 24px;
             text-align: center;
+        }
+        .whatsapp-btn:hover {
+            background-color: #1ebe57;
+        }
+        .location-contact {
+            text-align: center;
+            margin-top: 20px;
         }
         header {
             background: url('./images/vehiculos2.jpg') no-repeat center/cover;
@@ -56,46 +87,21 @@ if (!$result) {
             padding: 2rem 0;
             text-align: center;
         }
-        body {
-            background-color: lightgray;
-        }
-        nav {
-            background-color: #004A99;
-        }
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            padding: 15px 20px;
-            display: inline-block;
-        }
-        nav a:hover {
-            background-color: #0066CC;
-            border-radius: 5px;
-        }
-        @media (max-width: 768px) {
-            nav {
-                text-align: center;
-            }
-            nav a {
-                display: block;
-                margin: 5px 0;
-            }
-        }
     </style>
 </head>
 <body>
-
 <header>
     <h1>Filtra nuestros Vehículos Km0</h1>
     <p>Encuentra el coche de tus sueños según tus preferencias</p>
 </header>
 
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004A99;">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario</a>
-        <div class="collapse navbar-collapse">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a href="index.php" class="nav-link">Inicio</a></li>
                 <li class="nav-item"><a href="vehiculoskm0.php" class="nav-link">Vehículos km0</a></li>
@@ -114,13 +120,14 @@ if (!$result) {
             <div class="col-md-4">
                 <div class="vehicle-card">
                     <img src="<?= htmlspecialchars($row['imagen']) ?>" alt="<?= htmlspecialchars($row['modelo']) ?>">
-                    <div class="vehicle-info">
-                        <h5><?= htmlspecialchars($row['marca']) ?> <?= htmlspecialchars($row['modelo']) ?></h5>
-                        <p>Año: <?= htmlspecialchars($row['anio']) ?></p>
-                        <p>Color: <?= htmlspecialchars($row['color']) ?></p>
-                        <p>Tipo: <?= htmlspecialchars($row['tipo']) ?></p>
-                        <p>Presupuesto: €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
-                        <p>Kilómetros: <?= htmlspecialchars($row['kilometros']) ?></p>
+                    <h5><?= htmlspecialchars($row['marca']) ?> <?= htmlspecialchars($row['modelo']) ?></h5>
+                    <p>Año: <?= htmlspecialchars($row['anio']) ?></p>
+                    <p>Color: <?= htmlspecialchars($row['color']) ?></p>
+                    <p>Tipo: <?= htmlspecialchars($row['tipo']) ?></p>
+                    <p>Precio: €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
+                    <p>Kilómetros: <?= htmlspecialchars($row['kilometros']) ?></p>
+                    <div class="contact-info">
+                        <a href="contacto.php" class="contact-btn">Llámanos o Escríbenos</a>
                     </div>
                 </div>
             </div>
@@ -128,13 +135,18 @@ if (!$result) {
     </div>
 </main>
 
+<div class="location-contact">
+    <p><strong>Visítanos:</strong> Calle Ejemplo, 123, Valencia, España</p>
+</div>
+
+<a href="https://wa.me/34123456789" class="whatsapp-btn" target="_blank">
+    &#x1F4AC;
+</a>
+
 <footer>
     <p>&copy; 2025 Concesionario. Todos los derechos reservados.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
-
-

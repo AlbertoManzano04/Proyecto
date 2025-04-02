@@ -34,7 +34,7 @@ if ($conn->query($sql) === TRUE) {
 }
 
 // Crear tabla Coche_km0
-$sql = "CREATE TABLE vehiculos_km0 (
+$sql = "CREATE TABLE IF NOT EXISTS vehiculos_km0 (
     id INT AUTO_INCREMENT PRIMARY KEY,
     marca VARCHAR(50),
     modelo VARCHAR(50),
@@ -46,13 +46,13 @@ $sql = "CREATE TABLE vehiculos_km0 (
     imagen VARCHAR(255)
 )";
 if ($conn->query($sql) === TRUE) {
-    echo "Tabla Coche_km0 creada con éxito.<br>";
+    echo "Tabla vehiculos_km0 creada con éxito.<br>";
 } else {
-    echo "Error al crear la tabla Coche_km0: " . $conn->error . "<br>";
+    echo "Error al crear la tabla vehiculos_km0: " . $conn->error . "<br>";
 }
 
-// Crear tabla Coche_Usuario
-$sql = "CREATE TABLE coche_usuario (
+// Crear tabla Coche_Usuario (con teléfono)
+$sql = "CREATE TABLE IF NOT EXISTS coche_usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     marca VARCHAR(50),
     modelo VARCHAR(50),
@@ -61,14 +61,16 @@ $sql = "CREATE TABLE coche_usuario (
     tipo VARCHAR(30),
     presupuesto DECIMAL(10,2),
     kilometros INT,
-    imagen VARCHAR(255)
+    imagen VARCHAR(255),
+    telefono VARCHAR(15) NOT NULL
 )";
 if ($conn->query($sql) === TRUE) {
-    echo "Tabla Coche_Usuario creada con éxito.<br>";
+    echo "Tabla coche_usuario creada con éxito.<br>";
 } else {
-    echo "Error al crear la tabla Coche_Usuario: " . $conn->error . "<br>";
+    echo "Error al crear la tabla coche_usuario: " . $conn->error . "<br>";
 }
 
 // Cerrar conexión
 $conn->close();
 ?>
+

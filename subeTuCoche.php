@@ -12,6 +12,7 @@ if ($conn->connect_error) {
 
 // Manejo del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recoger los datos del formulario
     $marca = $_POST['marca'];
     $modelo = $_POST['modelo'];
     $anio = $_POST['anio'];
@@ -19,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipo = $_POST['tipo'];
     $presupuesto = $_POST['presupuesto'];
     $kilometros = $_POST['kilometros'];
+    $telefono = $_POST['contacto']; // Añadido para recoger el teléfono
 
     // Manejo de la imagen
     $directorio = "uploads/";
@@ -29,8 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     move_uploaded_file($_FILES["imagen"]["tmp_name"], $archivoImagen);
 
     // Insertar en la base de datos
-    $stmt = $conn->prepare("INSERT INTO coche_usuario (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssisssis", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $archivoImagen);
+    $stmt = $conn->prepare("INSERT INTO coche_usuario (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen, telefono) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssisssiss", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $archivoImagen, $telefono);
 
     if ($stmt->execute()) {
         echo "<script>alert('Coche subido con éxito'); window.location.href='vehiculosUsuarios.php';</script>";
@@ -159,6 +162,11 @@ $conn->close();
             <div class="col-md-12 mb-3">
                 <label for="imagen" class="form-label">Sube Imagen del Coche</label>
                 <input type="file" id="imagen" name="imagen" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="contacto" class="form-label">Número de Contacto</label>
+                <input type="tel" id="contacto" name="contacto" class="form-control" required pattern="[0-9]{9}" placeholder="Ej. 612345678">
             </div>
 
             <div class="col-12 text-center">
