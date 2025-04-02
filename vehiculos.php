@@ -25,7 +25,7 @@ if (!$result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehículos Km0 - Filtrar por Marca, Modelo, Año, Color, Tipo y Presupuesto</title>
+    <title>Vehículos Km0 </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .vehicle-card {
@@ -38,7 +38,8 @@ if (!$result) {
         }
         .vehicle-card img {
             max-width: 100%;
-            height: auto;
+            height: 300px;
+            width: 300px;
             border-radius: 8px;
         }
         .contact-info {
