@@ -4,101 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concesionario - Tu mejor opción</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        .subtitulo {
-            color: darkblue;
-        }
-        h2{
-            color: white;
-
-        }
         body {
             font-family: Arial, sans-serif;
             color: #333;
-            margin: 0;
-            padding: 0;
             background-color: lightgray;
         }
+
         header {
             background: url('./images/concesionario1.jpg') no-repeat center/cover;
             color: white;
-            padding: 2rem 0;
+            padding: 3rem 0;
             text-align: center;
+            font-size: 1.5rem;
         }
-       /* Estilos para el nav */
-       nav {
-            background-color: #004A99; /* Fondo azul */
+
+        /* Navegación */
+        nav {
+            background-color: #004A99;
         }
         nav a {
-            margin: 0 15px;
-            text-decoration: none;
             color: white;
             font-weight: bold;
             padding: 15px 20px;
             display: inline-block;
+            text-decoration: none;
         }
         nav a:hover {
             background-color: #0066CC;
             border-radius: 5px;
         }
-        /* Estilos para hacer el nav responsivo */
-        @media (max-width: 768px) {
-            nav {
-                text-align: center;
-            }
-            nav a {
-                display: block;
-                margin: 5px 0;
-            }
+
+        /* Subtítulos con enlaces */
+        .subtitulo {
+            color: darkblue;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            display: block;
+            margin-top: 20px;
         }
+        .subtitulo:hover {
+            text-decoration: underline;
+        }
+
+        /* Secciones */
         main {
-            padding: 2rem;
+            padding: 3rem;
+            text-align: center;
         }
         section {
-            margin-bottom: 2rem;
-            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
-        footer {
-            background-color: #004A99;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-        }
-        h1 {
-            color: darkblue;
-        }
-        p {
-            color: dark;
-            font-weight: bold;
-        }
+
+        /* Estilos del carrusel */
         .carousel-container {
-            max-width: 100%; 
-            margin: 0 auto;
+            max-width: 100%;
+            margin: auto;
         }
         .carousel-item img {
             width: 100%;
-            height: 600px; 
-            object-fit: cover;
+            height: auto;
+            max-height: 600px; /* Ajusta según necesites */
+            object-fit: contain; /* Asegura que la imagen se vea completa */
+            background-color: black; /* Evita espacios vacíos */
         }
+
         .carousel-caption {
-            color: white;
+            background: rgba(0, 0, 0, 0.6);
             padding: 10px;
             border-radius: 5px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            left: 20%;
-            top: 10%;
         }
-    footer{
-        background: url('./images/vehiculos3.avif') no-repeat center/cover;
-        color: white;
-        padding: 2rem 0;
-        text-align: center;
-    }
+
+        /* Footer */
+        footer {
+            background: url('./images/vehiculos3.avif') no-repeat center/cover;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -126,85 +120,90 @@
 </nav>
 
 <main>
-<section id="vehiculos">
-        <h2 class="subtitulo">Algunos De Nuestros Vehículos</h2>
-
+    <section id="vehiculos">
+        <a href="vehiculos.php" class="subtitulo">Algunos De Nuestros Vehículos</a>
         <div class="carousel-container">
             <div id="vehiculosCarrusel" class="carousel slide mt-4" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="./images/coche1.avif" class="d-block w-100" alt="Vehículo 1">
                         <div class="carousel-caption">
-                            <h2>Potencia y Elegancia</h5>
-                            <p>Descubre el rendimiento superior de nuestro modelo estrella.</p>
+                            <h5>Potencia y Elegancia</h5>
+                            <p>Domina la carretera con un diseño sofisticado y un rendimiento sin límites.</p>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <img src="./images/coche2.avif" class="d-block w-100" alt="Vehículo 2">
                         <div class="carousel-caption">
-                            <h2>Innovación y Confort</h5>
-                            <p>Viaja con la última tecnología y comodidad garantizada.</p>
+                            <h5>Innovación y Confort</h5>
+                            <p>La tecnología más avanzada combinada con la comodidad que mereces.</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="./images/coche6.avif" class="d-block w-100" alt="Vehículo 3">
+                        <img src="./images/coche3.avif" class="d-block w-100" alt="Vehículo 3">
                         <div class="carousel-caption">
-                            <h2>Diseño Vanguardista</h5>
-                            <p>Un modelo que destaca en la carretera.</p>
+                            <h5>Diseño Vanguardista</h5>
+                            <p>Estilo único, líneas aerodinámicas y un carácter inconfundible en cada detalle.</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="./images/coche4.avif" class="d-block w-100" alt="Vehículo 4">
+                        <img src="./images/coche4.avif" class="d-block w-100" alt="Vehículo 3">
                         <div class="carousel-caption">
-                            <h2>Seguridad y Confianza</h5>
-                            <p>Viaja con la tranquilidad de nuestros sistemas avanzados.</p>
+                            <h5>Seguridad y Confianza</h5>
+                            <p>Disfruta de cada viaje con la máxima protección y estabilidad</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="./images/coche5.avif" class="d-block w-100" alt="Vehículo 5">
+                        <img src="./images/coche5.avif" class="d-block w-100" alt="Vehículo 3">
                         <div class="carousel-caption">
-                            <h2>El Futuro es Ahora</h5>
-                            <p>Experimenta la conducción del mañana, hoy.</p>
+                            <h5> Rendimiento Imparable</h5>
+                            <p>Un motor potente y eficiente para llevarte más lejos.</p>
                         </div>
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#vehiculosCarrusel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="carousel-control-prev-icon"></span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#vehiculosCarrusel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="carousel-control-next-icon"></span>
                 </button>
             </div>
         </div>
     </section>
 
     <section id="financiacion">
-        <h2 class="subtitulo">Opciones de Financiación</h2>
+        <a href="financiacion.php" class="subtitulo">Opciones de Financiación</a>
         <p>Te ofrecemos planes de financiamiento a tu medida.</p>
-        <p>Nuestro proyecto se financia a través de aportes voluntarios, subvenciones y colaboraciones estratégicas. Gracias a este apoyo, podemos seguir innovando y ofreciendo soluciones de calidad. ¡Tu contribución hace la diferencia!</p>
-        <img src="./images/hombreFinanciero.avif" alt="Financias">
+        <img src="./images/hombreFinanciero.avif" alt="Financiación" class="img-fluid rounded">
     </section>
 
-    <section id="servicios">
-        <h2 class="subtitulo">Servicios Exclusivos</h2>
-        <p>Desde asesoramiento hasta mantenimiento, estamos para ayudarte.</p>
-        <img src="./images/asesoramiento.avif" alt="asesoramineto">
+    <section id="vehiculosUsuarios">
+        <a href="vehiculosUsuarios.php" class="subtitulo">Vehiculos de Usuarios</a>
+        <p>Vehículos de usuarios disponibles para ti. ¡Explora las opciones y encuentra el coche perfecto a un precio accesible!</p>
+        <img src="./images/ventas.jpg" alt="VehiculosUsuarios" class="img-fluid rounded">
+    </section>
+
+    <section id="subeTuCoche">
+        <a href="subeTuCoche.php" class="subtitulo">Sube tu Coche</a>
+        <p>¿Tienes un coche para vender? ¡Es tu oportunidad! Sube tu coche y llega a miles de compradores, estamos para ayudarte.</p>
+        <img src="./images/asesoramiento.avif" alt="Asesoramiento" class="img-fluid rounded">
     </section>
 
     <section id="contacto">
-        <h2 class="subtitulo">Contáctanos</h2>
+        <a href="contacto.php" class="subtitulo">Contáctanos</a>
         <p>Visítanos o llámanos para recibir atención personalizada.</p>
-        <img src="./images/instalaciones.avif" alt="instalaciones">
+        <img src="./images/instalaciones.avif" alt="Instalaciones" class="img-fluid rounded">
     </section>
 </main>
 
 <footer>
     <p>&copy; 2025 Concesionario. Todos los derechos reservados.</p>
-    <p>Politica de Privacidad</p> <p>Politica de cookies</p>
+    <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
 </footer>
 
-<!-- Bootstrap JS y dependencias -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
+
