@@ -1,23 +1,62 @@
+<?php
+// Incluir configuración de base de datos
+require_once __DIR__ . '/config/configBD.php';
+
+// Conectar a la base de datos
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+// Manejo del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $marca = $_POST['marca'];
+    $modelo = $_POST['modelo'];
+    $anio = $_POST['anio'];
+    $color = $_POST['color'];
+    $tipo = $_POST['tipo'];
+    $presupuesto = $_POST['presupuesto'];
+    $kilometros = $_POST['kilometros'];
+
+    // Manejo de la imagen
+    $directorio = "uploads/";
+    if (!is_dir($directorio)) {
+        mkdir($directorio, 0777, true);
+    }
+    $archivoImagen = $directorio . basename($_FILES["imagen"]["name"]);
+    move_uploaded_file($_FILES["imagen"]["tmp_name"], $archivoImagen);
+
+    // Insertar en la base de datos
+    $stmt = $conn->prepare("INSERT INTO coche_usuario (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssisssis", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $archivoImagen);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Coche subido con éxito'); window.location.href='vehiculosUsuarios.php';</script>";
+    } else {
+        echo "<script>alert('Error al subir el coche');</script>";
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subir Coche - Vender tu Vehículo</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: lightgray;
         }
-        header {
+        header, footer {
             background: url('./images/vehiculos2.jpg') no-repeat center/cover;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        footer {
-            background: url('./images/vehiculos3.avif') no-repeat center/cover;
             color: white;
             padding: 2rem 0;
             text-align: center;
@@ -31,9 +70,8 @@
         .form-container label {
             font-weight: bold;
         }
-        /* Estilos para el nav */
-       nav {
-            background-color: #004A99; /* Fondo azul */
+        nav {
+            background-color: #004A99;
         }
         nav a {
             margin: 0 15px;
@@ -47,16 +85,6 @@
             background-color: #0066CC;
             border-radius: 5px;
         }
-        /* Estilos para hacer el nav responsivo */
-        @media (max-width: 768px) {
-            nav {
-                text-align: center;
-            }
-            nav a {
-                display: block;
-                margin: 5px 0;
-            }
-        }
     </style>
 </head>
 <body>
@@ -66,7 +94,6 @@
     <p>Comparte las características de tu coche y sube imágenes para venderlo</p>
 </header>
 
-<!-- Menú de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario</a>
@@ -86,36 +113,27 @@
 <main class="container my-4">
     <div class="form-container">
         <h3 class="text-center">Formulario para Vender tu Vehículo</h3>
-        <form method="POST" action="/subir-coche" enctype="multipart/form-data" class="row">
-            <!-- Marca -->
+        <form method="POST" action="subeTuCoche.php" enctype="multipart/form-data" class="row">
             <div class="col-md-6 mb-3">
                 <label for="marca" class="form-label">Marca</label>
-                <select id="marca" name="marca" class="form-select" required>
-                    <option value="">Seleccione una marca</option>
-                    <option value="Marca A">Mercedes</option>
-                    <option value="Marca B">BMW</option>
-                    <option value="Marca C">Audi</option>
-                    <option value="Marca D">Toyota</option>
-                    <option value="Marca E">Honda</option>
-                    <option value="Otros">Otros</option>
-                </select>
+                <input type="text" id="marca" name="marca" class="form-control" required>
             </div>
 
-            <!-- Color -->
+            <div class="col-md-6 mb-3">
+                <label for="modelo" class="form-label">Modelo</label>
+                <input type="text" id="modelo" name="modelo" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="anio" class="form-label">Año</label>
+                <input type="number" id="anio" name="anio" class="form-control" required min="1990" max="2025">
+            </div>
+
             <div class="col-md-6 mb-3">
                 <label for="color" class="form-label">Color</label>
-                <select id="color" name="color" class="form-select" required>
-                    <option value="">Seleccione un color</option>
-                    <option value="Rojo">Rojo</option>
-                    <option value="Azul">Azul</option>
-                    <option value="Negro">Negro</option>
-                    <option value="Blanco">Blanco</option>
-                    <option value="Gris">Gris</option>
-                    <option value="Otro">Otro</option>
-                </select>
+                <input type="text" id="color" name="color" class="form-control" required>
             </div>
 
-            <!-- Tipo -->
             <div class="col-md-6 mb-3">
                 <label for="tipo" class="form-label">Tipo</label>
                 <select id="tipo" name="tipo" class="form-select" required>
@@ -128,26 +146,21 @@
                 </select>
             </div>
 
-            <!-- Precio -->
             <div class="col-md-6 mb-3">
-                <label for="precio" class="form-label">Precio (€)</label>
-                <input type="number" id="precio" name="precio" class="form-control" required min="1000" step="100" placeholder="Ingrese el precio del coche">
+                <label for="presupuesto" class="form-label">Presupuesto (€)</label>
+                <input type="number" id="presupuesto" name="presupuesto" class="form-control" required min="1000">
             </div>
 
-            <!-- Kilómetros -->
             <div class="col-md-6 mb-3">
                 <label for="kilometros" class="form-label">Kilómetros recorridos</label>
-                <input type="number" id="kilometros" name="kilometros" class="form-control" required min="0" placeholder="Ingrese los kilómetros recorridos">
+                <input type="number" id="kilometros" name="kilometros" class="form-control" required min="0">
             </div>
 
-            <!-- Imágenes -->
             <div class="col-md-12 mb-3">
-                <label for="imagenes" class="form-label">Sube Imágenes del Coche</label>
-                <input type="file" id="imagenes" name="imagenes[]" class="form-control" multiple required>
-                <small class="form-text text-muted">Puedes subir varias imágenes de tu coche.</small>
+                <label for="imagen" class="form-label">Sube Imagen del Coche</label>
+                <input type="file" id="imagen" name="imagen" class="form-control" required>
             </div>
 
-            <!-- Enviar formulario -->
             <div class="col-12 text-center">
                 <button type="submit" class="btn btn-primary">Subir Coche</button>
             </div>
@@ -159,7 +172,6 @@
     <p>&copy; 2025 Concesionario. Todos los derechos reservados.</p>
 </footer>
 
-<!-- Bootstrap JS y dependencias -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
