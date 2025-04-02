@@ -178,6 +178,7 @@ $conn->close();
 
 <footer>
     <p>&copy; 2025 Concesionario. Todos los derechos reservados.</p>
+    <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

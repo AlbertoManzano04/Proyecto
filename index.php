@@ -105,7 +105,7 @@
 <!-- Menú de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="index.php">Concesionario</a>
+        <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a href="index.php" class="nav-link">Inicio</a></li>
