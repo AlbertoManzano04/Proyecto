@@ -97,6 +97,32 @@ $conn->close();
                 margin: 5px 0;
             }
         }
+
+        /* Estilos del botón de WhatsApp */
+        .whatsapp-container {
+            display: flex;
+            justify-content: flex-start; /* Alinea al botón a la izquierda */
+            align-items: center;
+            gap: 10px; /* Añade espacio entre el texto y el ícono */
+            margin-top: 20px;
+        }
+        .whatsapp-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 24px;
+            text-align: center;
+            z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
+        }
+        .whatsapp-btn:hover {
+            background-color: #1ebe57;
+        }
     </style>
 </head>
 <body>
@@ -155,6 +181,14 @@ $conn->close();
             <div class="ratio ratio-16x9">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317713.67645747284!2d-0.4824852373897965!3d39.4699014201671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6046298c6a7d5f%3A0x9b5eebcd5e2d0a50!2sValencia%2C%20Espa%C3%B1a!5e0!3m2!1ses!2ses!4v1688498481721!5m2!1ses!2ses" allowfullscreen=""></iframe>
             </div>
+
+            <!-- WhatsApp button next to location -->
+            <div class="whatsapp-container">
+                <span class="whatsapp-text">Contáctanos por WhatsApp</span>
+                <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
+                    &#x1F4AC;
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -168,3 +202,4 @@ $conn->close();
 
 </body>
 </html>
+

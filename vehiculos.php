@@ -60,21 +60,19 @@ if (!$result) {
         }
         .whatsapp-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%); /* Centra verticalmente */
             background-color: #25D366;
             color: white;
             padding: 10px 15px;
             border-radius: 50%;
             font-size: 24px;
             text-align: center;
+            z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
         }
         .whatsapp-btn:hover {
             background-color: #1ebe57;
-        }
-        .location-contact {
-            text-align: center;
-            margin-top: 20px;
         }
         header {
             background: url('./images/vehiculos2.jpg') no-repeat center/cover;
@@ -98,14 +96,14 @@ if (!$result) {
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004A99;">
     <div class="container">
-        <a class="navbar-brand" href="index.php">Concesionario</a>
+        <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a href="index.php" class="nav-link">Inicio</a></li>
-                <li class="nav-item"><a href="vehiculoskm0.php" class="nav-link">Vehículos km0</a></li>
+                <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
                 <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
@@ -136,10 +134,7 @@ if (!$result) {
     </div>
 </main>
 
-<div class="location-contact">
-    <p><strong>Visítanos:</strong> Calle Ejemplo, 123, Valencia, España</p>
-</div>
-
+<!-- WhatsApp button (fixed to the right and centered vertically) -->
 <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
     &#x1F4AC;
 </a>

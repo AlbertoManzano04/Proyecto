@@ -107,7 +107,7 @@
 
 <footer>
     <p>&copy; 2025 Concesionarios Manzano. Todos los derechos reservados.</p>
-    <p><a href="politicas_de_privacidad.php" class="text-white">Política de Privacidad</a> | <a href="politicaCookies.php" class="text-white">Política de Cookies</a></p>
+    <p><a href="politicaPrivacidad.php" class="text-white">Política de Privacidad</a> | <a href="politicaCookies.php" class="text-white">Política de Cookies</a></p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
