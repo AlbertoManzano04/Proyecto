@@ -52,20 +52,26 @@
     <h1>Política de Privacidad - Concesionarios Manzano</h1>
 </header>
 
-<!-- Menú de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="index.php">Concesionarios Manzano</a>
+        <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a href="index.php" class="nav-link">Inicio</a></li>
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
                 <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-                <li class="nav-item"><a href="politicas_de_privacidad.php" class="nav-link">Política de Privacidad</a></li>
-                <li class="nav-item"><a href="politicas_de_cookies.php" class="nav-link">Política de Cookies</a></li>
+                <!-- Menú desplegable -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Concesionarios Manzano
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="nosotros.php">Nosotros</a></li>
+                        <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

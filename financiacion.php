@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opciones de Financiación - Concesionario</title>
+    <title>Opciones de Financiación - Concesionario Manzano</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Estilo similar al de vehiculo.php */
@@ -22,6 +22,21 @@
             color: white;
             padding: 2rem 0;
             text-align: center;
+        }
+        /* Navegación */
+        nav {
+            background-color: #004A99;
+        }
+        nav a {
+            color: white;
+            font-weight: bold;
+            padding: 15px 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #0066CC;
+            border-radius: 5px;
         }
         .container {
             margin-top: 40px;
@@ -88,7 +103,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a href="index.php" class="nav-link">Inicio</a></li>
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
