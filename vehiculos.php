@@ -139,7 +139,7 @@ if (!$result) {
     <p><strong>Visítanos:</strong> Calle Ejemplo, 123, Valencia, España</p>
 </div>
 
-<a href="https://wa.me/34123456789" class="whatsapp-btn" target="_blank">
+<a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
     &#x1F4AC;
 </a>
 

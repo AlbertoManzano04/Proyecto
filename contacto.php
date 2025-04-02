@@ -1,3 +1,54 @@
+<?php
+// Incluir archivo de configuración de la base de datos
+require_once './config/configBD.php';
+
+// Crear la conexión con la base de datos
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("❌ Error de conexión: " . $conn->connect_error);
+}
+
+// Variable para mostrar mensajes
+$mensaje = "";
+
+// Verificar si el formulario ha sido enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Capturar datos del formulario
+    $nombre = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $mensaje_usuario = trim($_POST['message'] ?? '');
+
+    // Validar que los campos no estén vacíos
+    if (empty($nombre) || empty($email) || empty($mensaje_usuario)) {
+        $mensaje = "❌ Todos los campos son obligatorios.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $mensaje = "❌ El correo electrónico no es válido.";
+    } else {
+        // Preparar la consulta SQL
+        $query = "INSERT INTO Usuario (nombre, email, mensaje) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt === false) {
+            $mensaje = "❌ Error al preparar la consulta: " . $conn->error;
+        } else {
+            // Enlazar parámetros y ejecutar
+            $stmt->bind_param('sss', $nombre, $email, $mensaje_usuario);
+            if ($stmt->execute()) {
+                $mensaje = "✅ ¡Gracias por contactarnos! Te responderemos pronto.";
+            } else {
+                $mensaje = "❌ Error al guardar los datos: " . $stmt->error;
+            }
+            $stmt->close();
+        }
+    }
+}
+
+// Cerrar la conexión
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,25 +57,24 @@
     <title>Contacto - Concesionario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-    body {
+        body {
             background-color: lightgray;
         }
-    header {
-    background: url('./images/concesionario1.jpg') no-repeat center/cover;
-    color: white;
-    padding: 2rem 0;
-    text-align: center;
-}
-footer{
-    background: url('./images/contacto1.avif') no-repeat center/cover;
-    color: darkblue;
-    font-weight: bold;
-    padding: 2rem 0;
-    text-align: center;
-}
-/* Estilos para el nav */
-nav {
-            background-color: #004A99; /* Fondo azul */
+        header {
+            background: url('./images/concesionario1.jpg') no-repeat center/cover;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        footer {
+            background: url('./images/contacto1.avif') no-repeat center/cover;
+            color: darkblue;
+            font-weight: bold;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #004A99;
         }
         nav a {
             margin: 0 15px;
@@ -38,7 +88,6 @@ nav {
             background-color: #0066CC;
             border-radius: 5px;
         }
-        /* Estilos para hacer el nav responsivo */
         @media (max-width: 768px) {
             nav {
                 text-align: center;
@@ -50,9 +99,12 @@ nav {
         }
     </style>
 </head>
+<body>
+
 <header>
     <h1>Contacta con Nosotros</h1>
 </header>
+
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario</a>
@@ -68,46 +120,50 @@ nav {
         </div>
     </div>
 </nav>
-<body>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <h2 class="mb-4">Contáctanos</h2>
-                <form id="contactForm">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Mensaje</label>
-                        <textarea class="form-control" id="message" rows="4" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <h2 class="mb-4">Nuestra Ubicación</h2>
-                <div class="ratio ratio-16x9">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317713.67645747284!2d-0.4824852373897965!3d39.4699014201671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6046298c6a7d5f%3A0x9b5eebcd5e2d0a50!2sValencia%2C%20Espa%C3%B1a!5e0!3m2!1ses!2ses!4v1688498481721!5m2!1ses!2ses" allowfullscreen=""></iframe>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mb-4">Contáctanos</h2>
+            
+            <!-- Mostrar mensaje -->
+            <?php if (!empty($mensaje)): ?>
+                <div class="alert <?= strpos($mensaje, '✅') !== false ? 'alert-success' : 'alert-danger' ?>">
+                    <?= $mensaje ?>
                 </div>
+            <?php endif; ?>
+
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Mensaje</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            <h2 class="mb-4">Nuestra Ubicación</h2>
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317713.67645747284!2d-0.4824852373897965!3d39.4699014201671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6046298c6a7d5f%3A0x9b5eebcd5e2d0a50!2sValencia%2C%20Espa%C3%B1a!5e0!3m2!1ses!2ses!4v1688498481721!5m2!1ses!2ses" allowfullscreen=""></iframe>
             </div>
         </div>
     </div>
-    <footer>
-        <p>Concesionarios Alberto- Tu mejor opción siempre</p>
-    </footer>
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert('Gracias por contactarnos. Nos pondremos en contacto contigo pronto.');
-            this.reset();
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+
+<footer>
+    <p>Concesionarios Alberto - Tu mejor opción siempre</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
-

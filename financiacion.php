@@ -143,7 +143,7 @@
             </ul>
             <strong>¿Cómo funciona?</strong><br>
             <ol>
-                <li><strong>Tasación de tu coche:</strong> Trae tu vehículo y nosotros lo evaluamos en menos de 30 minutos.</li>
+                <li><strong>Tasación de tu coche:</strong> Trae tu vehículo al concesionario y nosotros lo evaluamos en menos de 30 minutos.</li>
                 <li><strong>Aprobación del crédito:</strong> Te ayudamos a obtener la financiación más conveniente con una aprobación rápida y sencilla.</li>
                 <li><strong>Entrega inmediata:</strong> Una vez aprobado tu crédito, podrás elegir el coche que más te guste y llevártelo al instante.</li>
             </ol>
