@@ -88,6 +88,21 @@ $conn->close();
             background-color: #0066CC;
             border-radius: 5px;
         }
+
+        .highlight-text {
+            font-size: 1.2rem;
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .sube-coche-description {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
@@ -114,6 +129,11 @@ $conn->close();
 </nav>
 
 <main class="container my-4">
+    <div class="sube-coche-description">
+        <h3 class="highlight-text">¡Vende tu coche de manera rápida y fácil!</h3>
+        <p>¿Estás buscando vender tu vehículo? ¡Estás en el lugar indicado! Completa este sencillo formulario, sube las fotos de tu coche y nosotros nos encargaremos del resto. Te garantizamos un proceso rápido, seguro y con una excelente valoración. ¡Aprovecha esta oportunidad para vender tu coche de forma sencilla y sin complicaciones!</p>
+    </div>
+
     <div class="form-container">
         <h3 class="text-center">Formulario para Vender tu Vehículo</h3>
         <form method="POST" action="subeTuCoche.php" enctype="multipart/form-data" class="row">
@@ -185,3 +205,4 @@ $conn->close();
 
 </body>
 </html>
+
