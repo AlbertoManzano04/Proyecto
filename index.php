@@ -22,7 +22,6 @@
             text-align: center;
             font-size: 1.5rem;
         }
-
         /* Navegación */
         nav {
             background-color: #004A99;

@@ -45,9 +45,10 @@
             border: 1px solid #ddd;
             padding: 15px;
             border-radius: 8px;
-            background-color: white;
+            background-color:  lightgray;
             text-align: center;
             margin-bottom: 15px;
+
         }
         .financiacion-card h5 {
             font-size: 1.5rem;
@@ -70,14 +71,16 @@
         }
         .whatsapp-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%); /* Centra verticalmente */
             background-color: #25D366;
             color: white;
             padding: 10px 15px;
             border-radius: 50%;
             font-size: 24px;
             text-align: center;
+            z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
         }
         .whatsapp-btn:hover {
             background-color: #1ebe57;
@@ -85,6 +88,9 @@
         .location-contact {
             text-align: center;
             margin-top: 20px;
+        }
+        h3,h2{
+            color: darkblue;
         }
     </style>
 </head>
@@ -112,6 +118,35 @@
         </div>
     </div>
 </nav>
+    <section class="container">
+        <h2>Financiación a tu medida en Concesionarios Manzano</h2>
+        <p>En <strong>Concesionarios Manzano</strong>, entendemos que comprar un coche es una gran inversión. Por eso, te ofrecemos <strong>opciones de financiación flexibles</strong> que se adaptan a tus necesidades y presupuesto.</p>
+        <h3>¿Cómo funciona?</h3>
+        <p>Contamos con planes de financiación con cuotas mensuales accesibles y tasas de interés competitivas. Puedes elegir entre:</p>
+        <ul>
+            <li><strong>12 meses:</strong> Pagos más altos, menor interés.</li>
+            <li><strong>24 meses:</strong> Un equilibrio entre cuota e interés.</li>
+            <li><strong>36 meses o más:</strong> Cuotas más reducidas y mayor accesibilidad.</li>
+        </ul>
+        <img src="./images/finanzas1.avif" alt="">
+        <h3>Ventajas de financiar con nosotros</h3>
+        <ul>
+            <li>Proceso rápido y sencillo.</li>
+            <li>Condiciones adaptadas a tu perfil financiero.</li>
+            <li>Flexibilidad en los pagos.</li>
+            <li>Transparencia total, sin costos ocultos.</li>
+            <li>Asesoramiento personalizado.</li>
+        </ul>
+        <img src="./images/finanzas2.jpg" alt="">
+        <h3>Requisitos</h3>
+        <p>Para acceder a nuestra financiación, solo necesitas traer a nuestras oficinas estos documentos:</p>
+        <ul>
+            <li>DNI o NIE.</li>
+            <li>Justificante de ingresos.</li>
+            <li>Extracto bancario reciente.</li>
+        </ul>
+        <p><strong>¡Contáctanos hoy mismo para más información!</strong></p>
+    </section>
 
 <main class="container">
     <div class="row">
@@ -121,7 +156,7 @@
                 <p>Plazo: 12 meses</p>
                 <p>Interés: 5.5% anual</p>
                 <p>Cuota mensual: 350€</p>
-                <a href="contacto.php" class="contact-btn">Solicita más Información</a>
+                <a href="contacto.php" class="contact-btn">Más Información</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -130,7 +165,7 @@
                 <p>Plazo: 24 meses</p>
                 <p>Interés: 6.2% anual</p>
                 <p>Cuota mensual: 250€</p>
-                <a href="contacto.php" class="contact-btn">Solicita más Información</a>
+                <a href="contacto.php" class="contact-btn">Más Información</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -139,7 +174,7 @@
                 <p>Plazo: 36 meses</p>
                 <p>Interés: 6.9% anual</p>
                 <p>Cuota mensual: 180€</p>
-                <a href="contacto.php" class="contact-btn">Solicita más Información</a>
+                <a href="contacto.php" class="contact-btn">Más Información</a>
             </div>
         </div>
     </div>

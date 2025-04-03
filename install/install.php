@@ -83,19 +83,30 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error al crear la tabla opciones_financiacion: " . $conn->error . "<br>";
 }
+
 // Insertar opciones de financiación
 $sql = "INSERT INTO opciones_financiacion (tipo_financiacion, plazo, interes, cuota) VALUES
 ('Financiación a 12 meses', 12, 5.5, 350.00),
 ('Financiación a 24 meses', 24, 6.0, 250.00),
 ('Financiación a 36 meses', 36, 6.5, 180.00)";
-
 if ($conn->query($sql) === TRUE) {
     echo "Opciones de financiación insertadas con éxito.<br>";
 } else {
     echo "Error al insertar las opciones de financiación: " . $conn->error . "<br>";
 }
+$sql = "CREATE TABLE IF NOT EXISTS enviarCV (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_completo VARCHAR(100) NOT NULL,
+    correo_electronico VARCHAR(100) NOT NULL,
+    telefono VARCHAR(15) NOT NULL,
+    curriculum LONGBLOB NOT NULL  -- Para almacenar el archivo binario
+)";
+if ($conn->query($sql) === TRUE) {
+    echo "Tabla enviarCV creada con éxito.<br>";
+} else {
+    echo "Error al crear la tabla enviarCV: " . $conn->error . "<br>";
+}
+
 // Cerrar conexión
 $conn->close();
 ?>
-
-

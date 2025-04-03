@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosotros - Concesionarios Manzano</title>
-
+    <title>Trabaja con Nosotros - Concesionario Manzano</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
         body {
             font-family: Arial, sans-serif;
-            color: #333;
-            background-color: lightgray;
-        }
-        h2{
-            text-align: center;
+            background-color: #f4f4f4;
         }
         header {
-            background: url('./images/concesionario1.jpg') no-repeat center/cover;
+            background: url('./images/vehiculos2.jpg') no-repeat center/cover;
             color: white;
             padding: 3rem 0;
             text-align: center;
-            font-size: 1.5rem;
         }
-
+        footer {
+            background: url('./images/vehiculos3.avif') no-repeat center/cover;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
         nav {
             background-color: #004A99;
         }
@@ -38,43 +36,12 @@
             background-color: #0066CC;
             border-radius: 5px;
         }
-
-        main {
-            padding: 3rem;
-            text-align: center;
+        .container {
+            margin-top: 40px;
         }
-        section {
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .imagenes-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .imagenes-container img,
-        .imagenesValores img,
-        main img {
-            width: 300px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Estilos del carrusel */
-        .carousel-item img {
-            width: 400px;
-            height: 300px;
-            object-fit: cover;
+        .formulario-container {
+            background: url('./images/curriculum.jpg') no-repeat center/cover;
+            padding: 40px;
             border-radius: 10px;
         }
     </style>
@@ -82,8 +49,8 @@
 <body>
 
 <header>
-    <h1>Concesionarios Manzano</h1>
-    <p>Conoce más sobre nosotros</p>
+    <h1>Trabaja con Nosotros</h1>
+    <p>Únete al equipo de Concesionarios Manzano</p>
 </header>
 
 <nav class="navbar navbar-expand-lg navbar-dark">
@@ -96,75 +63,46 @@
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
                 <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-                <!-- Menú desplegable -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Concesionarios Manzano
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="nosotros.php">Nosotros</a></li>
-                        <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<section>
-    <h2>Nuestras Instalaciones</h2>
-    <div class="imagenes-container">
-        <div><img src="./images/instalacion1.jpeg" alt="Instalación 1"></div>
-        <div><img src="./images/instalacion2.jpeg" alt="Instalación 2"></div>
-        <div><img src="./images/instalacion3.jpeg" alt="Instalación 3"></div>
-        <div><img src="./images/instalacion4.jpeg" alt="Instalación 4"></div>
-    </div>
-</section>
-
-<main>
+<main class="container">
     <section>
-        <h2>¿Quiénes Somos?</h2>
-        <p>En <strong>Concesionarios Manzano</strong> nos dedicamos a ofrecer una amplia variedad de vehículos nuevos y de segunda mano con la mejor calidad y al mejor precio. Contamos con más de 20 años de experiencia en el sector, lo que nos ha permitido consolidarnos como una de las opciones más confiables y preferidas por nuestros clientes.</p>
-        <img src="./images/quienesSomos.jpg" style="object-position: center 10%;" alt="">
-        <h3>Nuestra Misión</h3>
-        <p>Brindar a nuestros clientes vehículos que se adapten a sus necesidades y presupuesto, ofreciendo un servicio personalizado y un trato cercano. Nos importa tu satisfacción, por eso nos aseguramos de que cada vehículo que ofrecemos esté en las mejores condiciones.</p>
-        <img src="./images/IA.png" style="object-position: center 35%;" alt="">
-        <h3>Nuestros Valores</h3>
-        <ul>
-            <li><strong>Compromiso:</strong> Estamos comprometidos con cada cliente, ofreciendo un servicio excepcional y vehículos de calidad.</li>
-            <li><strong>Transparencia:</strong> Actuamos con honestidad en todo momento, desde el momento en que te asesores hasta la entrega del vehículo.</li>
-            <li><strong>Innovación:</strong> Siempre buscamos nuevas formas de mejorar la experiencia de compra y postventa de nuestros clientes.</li>
-            <li><strong>Confianza:</strong> Queremos que nuestros clientes confíen en nosotros como su opción preferida cuando se trata de comprar un coche.</li>
-        </ul>
-            <img src="./images/compromiso.jpg" alt="">
-        <h3>Nuestro Equipo</h3>
-        <p>Contamos con un equipo altamente cualificado y apasionado por el mundo del motor. Desde nuestros asesores hasta nuestro equipo de taller, trabajamos con dedicación para ofrecerte el mejor servicio.</p>
-        <section>
-        <h2>Conoce a nuestro equipo</h2>
-        <<div id="carouselEquipo" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="./images/equipo1.jpg" class="d-block mx-auto" alt="Miembro del equipo 1">
+        <h2>Únete a Nuestro Equipo</h2>
+        <p>En <strong>Concesionarios Manzano</strong> buscamos talento apasionado por el mundo del motor. Si quieres formar parte de nuestro equipo, completa el siguiente formulario y envíanos tu currículum.</p>
+        <div class="formulario-container">
+            <form action="enviar_cv.php" method="POST" enctype="multipart/form-data" class="p-4 border rounded bg-white">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                </div>
+                <div class="mb-3">
+                    <label for="cv" class="form-label">Adjuntar Currículum</label>
+                    <input type="file" class="form-control" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
         </div>
-        <div class="carousel-item">
-            <img src="./images/equipo2.jpg" class="d-block mx-auto" alt="Miembro del equipo 2">
-        </div>
-        <div class="carousel-item">
-            <img src="./images/equipo3.jpg" class="d-block mx-auto" alt="Miembro del equipo 3">
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselEquipo" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselEquipo" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </button>
-</div>
-    </section>
-        <h3>Visítanos</h3>
-        <p>Nos encantaría que nos visitaras. Nuestro concesionario está ubicado en el centro de la ciudad, donde podrás conocer a nuestro equipo, ver nuestra amplia oferta de vehículos y recibir asesoramiento personalizado.</p>
     </section>
 </main>
+
+<footer>
+    <p>&copy; 2025 Concesionario Manzano. Todos los derechos reservados.</p>
+    <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
