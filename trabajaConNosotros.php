@@ -56,12 +56,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
-        header { background: url('./images/vehiculos2.jpg') no-repeat center/cover; color: white; padding: 3rem 0; text-align: center; }
-        footer { background: url('./images/vehiculos3.avif') no-repeat center/cover; color: white; padding: 2rem 0; text-align: center; }
+        header { 
+            background: url('./images/trabajaJuntos.jpg') no-repeat center/cover; 
+            color: white; 
+            padding: 3rem 0; 
+            text-align: center; 
+            background-position: center 30%;
+        }
+        footer { 
+            background: url('./images/juntos.avif') no-repeat center/cover; 
+            color: white; 
+            padding: 2rem 0; 
+            text-align: center; }
         nav { background-color: #004A99; }
         nav a { color: white; font-weight: bold; padding: 15px 20px; display: inline-block; text-decoration: none; }
         nav a:hover { background-color: #0066CC; border-radius: 5px; }
         .container { margin-top: 40px; }
+        
+        .form-area {
+            position: relative;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./images/curriculum.jpg');
+            background-size: cover;
+            background-position: center 25%;
+            opacity: 0.3; /* Controla la opacidad de la imagen */
+            z-index: 0; /* Pone la imagen detrás de los campos del formulario */
+        }
+
+        .form-area input, .form-area button {
+            position: relative;
+            z-index: 1; /* Asegura que los campos estén encima de la imagen */
+        }
+        footer {
+            background: url('./images/vehiculos3.avif') no-repeat center/cover;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -81,6 +124,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
                 <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
+                <!-- Menú desplegable -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Concesionarios Manzano
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="nosotros.php">Nosotros</a></li>
+                        <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -98,24 +151,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         <?php endif; ?>
 
-        <form action="" method="POST" enctype="multipart/form-data" class="p-4 border rounded bg-white">
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre Completo</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="form-area">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                </div>
+                <div class="mb-3">
+                    <label for="cv" class="form-label">Adjuntar Currículum</label>
+                    <input type="file" class="form-control" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="telefono" class="form-label">Teléfono</label>
-                <input type="tel" class="form-control" id="telefono" name="telefono" required>
-            </div>
-            <div class="mb-3">
-                <label for="cv" class="form-label">Adjuntar Currículum</label>
-                <input type="file" class="form-control" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
     </section>
 </main>

@@ -21,6 +21,7 @@
             padding: 3rem 0;
             text-align: center;
             font-size: 1.5rem;
+            background-position: center 65%;
         }
         /* Navegación */
         nav {

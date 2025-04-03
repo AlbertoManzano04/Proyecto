@@ -76,16 +76,18 @@ if (!$result) {
             margin-top: 20px;
         }
         header {
-            background: url('./images/vehiculos2.jpg') no-repeat center/cover;
+            background: url('./images/vehiculoUsuario.jpg') no-repeat center/cover;
             color: white;
             padding: 2rem 0;
             text-align: center;
+            background-position: center 27%;
         }
         footer {
-            background: url('./images/vehiculos3.avif') no-repeat center/cover;
+            background: url('./images/vehiculoUsuario2.avif') no-repeat center/cover;
             color: white;
             padding: 2rem 0;
             text-align: center;
+            background-position: center 60%;
         }
         /* Navegación */
         nav {

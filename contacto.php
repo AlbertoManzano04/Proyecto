@@ -61,10 +61,11 @@ $conn->close();
             background-color: lightgray;
         }
         header {
-            background: url('./images/concesionario1.jpg') no-repeat center/cover;
+            background: url('./images/contacto2.avif') no-repeat center/cover;
             color: white;
             padding: 2rem 0;
             text-align: center;
+            background-position: center 30%;
         }
         footer {
             background: url('./images/contacto1.avif') no-repeat center/cover;

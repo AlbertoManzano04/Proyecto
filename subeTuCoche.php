@@ -56,53 +56,81 @@ $conn->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: lightgray;
-        }
-        header, footer {
-            background: url('./images/vehiculos2.jpg') no-repeat center/cover;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        .form-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .form-container label {
-            font-weight: bold;
-        }
-        nav {
-            background-color: #004A99;
-        }
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            padding: 15px 20px;
-            display: inline-block;
-        }
-        nav a:hover {
-            background-color: #0066CC;
-            border-radius: 5px;
+    background-color: lightgray;
+}
+
+header, footer {
+    background: url('./images/subeCoche.jpg') no-repeat center/cover;
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    background-position: center 75%;
+}
+
+.form-container {
+    position: relative; /* Esto asegura que los elementos dentro de este contenedor no se vean afectados por el fondo */
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Asegura que el formulario esté por encima de la imagen de fondo */
+}
+
+.form-container label {
+    font-weight: bold;
+}
+
+.form-area input, .form-area button {
+            position: relative;
+            z-index: 1; /* Asegura que los campos estén encima de la imagen */
         }
 
-        .highlight-text {
-            font-size: 1.2rem;
-            color: #007bff;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+.form-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('./images/venta.avif');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3; /* Ajusta la opacidad para que la imagen no opaque los campos */
+    z-index: 0; /* Esto asegura que la imagen esté detrás del formulario */
+}
 
-        .sube-coche-description {
-            background-color: #f7f7f7;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
+nav {
+    background-color: #004A99;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 15px 20px;
+    display: inline-block;
+}
+
+nav a:hover {
+    background-color: #0066CC;
+    border-radius: 5px;
+}
+
+.highlight-text {
+    font-size: 1.2rem;
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sube-coche-description {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 30px;
+}
     </style>
 </head>
 <body>
@@ -143,7 +171,7 @@ $conn->close();
         <p>¿Estás buscando vender tu vehículo? ¡Estás en el lugar indicado! Completa este sencillo formulario, sube las fotos de tu coche y nosotros nos encargaremos del resto. Te garantizamos un proceso rápido, seguro y con una excelente valoración. ¡Aprovecha esta oportunidad para vender tu coche de forma sencilla y sin complicaciones!</p>
     </div>
 
-    <div class="form-container">
+    <div class="form-container form-area">
         <h3 class="text-center">Formulario para Vender tu Vehículo</h3>
         <form method="POST" action="subeTuCoche.php" enctype="multipart/form-data" class="row">
             <div class="col-md-6 mb-3">
@@ -214,4 +242,3 @@ $conn->close();
 
 </body>
 </html>
-

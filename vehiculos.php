@@ -81,7 +81,7 @@ if (!$result) {
             text-align: center;
         }
         footer {
-            background: url('./images/vehiculos3.avif') no-repeat center/cover;
+            background: url('./images/vehiculos2.jpg') no-repeat center/cover;
             color: white;
             padding: 2rem 0;
             text-align: center;
@@ -104,7 +104,7 @@ if (!$result) {
 </head>
 <body>
 <header>
-    <h1>Filtra nuestros Vehículos Km0</h1>
+    <h1>Nuestros Vehículos (Km0)</h1>
     <p>Encuentra el coche de tus sueños según tus preferencias</p>
 </header>
 

@@ -12,13 +12,14 @@
             background-color: #f4f4f4;
         }
         header {
-            background: url('./images/vehiculos2.jpg') no-repeat center/cover;
+            background: url('./images/financiacion.avif') no-repeat center/cover;
             color: white;
             padding: 3rem 0;
             text-align: center;
+            background-position: center 48%;
         }
         footer {
-            background: url('./images/vehiculos3.avif') no-repeat center/cover;
+            background: url('./images/financiacion1.avif') no-repeat center/cover;
             color: white;
             padding: 2rem 0;
             text-align: center;
@@ -114,6 +115,15 @@
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
                 <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Concesionarios Manzano
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="nosotros.php">Nosotros</a></li>
+                        <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
+                    </ul>
+                </li>           
             </ul>
         </div>
     </div>
