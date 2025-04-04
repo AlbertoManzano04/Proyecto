@@ -84,6 +84,9 @@
             text-align: center;
             background-position: center 30%;
         }
+        h1, h2 {
+            color: darkblue;
+        }
     </style>
 </head>
 <body>

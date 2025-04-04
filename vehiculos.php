@@ -39,7 +39,7 @@ if (!$result) {
         .vehicle-card img {
             max-width: 100%;
             height: 300px;
-            width: 300px;
+            width: auto;
             border-radius: 8px;
         }
         .contact-info {
@@ -74,6 +74,9 @@ if (!$result) {
         .whatsapp-btn:hover {
             background-color: #1ebe57;
         }
+        body{
+            background-color: lightgray;
+        }
         header {
             background: url('./images/vehiculos2.jpg') no-repeat center/cover;
             color: white;
@@ -99,6 +102,9 @@ if (!$result) {
         nav a:hover {
             background-color: #0066CC;
             border-radius: 5px;
+        }
+        h1, h2 {
+            color: darkblue;
         }
     </style>
 </head>

@@ -74,6 +74,9 @@ $conn->close();
             padding: 2rem 0;
             text-align: center;
         }
+        h1,h2{
+            color: darkblue;
+        }
         nav {
             background-color: #004A99;
         }

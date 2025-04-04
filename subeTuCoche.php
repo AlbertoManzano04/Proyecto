@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefono = $_POST['contacto']; // Añadido para recoger el teléfono
 
     // Manejo de la imagen
-    $directorio = "uploads/";
+    $directorio = "images/";
     if (!is_dir($directorio)) {
         mkdir($directorio, 0777, true);
     }
@@ -58,7 +58,9 @@ $conn->close();
         body {
     background-color: lightgray;
 }
-
+        h1, h2 {
+            color: darkblue;
+        }
 header, footer {
     background: url('./images/subeCoche.jpg') no-repeat center/cover;
     color: white;
@@ -96,7 +98,7 @@ header, footer {
     background-size: cover;
     background-position: center;
     opacity: 0.3; /* Ajusta la opacidad para que la imagen no opaque los campos */
-    z-index: 0; /* Esto asegura que la imagen esté detrás del formulario */
+    z-index: -1; /* Esto asegura que la imagen esté detrás del formulario */
 }
 
 nav {

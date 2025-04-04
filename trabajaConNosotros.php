@@ -55,7 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Trabaja con Nosotros - Concesionario Manzano</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: lightgray; 
+        }
         header { 
             background: url('./images/trabajaJuntos.jpg') no-repeat center/cover; 
             color: white; 
@@ -64,14 +67,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-position: center 30%;
         }
         footer { 
-            background: url('./images/juntos.avif') no-repeat center/cover; 
+            background: url('./images/juntos2.avif') no-repeat center/cover; 
             color: white; 
             padding: 2rem 0; 
             text-align: center; }
-        nav { background-color: #004A99; }
-        nav a { color: white; font-weight: bold; padding: 15px 20px; display: inline-block; text-decoration: none; }
-        nav a:hover { background-color: #0066CC; border-radius: 5px; }
-        .container { margin-top: 40px; }
+        nav { 
+            background-color: #004A99; 
+        }
+        nav a { 
+            color: white; 
+            font-weight: bold; 
+            padding: 15px 20px; 
+            display: inline-block; 
+            text-decoration: none; }
+        nav a:hover { 
+            background-color: #0066CC; 
+            border-radius: 5px; 
+        }
+        .container { 
+            margin-top: 40px; 
+        }
         
         .form-area {
             position: relative;
@@ -79,6 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
         }
 
         .form-area::before {
@@ -99,11 +115,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             position: relative;
             z-index: 1; /* Asegura que los campos estén encima de la imagen */
         }
-        footer {
-            background: url('./images/vehiculos3.avif') no-repeat center/cover;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
+        h1, h2 {
+            color: darkblue;
         }
     </style>
 </head>

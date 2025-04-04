@@ -9,7 +9,10 @@
         /* Estilo similar al de vehiculo.php */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: lightgray;
+        }
+        h1, h2 {
+            color: darkblue;
         }
         header {
             background: url('./images/financiacion.avif') no-repeat center/cover;
@@ -46,7 +49,7 @@
             border: 1px solid #ddd;
             padding: 15px;
             border-radius: 8px;
-            background-color:  lightgray;
+            background-color:  white;
             text-align: center;
             margin-bottom: 15px;
 
