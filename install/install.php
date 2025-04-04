@@ -20,17 +20,41 @@ if ($conn->query($sql) === TRUE) {
 // Seleccionar la base de datos
 $conn->select_db(DB_NAME);
 
-// Crear tabla Usuario
-$sql = "CREATE TABLE IF NOT EXISTS Usuario (
+// Crear tabla usuarios con roles
+$sql = "CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    contraseña VARCHAR(255) NOT NULL,
+    rol ENUM('admin', 'usuario') NOT NULL DEFAULT 'usuario'
+)";
+if ($conn->query($sql) === TRUE) {
+    echo "Tabla usuarios creada con éxito.<br>";
+} else {
+    echo "Error al crear la tabla usuarios: " . $conn->error . "<br>";
+}
+
+// Insertar usuario administrador por defecto
+$admin_email = 'admin@concesionario.com';
+$admin_password = password_hash('admin123', PASSWORD_DEFAULT);
+$sql = "INSERT IGNORE INTO usuarios (nombre, email, contraseña, rol) VALUES ('Administrador', '$admin_email', '$admin_password', 'admin')";
+if ($conn->query($sql) === TRUE) {
+    echo "Usuario administrador creado con éxito.<br>";
+} else {
+    echo "Error al crear el usuario administrador: " . $conn->error . "<br>";
+}
+
+// Crear tabla Contacto
+$sql = "CREATE TABLE IF NOT EXISTS Contacto (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     mensaje TEXT NOT NULL
 )";
 if ($conn->query($sql) === TRUE) {
-    echo "Tabla Usuario creada con éxito.<br>";
+    echo "Tabla Contacto creada con éxito.<br>";
 } else {
-    echo "Error al crear la tabla Usuario: " . $conn->error . "<br>";
+    echo "Error al crear la tabla Contacto: " . $conn->error . "<br>";
 }
 
 // Crear tabla vehiculos_km0
@@ -51,9 +75,10 @@ if ($conn->query($sql) === TRUE) {
     echo "Error al crear la tabla vehiculos_km0: " . $conn->error . "<br>";
 }
 
-// Crear tabla coche_usuario (con teléfono)
+// Crear tabla coche_usuario con relación a usuarios
 $sql = "CREATE TABLE IF NOT EXISTS coche_usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
     marca VARCHAR(50),
     modelo VARCHAR(50),
     anio INT,
@@ -62,7 +87,8 @@ $sql = "CREATE TABLE IF NOT EXISTS coche_usuario (
     presupuesto DECIMAL(10,2),
     kilometros INT,
     imagen VARCHAR(255),
-    telefono VARCHAR(15) NOT NULL
+    telefono VARCHAR(15) NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 )";
 if ($conn->query($sql) === TRUE) {
     echo "Tabla coche_usuario creada con éxito.<br>";
@@ -88,18 +114,21 @@ if ($conn->query($sql) === TRUE) {
 $sql = "INSERT INTO opciones_financiacion (tipo_financiacion, plazo, interes, cuota) VALUES
 ('Financiación a 12 meses', 12, 5.5, 350.00),
 ('Financiación a 24 meses', 24, 6.0, 250.00),
-('Financiación a 36 meses', 36, 6.5, 180.00)";
+('Financiación a 36 meses', 36, 6.5, 180.00)
+ON DUPLICATE KEY UPDATE id=id";
 if ($conn->query($sql) === TRUE) {
     echo "Opciones de financiación insertadas con éxito.<br>";
 } else {
     echo "Error al insertar las opciones de financiación: " . $conn->error . "<br>";
 }
+
+// Crear tabla enviarCV
 $sql = "CREATE TABLE IF NOT EXISTS enviarCV (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre_completo VARCHAR(100) NOT NULL,
     correo_electronico VARCHAR(100) NOT NULL,
     telefono VARCHAR(15) NOT NULL,
-    curriculum LONGBLOB NOT NULL  -- Para almacenar el archivo binario
+    curriculum LONGBLOB NOT NULL
 )";
 if ($conn->query($sql) === TRUE) {
     echo "Tabla enviarCV creada con éxito.<br>";

@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mensaje = "❌ El correo electrónico no es válido.";
     } else {
         // Preparar la consulta SQL
-        $query = "INSERT INTO Usuario (nombre, email, mensaje) VALUES (?, ?, ?)";
+        $query = "INSERT INTO Contacto (nombre, email, mensaje) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($query);
 
         if ($stmt === false) {
