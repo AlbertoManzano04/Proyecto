@@ -114,7 +114,7 @@ if (!$result) {
     <p>Encuentra el coche de tus sueños según tus preferencias</p>
 </header>
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004A99;">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,6 +127,7 @@ if (!$result) {
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
                 <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
+                <!-- Menú desplegable -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Concesionarios Manzano
@@ -135,7 +136,10 @@ if (!$result) {
                         <li><a class="dropdown-item" href="nosotros.php">Nosotros</a></li>
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
                     </ul>
-                </li>           
+                </li>
+                <!-- Login y Registro alineados a la derecha -->
+                <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
+                <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
             </ul>
         </div>
     </div>
