@@ -1,4 +1,5 @@
 <?php
+session_start(); // Iniciar la sesión
 // Incluir archivo de configuración de la base de datos
 require_once './config/configBD.php'; 
 
@@ -18,6 +19,9 @@ $result = $conn->query($query);
 if (!$result) {
     die("Error en la consulta: " . $conn->error);
 }
+
+// Verificar si el usuario está logueado
+$usuario_id = isset($_SESSION['usuario_id']) ? $_SESSION['usuario_id'] : null;
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +32,7 @@ if (!$result) {
     <title>Vehículos de Usuarios</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body{
+        body {
             background-color: lightgray;
         }
         h1, h2 {
@@ -96,7 +100,6 @@ if (!$result) {
             text-align: center;
             background-position: center 60%;
         }
-        /* Navegación */
         nav {
             background-color: #004A99;
         }
@@ -131,9 +134,13 @@ if (!$result) {
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
-                <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                <?php endif; ?>
+
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-                <!-- Menú desplegable -->
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Concesionarios Manzano
@@ -143,13 +150,14 @@ if (!$result) {
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
                     </ul>
                 </li>
-                <!-- Login y Registro alineados a la derecha -->
+
                 <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                 <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
             </ul>
         </div>
     </div>
 </nav>
+
 <main class="container my-4">
     <div class="row">
         <?php while ($row = $result->fetch_assoc()): ?>
@@ -164,7 +172,25 @@ if (!$result) {
                     <p>Precio: €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
                     <p>Kilómetros: <?= htmlspecialchars($row['kilometros']) ?></p>
                     <div class="contact-info">
-                        <!-- Mostrar el número de contacto directamente desde la BD y crear el enlace de WhatsApp -->
+                        <!-- Botón de Favorito encima del botón de WhatsApp -->
+                        <?php if ($usuario_id): ?>
+                            <?php
+                                // Verificar si este vehículo está en los favoritos del usuario
+                                $check_fav_query = "SELECT * FROM usuarios_favoritos WHERE usuario_id = ? AND vehiculo_id = ?";
+                                $stmt = $conn->prepare($check_fav_query);
+                                $stmt->bind_param("ii", $usuario_id, $row['id']);
+                                $stmt->execute();
+                                $fav_result = $stmt->get_result();
+                            ?>
+                            <form action="agregar_favorito.php" method="POST">
+                                <input type="hidden" name="vehiculo_id" value="<?= $row['id'] ?>">
+                                <button type="submit" class="btn <?= $fav_result->num_rows > 0 ? 'btn-danger' : 'btn-outline-primary' ?>">
+                                    <?= $fav_result->num_rows > 0 ? 'Eliminar de Favoritos' : 'Agregar a Favoritos' ?>
+                                </button>
+                            </form>
+                        <?php endif; ?>
+
+                        <!-- Botón de contacto por WhatsApp -->
                         <a href="https://wa.me/<?= htmlspecialchars($row['telefono']) ?>" class="contact-btn">
                             Contactar por WhatsApp: <?= htmlspecialchars($row['telefono']) ?>
                         </a>
@@ -187,11 +213,4 @@ if (!$result) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-</html>
-
-<?php
-// Cerrar la conexión
-$conn->close();
-?>
-
-
+</html

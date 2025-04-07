@@ -1,4 +1,5 @@
 <?php
+session_start(); // Iniciar la sesión
 // Incluir archivo de configuración de la base de datos
 require_once './config/configBD.php'; 
 
@@ -18,6 +19,23 @@ $result = $conn->query($query);
 if (!$result) {
     die("Error en la consulta: " . $conn->error);
 }
+
+// Comprobar si el usuario está logueado
+$usuario_id = isset($_SESSION['usuario_id']) ? $_SESSION['usuario_id'] : null;
+
+// Función para verificar si el vehículo está en favoritos
+function esFavorito($vehiculo_id, $usuario_id, $conn) {
+    if ($usuario_id) {
+        $query = "SELECT * FROM usuarios_favoritos WHERE usuario_id = ? AND vehiculo_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ii", $usuario_id, $vehiculo_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0;
+    }
+    return false;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -62,19 +80,19 @@ if (!$result) {
             position: fixed;
             top: 50%;
             right: 0;
-            transform: translateY(-50%); /* Centra verticalmente */
+            transform: translateY(-50%);
             background-color: #25D366;
             color: white;
             padding: 10px 15px;
             border-radius: 50%;
             font-size: 24px;
             text-align: center;
-            z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
+            z-index: 1000;
         }
         .whatsapp-btn:hover {
             background-color: #1ebe57;
         }
-        body{
+        body {
             background-color: lightgray;
         }
         header {
@@ -125,9 +143,10 @@ if (!$result) {
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
-                <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                <?php endif; ?>
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-                <!-- Menú desplegable -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Concesionarios Manzano
@@ -137,7 +156,6 @@ if (!$result) {
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
                     </ul>
                 </li>
-                <!-- Login y Registro alineados a la derecha -->
                 <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                 <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
             </ul>
@@ -157,6 +175,16 @@ if (!$result) {
                     <p>Tipo: <?= htmlspecialchars($row['tipo']) ?></p>
                     <p>Precio: €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
                     <p>Kilómetros: <?= htmlspecialchars($row['kilometros']) ?></p>
+
+                    <?php if ($usuario_id): ?>
+                        <form action="agregar_favorito.php" method="POST">
+                            <input type="hidden" name="vehiculo_id" value="<?= $row['id'] ?>">
+                            <button type="submit" class="btn <?= $fav_result->num_rows > 0 ? 'btn-danger' : 'btn-outline-primary' ?>">
+                                <?= esFavorito($row['id'], $usuario_id, $conn) ? 'Eliminar de Favoritos' : 'Agregar a Favoritos' ?>
+                            </button>
+                        </form>
+                    <?php endif; ?>
+
                     <div class="contact-info">
                         <a href="contacto.php" class="contact-btn">Llámanos o Escríbenos</a>
                     </div>
@@ -166,7 +194,6 @@ if (!$result) {
     </div>
 </main>
 
-<!-- WhatsApp button (fixed to the right and centered vertically) -->
 <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
     &#x1F4AC;
 </a>

@@ -1,3 +1,6 @@
+<?php
+session_start(); // Iniciar la sesión
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -63,9 +66,13 @@
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
-                <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                <?php endif; ?>
+
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-                <!-- Menú desplegable -->
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Concesionarios Manzano
@@ -75,7 +82,7 @@
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
                     </ul>
                 </li>
-                <!-- Login y Registro alineados a la derecha -->
+
                 <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                 <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
             </ul>

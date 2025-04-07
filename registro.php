@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once './config/configBD.php'; // Archivo de conexión a la base de datos
+
 // Crear la conexión con la base de datos
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
@@ -8,6 +9,7 @@ $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
     $email = $_POST['email'];
@@ -20,7 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Insertar el usuario en la base de datos
         $query = $conn->prepare("INSERT INTO usuarios (nombre, email, contraseña, rol) VALUES (?, ?, ?, 'usuario')");
-        $query->execute([$nombre, $email, $hashed_password]);
+        $query->bind_param("sss", $nombre, $email, $hashed_password);
+        $query->execute();
 
         // Redirigir al login
         header("Location: login.php");
@@ -81,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" class="btn btn-primary w-100">Registrarse</button>
         </form>
         <p class="mt-3">¿Ya tienes cuenta? <a href="login.php">Inicia sesión aquí</a></p>
+        <a href="index.php" class="btn btn-secondary mt-3">Volver al Inicio</a>
     </div>
 </body>
 </html>

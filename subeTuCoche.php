@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Incluir configuración de base de datos
 require_once __DIR__ . '/config/configBD.php';
 
@@ -141,7 +142,6 @@ nav a:hover {
     <h1>Vende tu Vehículo</h1>
     <p>Comparte las características de tu coche y sube imágenes para venderlo</p>
 </header>
-
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
@@ -153,9 +153,13 @@ nav a:hover {
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
-                <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                <?php endif; ?>
+
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-                <!-- Menú desplegable -->
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Concesionarios Manzano
@@ -165,7 +169,7 @@ nav a:hover {
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
                     </ul>
                 </li>
-                <!-- Login y Registro alineados a la derecha -->
+
                 <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                 <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
             </ul>

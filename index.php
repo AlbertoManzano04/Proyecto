@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,7 +27,7 @@
             font-size: 1.5rem;
             background-position: center 65%;
         }
-        /* Navegación */
+
         nav {
             background-color: #004A99;
         }
@@ -39,7 +43,6 @@
             border-radius: 5px;
         }
 
-        /* Subtítulos con enlaces */
         .subtitulo {
             color: darkblue;
             font-size: 1.8rem;
@@ -53,7 +56,6 @@
             text-decoration: underline;
         }
 
-        /* Secciones */
         main {
             padding: 3rem;
             text-align: center;
@@ -66,7 +68,6 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Estilos del carrusel */
         .carousel-container {
             max-width: 100%;
             margin: auto;
@@ -74,9 +75,9 @@
         .carousel-item img {
             width: 100%;
             height: auto;
-            max-height: 600px; /* Ajusta según necesites */
-            object-fit: contain; /* Asegura que la imagen se vea completa */
-            background-color: black; /* Evita espacios vacíos */
+            max-height: 600px;
+            object-fit: contain;
+            background-color: black;
         }
 
         .carousel-caption {
@@ -85,7 +86,6 @@
             border-radius: 5px;
         }
 
-        /* Footer */
         footer {
             background: url('./images/vehiculos3.avif') no-repeat center/cover;
             color: white;
@@ -113,9 +113,13 @@
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
-                <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                <?php endif; ?>
+
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-                <!-- Menú desplegable -->
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Concesionarios Manzano
@@ -125,14 +129,13 @@
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
                     </ul>
                 </li>
-                <!-- Login y Registro alineados a la derecha -->
+
                 <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                 <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
             </ul>
         </div>
     </div>
 </nav>
-
 
 <main>
     <section id="vehiculos">
@@ -162,16 +165,16 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="./images/coche4.avif" class="d-block w-100" alt="Vehículo 3">
+                        <img src="./images/coche4.avif" class="d-block w-100" alt="Vehículo 4">
                         <div class="carousel-caption">
                             <h5>Seguridad y Confianza</h5>
                             <p>Disfruta de cada viaje con la máxima protección y estabilidad</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="./images/coche5.avif" class="d-block w-100" alt="Vehículo 3">
+                        <img src="./images/coche5.avif" class="d-block w-100" alt="Vehículo 5">
                         <div class="carousel-caption">
-                            <h5> Rendimiento Imparable</h5>
+                            <h5>Rendimiento Imparable</h5>
                             <p>Un motor potente y eficiente para llevarte más lejos.</p>
                         </div>
                     </div>
@@ -198,11 +201,13 @@
         <img src="./images/ventas.jpg" alt="VehiculosUsuarios" class="img-fluid rounded">
     </section>
 
+    <?php if (isset($_SESSION['usuario_id'])): ?>
     <section id="subeTuCoche">
         <a href="subeTuCoche.php" class="subtitulo">Sube tu Coche</a>
         <p>¿Tienes un coche para vender? ¡Es tu oportunidad! Sube tu coche y llega a miles de compradores, estamos para ayudarte.</p>
         <img src="./images/asesoramiento.avif" alt="Asesoramiento" class="img-fluid rounded">
     </section>
+    <?php endif; ?>
 
     <section id="contacto">
         <a href="contacto.php" class="subtitulo">Contáctanos</a>
@@ -221,4 +226,7 @@
 
 </body>
 </html>
+
+
+
 

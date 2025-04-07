@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once  './config/configBD.php'; // Archivo de conexión a la base de datos
+require_once './config/configBD.php'; // Archivo de conexión a la base de datos
 
 // Crear la conexión con la base de datos
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
@@ -69,6 +69,7 @@ if (isset($_SESSION['usuario_id'])) {
         <div class="login-container">
             <p class="welcome-message"><?php echo $mensaje; ?></p>
             <a href="logout.php" class="btn-logout">Cerrar Sesión</a>
+            <a href="index.php" class="btn btn-secondary mt-3">Volver al Inicio</a>
         </div>
     </body>
     </html>
@@ -148,6 +149,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" class="btn btn-primary w-100">Ingresar</button>
         </form>
         <p class="mt-3">¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a></p>
+        <a href="index.php" class="btn btn-secondary mt-3">Volver al Inicio</a>
     </div>
 </body>
 </html>
+

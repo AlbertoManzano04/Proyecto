@@ -135,7 +135,19 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error al crear la tabla enviarCV: " . $conn->error . "<br>";
 }
+$sql= "CREATE TABLE usuarios_favoritos (
+    usuario_id INT NOT NULL,
+    vehiculo_id INT NOT NULL,
+    PRIMARY KEY (usuario_id, vehiculo_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (vehiculo_id) REFERENCES vehiculos_km0(id)
+)";
 
+if ($conn->query($sql) === TRUE) {
+    echo "Tabla usuarios_favoritos creada con éxito.<br>";
+} else {
+    echo "Error al crear la tabla usuarios_favoritos: " . $conn->error . "<br>";
+}
 // Cerrar conexión
 $conn->close();
 ?>
