@@ -140,14 +140,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
-                <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
-                <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
-                <?php if (isset($_SESSION['usuario_id'])): ?>
-                    <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
-                <?php endif; ?>
-                <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-                <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Concesionarios Manzano
                     </a>
@@ -156,6 +149,16 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
+                <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
+                <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
+                
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                <?php endif; ?>
+
+                <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
+
                 <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                 <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
             </ul>
@@ -179,7 +182,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                     <?php if ($usuario_id): ?>
                         <form action="agregar_favorito.php" method="POST">
                             <input type="hidden" name="vehiculo_id" value="<?= $row['id'] ?>">
-                            <button type="submit" class="btn <?= $fav_result->num_rows > 0 ? 'btn-danger' : 'btn-outline-primary' ?>">
+                            <button type="submit" class="btn <?= esFavorito($row['id'], $usuario_id, $conn) ? 'btn-danger' : 'btn-outline-primary' ?>">
                                 <?= esFavorito($row['id'], $usuario_id, $conn) ? 'Eliminar de Favoritos' : 'Agregar a Favoritos' ?>
                             </button>
                         </form>
@@ -193,6 +196,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         <?php endwhile; ?>
     </div>
 </main>
+
 
 <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
     &#x1F4AC;
