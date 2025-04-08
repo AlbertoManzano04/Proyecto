@@ -95,9 +95,9 @@ session_start();
             font-weight: bold;
         }
         .nav-item .fas.fa-heart {
-    color: red; /* Cambiar el color del corazón */
-    font-size: 1.5rem; /* Ajustar el tamaño del ícono */
-}
+            color: red; /* Cambiar el color del corazón */
+            font-size: 1.5rem; /* Ajustar el tamaño del ícono */
+        }
 
     </style>
 </head>
