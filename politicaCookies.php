@@ -64,19 +64,24 @@ session_start();
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Concesionarios Manzano
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="nosotros.php">Nosotros</a></li>
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
+                        
+                        <!-- Mostrar el comparador solo si el usuario está logueado -->
+                        <?php if (isset($_SESSION['usuario_id'])): ?>
+                            <li><a class="dropdown-item" href="comparator.php">Compara los Coches</a></li>
+                        <?php endif; ?>
                     </ul>
                 </li>
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
-                
+
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
                 <?php endif; ?>

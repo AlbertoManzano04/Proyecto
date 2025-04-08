@@ -11,6 +11,7 @@ session_start();
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
         body {
@@ -93,6 +94,11 @@ session_start();
             padding: 2rem;
             font-weight: bold;
         }
+        .nav-item .fas.fa-heart {
+    color: red; /* Cambiar el color del corazón */
+    font-size: 1.5rem; /* Ajustar el tamaño del ícono */
+}
+
     </style>
 </head>
 <body>
@@ -110,21 +116,31 @@ session_start();
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Concesionarios Manzano
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="nosotros.php">Nosotros</a></li>
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
+                        
+                        <?php if (isset($_SESSION['usuario_id'])): ?>
+                            <li><a class="dropdown-item" href="comparator.php">Compara los Coches</a></li>
+                        <?php endif; ?>
                     </ul>
                 </li>
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
-                
+
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                    <!-- Icono de corazón que lleva a favoritos.php, solo si el usuario está logueado -->
+                    <li class="nav-item">
+                        <a href="favoritos.php" class="nav-link">
+                            <i class="fas fa-heart"></i>
+                        </a>
+                    </li>
                 <?php endif; ?>
 
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
