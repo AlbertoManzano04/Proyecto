@@ -115,33 +115,54 @@ $mysqli->close();
 </head>
 <body>
 
-<!-- Navbar -->
+<header class="text-center py-5">
+    <h1>Mis Coches Favoritos</h1>
+    <p>Estos son los coches que has marcado como favoritos</p>
+</header>
+
 <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Concesionario Manzano</a>
+    <div class="container">
+        <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.php">Inicio</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Concesionarios Manzano
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="nosotros.php">Nosotros</a></li>
+                        <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
+                        
+                        <?php if (isset($_SESSION['usuario_id'])): ?>
+                            <li><a class="dropdown-item" href="comparator.php">Compara los Coches</a></li>
+                        <?php endif; ?>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="favoritos.php">Mis Favoritos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Cerrar Sesión</a>
-                </li>
+                <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
+                <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
+                <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
+
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
+                    <!-- Icono de corazón que lleva a favoritos.php, solo si el usuario está logueado -->
+                    <li class="nav-item">
+                        <a href="favoritos.php" class="nav-link">
+                            <i class="fas fa-heart"></i>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
+
+                <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
+                <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
             </ul>
         </div>
     </div>
 </nav>
-
-<header class="text-center py-5">
-    <h1>Mis Coches Favoritos</h1>
-    <p>Estos son los coches que has marcado como favoritos</p>
-</header>
 
 <main class="container">
     <?php if (count($favoritos) > 0): ?>

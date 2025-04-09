@@ -48,65 +48,62 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .nav-item .fas.fa-heart {
-            color: red; /* Cambiar el color del corazón */
-            font-size: 1.5rem; /* Ajustar el tamaño del ícono */
+            color: red;
+            font-size: 1.5rem;
         }
-        .vehicle-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            background-color: white;
+        .tarjeta-vehiculo {
+            border: none;
+            padding: 20px;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
+            transition: transform 0.2s ease-in-out;
         }
-        .vehicle-card img {
+        .tarjeta-vehiculo:hover {
+            transform: translateY(-5px);
+        }
+        .tarjeta-vehiculo img {
             max-width: 100%;
-            height: 300px;
-            width: auto;
-            border-radius: 8px;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 12px;
         }
-        .contact-info {
-            margin-top: 10px;
+        .distintivo {
+            font-size: 0.9rem;
+            padding: 0.5em 0.75em;
+        }
+        .informacion-contacto {
+            margin-top: 15px;
         }
         .contact-btn {
             display: block;
-            background-color: #007bff;
+            background-color: #25D366;
             color: white;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
             margin-top: 10px;
         }
-        .contact-btn:hover {
-            background-color: #0056b3;
-        }
+        .contact-btn:hover { background-color: #1ebe57; }
         .whatsapp-btn {
             position: fixed;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
+            bottom: 20px;
+            right: 20px;
             background-color: #25D366;
             color: white;
-            padding: 10px 15px;
+            padding: 15px;
             border-radius: 50%;
-            font-size: 24px;
-            text-align: center;
+            font-size: 28px;
             z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .whatsapp-btn:hover {
-            background-color: #1ebe57;
-        }
+        .whatsapp-btn:hover { background-color: #1ebe57; }
         body {
-            background-color: lightgray;
+            background-color: #f2f2f2;
         }
-        header {
-            background: url('./images/vehiculos2.jpg') no-repeat center/cover;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        footer {
+        header, footer {
             background: url('./images/vehiculos2.jpg') no-repeat center/cover;
             color: white;
             padding: 2rem 0;
@@ -129,6 +126,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         h1, h2 {
             color: darkblue;
         }
+
     </style>
 </head>
 <body>
@@ -184,27 +182,30 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
 <main class="container my-4">
     <div class="row">
         <?php while ($row = $result->fetch_assoc()): ?>
-            <div class="col-md-4">
-                <div class="vehicle-card">
+            <div class="col-md-4 mb-4">
+                <div class="tarjeta-vehiculo shadow-sm position-relative">
+                    <span class="distintivo bg-success position-absolute top-0 start-0 m-2">Km0</span>
+
                     <img src="<?= htmlspecialchars($row['imagen']) ?>" alt="<?= htmlspecialchars($row['modelo']) ?>">
-                    <h5><?= htmlspecialchars($row['marca']) ?> <?= htmlspecialchars($row['modelo']) ?></h5>
-                    <p>Año: <?= htmlspecialchars($row['anio']) ?></p>
-                    <p>Color: <?= htmlspecialchars($row['color']) ?></p>
-                    <p>Tipo: <?= htmlspecialchars($row['tipo']) ?></p>
-                    <p>Precio: €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
-                    <p>Kilómetros: <?= htmlspecialchars($row['kilometros']) ?></p>
+                    <h5 class="mt-3"><?= htmlspecialchars($row['marca']) ?> <?= htmlspecialchars($row['modelo']) ?></h5>
+                    <p><strong>Año:</strong> <?= htmlspecialchars($row['anio']) ?></p>
+                    <p><strong>Color:</strong> <?= htmlspecialchars($row['color']) ?></p>
+                    <p><strong>Tipo:</strong> <?= htmlspecialchars($row['tipo']) ?></p>
+                    <p><strong>Precio:</strong> €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
+                    <p><strong>Kilómetros:</strong> <?= htmlspecialchars($row['kilometros']) ?> km</p>
 
                     <?php if ($usuario_id): ?>
-                        <form action="agregar_favorito.php" method="POST">
+                        <form action="agregar_favorito.php" method="POST" class="mt-2">
                             <input type="hidden" name="vehiculo_id" value="<?= $row['id'] ?>">
-                            <button type="submit" class="btn <?= esFavorito($row['id'], $usuario_id, $conn) ? 'btn-danger' : 'btn-outline-primary' ?>">
-                                <?= esFavorito($row['id'], $usuario_id, $conn) ? 'Eliminar de Favoritos' : 'Agregar a Favoritos' ?>
+                            <button type="submit" class="btn <?= esFavorito($row['id'], $usuario_id, $conn) ? 'btn-danger' : 'btn-outline-secondary' ?> btn-sm w-100">
+                                <i class="fas fa-heart me-1"></i>
+                                <?= esFavorito($row['id'], $usuario_id, $conn) ? 'Quitar de Favoritos' : 'Agregar a Favoritos' ?>
                             </button>
                         </form>
                     <?php endif; ?>
 
-                    <div class="contact-info">
-                        <a href="contacto.php" class="contact-btn">Llámanos o Escríbenos</a>
+                    <div class="informacion-contacto">
+                        <a href="contacto.php" class="boton-contacto">📞 Contáctanos</a>
                     </div>
                 </div>
             </div>
@@ -212,11 +213,9 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
     </div>
 </main>
 
-
 <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
-    &#x1F4AC;
+    <i class="fab fa-whatsapp"></i>
 </a>
-
 <footer>
     <p>&copy; 2025 Concesionario. Todos los derechos reservados.</p>
     <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
@@ -225,3 +224,4 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

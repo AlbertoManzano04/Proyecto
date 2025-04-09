@@ -43,7 +43,8 @@ $result2 = $conn->query($query2);
             cursor: grab;
         }
         .vehicle-card img {
-            max-height: 200px;
+            weight: 300px;
+            height: 300px;
             object-fit: contain;
             border-radius: 5px;
         }

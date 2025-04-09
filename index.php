@@ -75,8 +75,7 @@ session_start();
         }
         .carousel-item img {
             width: 100%;
-            height: auto;
-            max-height: 600px;
+            height: 600px;
             object-fit: contain;
             background-color: black;
         }
