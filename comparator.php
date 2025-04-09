@@ -132,7 +132,6 @@ $result2 = $conn->query($query2);
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="nosotros.php">Nosotros</a></li>
                         <li><a class="dropdown-item" href="trabajaConNosotros.php">Trabaja con Nosotros</a></li>
-                        
                         <?php if (isset($_SESSION['usuario_id'])): ?>
                             <li><a class="dropdown-item" href="comparator.php">Compara los Coches</a></li>
                         <?php endif; ?>
@@ -265,10 +264,14 @@ $result2 = $conn->query($query2);
     }
 </script>
 
+<!-- Incluir JavaScript de Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <footer>
     <p>&copy; 2025 Concesionario. Todos los derechos reservados.</p>
     <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
 </footer>
 </body>
 </html>
+
 

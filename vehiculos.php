@@ -126,7 +126,22 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         h1, h2 {
             color: darkblue;
         }
+        .boton-contacto {
+        display: block;
+        background-color: #007bff; /* Color azul */
+        color: white;
+        padding: 10px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 10px;
+        text-align: center;
+        width: 100%; /* Para que el botón ocupe el 100% del ancho */
+    }
 
+    .boton-contacto:hover {
+        background-color: #0056b3; /* Color azul más oscuro al hacer hover */
+    }
     </style>
 </head>
 <body>
