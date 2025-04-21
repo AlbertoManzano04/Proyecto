@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si las credenciales son correctas, establecer la sesión
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['usuario_nombre'] = $usuario['nombre'];
-        $_SESSION['usuario_rol'] = $usuario['rol'];
+        $_SESSION['usuario_rol'] = $usuario['rol'];  // Asegúrate de guardar el rol también
 
         // Redirigir al index
         header("Location: index.php");
