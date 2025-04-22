@@ -2,61 +2,82 @@
 session_start();
 require_once './config/configBD.php';
 
+// Conexión a la base de datos
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Obtener los datos del formulario
-$marca = $_POST['marca'];
-$modelo = $_POST['modelo'];
-$anio = $_POST['anio'];
-$color = $_POST['color'];
-$tipo = $_POST['tipo'];
-$presupuesto = $_POST['presupuesto'];
-$kilometros = $_POST['kilometros'];
-$imagen = $_FILES['imagen'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $marca = trim($_POST['marca'] ?? '');
+    $modelo = trim($_POST['modelo'] ?? '');
+    $anio = intval($_POST['anio'] ?? 0);
+    $color = trim($_POST['color'] ?? '');
+    $tipo = trim($_POST['tipo'] ?? '');
+    $presupuesto = floatval($_POST['presupuesto'] ?? 0);
+    $kilometros = 0;
+    $imagen = $_FILES['imagen'] ?? null;
 
-// Subir la imagen si se ha cargado una
-$imagenRuta = "";
-if ($imagen['error'] == 0) {
-    $imagenRuta = 'images/' . basename($imagen['name']);
-    move_uploaded_file($imagen['tmp_name'], $imagenRuta);
-}
+    if (empty($marca) || empty($modelo) || $anio === 0 || $presupuesto === 0) {
+        header("Location: adminDashboard.php?error=Faltan datos obligatorios.");
+        exit();
+    }
 
-// Validar el teléfono solo si los kilómetros son mayores a 0
-$telefono = null;
-if ($kilometros > 0 && isset($_POST['telefono']) && !empty($_POST['telefono'])) {
-    $telefono = $_POST['telefono'];
-}
+    $imagenRutaRelativa = ''; // Por defecto, vacío
 
-// Insertar en la tabla correspondiente utilizando consultas preparadas
-if ($kilometros == 0) {
-    // Insertar en la tabla vehiculos_km0
-    $sql = "INSERT INTO vehiculos_km0 (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen) 
+    if ($imagen && $imagen['error'] === 0) {
+        // Validación de tipo MIME (opcional pero recomendable)
+        $tiposValidos = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!in_array($imagen['type'], $tiposValidos)) {
+            header("Location: adminDashboard.php?error=Tipo de archivo no válido. Solo JPG, PNG o WEBP.");
+            exit();
+        }
+
+        $carpeta = __DIR__ . '/images/';
+        if (!is_dir($carpeta)) {
+            mkdir($carpeta, 0777, true);
+        }
+
+        $nombreSeguro = time() . "_" . basename($imagen['name']);
+        $imagenRuta = $carpeta . $nombreSeguro;
+
+        $contador = 1;
+        while (file_exists($imagenRuta)) {
+            $nombreSeguro = time() . "_" . $contador . "_" . basename($imagen['name']);
+            $imagenRuta = $carpeta . $nombreSeguro;
+            $contador++;
+        }
+
+        if (!move_uploaded_file($imagen['tmp_name'], $imagenRuta)) {
+            header("Location: adminDashboard.php?error=No se pudo guardar la imagen.");
+            exit();
+        }
+
+        $imagenRutaRelativa = 'images/' . $nombreSeguro;
+    }
+
+    $sql = "INSERT INTO vehiculos_km0 (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssississ", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $imagenRuta);
-} else {
-    
-    $sql = "INSERT INTO coche_usuario (marca, modelo, anio, color, tipo, presupuesto, kilometros, telefono, imagen) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssississs", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $telefono, $imagenRuta);
-}
 
-// Ejecutar la consulta
-if ($stmt->execute()) {
-    // Redirigir al dashboard con un mensaje de éxito
-    header("Location: adminDashboard.php?message=Vehículo añadido con éxito");
+    if (!$stmt) {
+        die("❌ Error al preparar la consulta: " . $conn->error);
+    }
+
+    $stmt->bind_param("ssissids", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $imagenRutaRelativa);
+
+    if ($stmt->execute()) {
+        header("Location: adminDashboard.php?message=Vehículo KM0 añadido con éxito");
+    } else {
+        header("Location: adminDashboard.php?error=Error al insertar el vehículo.");
+    }
+
+    $stmt->close();
+    $conn->close();
     exit();
 } else {
-    // Redirigir al dashboard con un mensaje de error
-    header("Location: adminDashboard.php?error=Hubo un error al añadir el vehículo");
+    header("Location: adminDashboard.php");
     exit();
 }
-
-// Cerrar la conexión
-$stmt->close();
-$conn->close();
 ?>
+
