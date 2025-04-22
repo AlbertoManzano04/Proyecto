@@ -17,26 +17,67 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
     <meta charset="UTF-8">
     <title>Panel de Administración</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f0f0f0; }
+        body {
+            background-color: #f5f8fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
         header {
-            background: url('./images/administracion.avif') no-repeat center/cover;
-            color: darkblue;
-            padding: 3rem 0;
+            background: linear-gradient(to right, #004a99, #007bff);
+            color: white;
+            padding: 4rem 2rem;
             text-align: center;
-            font-size: 1.5rem;
-            background-position: center 65%;
+            border-bottom: 5px solid #004a99;
+        }
+        header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+        nav {
+            background-color: #003366;
+        }
+        nav a.nav-link, nav .navbar-brand {
+            color: white;
+            font-weight: 500;
+        }
+        nav a:hover {
+            color: #ffc107;
         }
         .form-section {
             background: white;
             padding: 2rem;
-            margin: 2rem 0;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        .form-section:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+        }
+        table th {
+            background-color: #f1f1f1;
+        }
+        .btn-sm {
+            font-size: 0.8rem;
+        }
+        .alert {
+            margin: 1rem auto;
+            width: 80%;
+        }
+        h3 {
+            border-left: 5px solid #007bff;
+            padding-left: 10px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
+
 <?php if (isset($_GET['message'])): ?>
     <div class="alert alert-success text-center"><?= htmlspecialchars($_GET['message']) ?></div>
 <?php elseif (isset($_GET['error'])): ?>
@@ -44,20 +85,20 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
 <?php endif; ?>
 
 <header>
-    <h1>Panel de Administración</h1>
-    <p>Gestiona vehículos del concesionario y de usuarios</p>
+    <h1><i class="bi bi-speedometer2"></i> Panel de Administración</h1>
+    <p>Gestiona vehículos del concesionario y de los usuarios</p>
 </header>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="adminDashboard.php">Panel de Administración</a>
+    <a class="navbar-brand" href="adminDashboard.php"><i class="bi bi-house-fill"></i> Admin Panel</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="index.php">Salir del Panel de Admin</a>
+          <a class="nav-link" href="index.php"><i class="bi bi-box-arrow-right"></i> Salir</a>
         </li>
       </ul>
     </div>
@@ -65,8 +106,9 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
 </nav>
 
 <div class="container">
+    <!-- Formulario para añadir nuevo coche -->
     <div class="form-section">
-        <h3>Añadir nuevo vehículo de KM 0</h3>
+        <h3><i class="bi bi-plus-circle"></i> Añadir nuevo vehículo de KM 0</h3>
         <form action="procesarCoche.php" method="POST" enctype="multipart/form-data">
             <div class="row mb-3">
                 <div class="col">
@@ -106,14 +148,14 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
                 <label>Imagen</label>
                 <input type="file" name="imagen" class="form-control">
             </div>
-            <button type="submit" class="btn btn-primary">Guardar Vehículo</button>
+            <button type="submit" class="btn btn-success"><i class="bi bi-save2"></i> Guardar Vehículo</button>
         </form>
     </div>
 
-    <!-- Vehículos del Concesionario -->
+    <!-- Tabla de vehículos del concesionario -->
     <div class="form-section">
-        <h3>Vehículos del Concesionario</h3>
-        <table class="table table-bordered">
+        <h3><i class="bi bi-car-front-fill"></i> Vehículos del Concesionario</h3>
+        <table class="table table-striped">
             <thead><tr><th>Marca</th><th>Modelo</th><th>Precio</th><th>Acción</th></tr></thead>
             <tbody>
             <?php while($row = $vehiculosConcesionario->fetch_assoc()): ?>
@@ -122,7 +164,8 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
                     <td><?= htmlspecialchars($row['modelo']) ?></td>
                     <td><?= number_format($row['presupuesto'], 2) ?> €</td>
                     <td>
-                        <a href="eliminarCoche.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="procesarEdicionCoche.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></a>
+                        <a href="eliminarCoche.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></a>
                     </td>
                 </tr>
             <?php endwhile; ?>
@@ -130,10 +173,10 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
         </table>
     </div>
 
-    <!-- Vehículos de Usuarios -->
+    <!-- Tabla de vehículos de usuarios -->
     <div class="form-section">
-        <h3>Vehículos de Usuarios</h3>
-        <table class="table table-bordered">
+        <h3><i class="bi bi-person-badge-fill"></i> Vehículos de Usuarios</h3>
+        <table class="table table-striped">
             <thead><tr><th>Marca</th><th>Modelo</th><th>Teléfono</th><th>Kilómetros</th><th>Precio</th><th>Acción</th></tr></thead>
             <tbody>
             <?php while($row = $vehiculosUsuarios->fetch_assoc()): ?>
@@ -143,17 +186,20 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
                     <td><?= htmlspecialchars($row['telefono']) ?></td>
                     <td><?= htmlspecialchars($row['kilometros']) ?> km</td>
                     <td><?= number_format($row['presupuesto'], 2) ?> €</td>
-                    <td><a href="eliminarCoche.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Eliminar</a></td>
+                    <td>
+                        <a href="procesarEdicionCoche.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></a>
+                        <a href="eliminarCoche.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></a>
+                    </td>
                 </tr>
             <?php endwhile; ?>
             </tbody>
         </table>
     </div>
 
-    <!-- Lista de Usuarios -->
+    <!-- Tabla de usuarios -->
     <div class="form-section">
-        <h3>Usuarios</h3>
-        <table class="table table-bordered">
+        <h3><i class="bi bi-people-fill"></i> Usuarios</h3>
+        <table class="table table-striped">
             <thead><tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Acción</th></tr></thead>
             <tbody>
             <?php while($row = $usuarios->fetch_assoc()): ?>
@@ -163,7 +209,7 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
                     <td><?= htmlspecialchars($row['rol']) ?></td>
                     <td>
                         <?php if ($row['rol'] !== 'admin'): ?>
-                            <a href="eliminarUsuario.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro que deseas eliminar este usuario?')">Eliminar</a>
+                            <a href="eliminarUsuario.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro que deseas eliminar este usuario?')"><i class="bi bi-trash"></i></a>
                         <?php else: ?>
                             <span class="text-muted">No se puede eliminar</span>
                         <?php endif; ?>
@@ -174,5 +220,7 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
         </table>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
