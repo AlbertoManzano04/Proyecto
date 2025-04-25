@@ -111,6 +111,10 @@ $mysqli->close();
             padding: 2rem;
             font-weight: bold;
         }
+        .nav-item .fas.fa-heart {
+            color: red;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>

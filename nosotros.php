@@ -76,7 +76,19 @@ session_start();
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
-
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 28px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .whatsapp-btn:hover { background-color: #1ebe57; }
         /* Estilos del carrusel */
         .carousel-item img {
             width: 400px;
@@ -84,12 +96,29 @@ session_start();
             object-fit: cover;
             border-radius: 10px;
         }
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 28px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .whatsapp-btn:hover { background-color: #1ebe57; }
         footer {
             background: url('./images/taller.jpg') no-repeat center/cover;
             color: white;
             padding: 2rem 0;
             text-align: center;
             background-position: center 30%;
+            color: darkblue;
+        }
+        footer p{
+            color:darkblue;
         }
         h1, h2 {
             color: darkblue;
@@ -213,9 +242,13 @@ session_start();
         <p>Nos encantaría que nos visitaras. Nuestro concesionario está ubicado en el centro de la ciudad, donde podrás conocer a nuestro equipo, ver nuestra amplia oferta de vehículos y recibir asesoramiento personalizado.</p>
     </section>
 </main>
+<a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
 <footer>
     <p>&copy; 2025 Concesionario Manzano. Todos los derechos reservados.</p>
-    <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
+    <p>Telefono de contacto +34 608 60 23 02</p>
+    <p><a href="politicaPrivacidad.php">Política de Privacidad</a> | <a href="politicaCookies.php">Política de Cookies</a></p>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -185,6 +185,7 @@ session_start(); // Iniciar la sesión
 
 <footer>
     <p>&copy; 2025 Concesionarios Manzano. Todos los derechos reservados.</p>
+    <p>Telefono contacto: +34 608 60 23 02</p>
     <p><a href="politicaPrivacidad.php" class="text-white">Política de Privacidad</a> | <a href="politicaCookies.php" class="text-white">Política de Cookies</a></p>
 </footer>
 

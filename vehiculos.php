@@ -103,7 +103,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         body {
             background-color: #f2f2f2;
         }
-        header, footer {
+        header {
             background: url('./images/vehiculos2.jpg') no-repeat center/cover;
             color: white;
             padding: 2rem 0;
@@ -141,6 +141,12 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
 
     .boton-contacto:hover {
         background-color: #0056b3; /* Color azul más oscuro al hacer hover */
+    }
+    footer{
+        color: white;    
+        background: url('./images/cochesNegros.avif') no-repeat center/cover;
+        padding: 2rem 0;
+        text-align: center;
     }
     </style>
 </head>
@@ -244,8 +250,9 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
     <i class="fab fa-whatsapp"></i>
 </a>
 <footer>
-    <p>&copy; 2025 Concesionario. Todos los derechos reservados.</p>
-    <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
+    <p>&copy; 2025 Concesionario Manzano. Todos los derechos reservados.</p>
+    <p>Telefono de contacto +34 608 60 23 02</p>
+    <p><a href="politicaPrivacidad.php">Política de Privacidad</a> | <a href="politicaCookies.php">Política de Cookies</a></p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

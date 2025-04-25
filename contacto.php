@@ -246,6 +246,7 @@ $conn->close();
 
 <footer>
     <p>Concesionarios Alberto - Tu mejor opción siempre</p>
+    <p>Telefono contacto: +34 608 60 23 02</p>
     <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
 </footer>
 

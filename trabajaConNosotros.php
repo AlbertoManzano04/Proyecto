@@ -228,6 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <footer>
     <p>&copy; 2025 Concesionario Manzano. Todos los derechos reservados.</p>
+    <p>Telefono contacto: +34 608 60 23 02</p>
     <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
 </footer>
 

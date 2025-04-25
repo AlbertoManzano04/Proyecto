@@ -148,6 +148,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error al crear la tabla usuarios_favoritos: " . $conn->error . "<br>";
 }
+
 // Cerrar conexión
 $conn->close();
 ?>

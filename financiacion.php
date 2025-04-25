@@ -83,20 +83,17 @@ session_start();
         }
         .whatsapp-btn {
             position: fixed;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%); /* Centra verticalmente */
+            bottom: 20px;
+            right: 20px;
             background-color: #25D366;
             color: white;
-            padding: 10px 15px;
+            padding: 15px;
             border-radius: 50%;
-            font-size: 24px;
-            text-align: center;
-            z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
+            font-size: 28px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .whatsapp-btn:hover {
-            background-color: #1ebe57;
-        }
+        .whatsapp-btn:hover { background-color: #1ebe57; }
         .location-contact {
             text-align: center;
             margin-top: 20px;
@@ -236,11 +233,12 @@ session_start();
 </div>
 
 <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
-    &#x1F4AC;
+    <i class="fab fa-whatsapp"></i>
 </a>
 
 <footer>
     <p>&copy; 2025 Concesionario Manzano. Todos los derechos reservados.</p>
+    <p>Telefono contacto: +34 608 60 23 02</p>
     <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
 </footer>
 
