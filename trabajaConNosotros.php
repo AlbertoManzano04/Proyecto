@@ -22,27 +22,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!in_array($tipoArchivo, $formatosPermitidos)) {
             $mensaje = "❌ Formato no permitido. Solo PDF, DOC y DOCX.";
         } else {
-            // Leer el archivo binario
-            $archivoContenido = file_get_contents($archivo['tmp_name']);
-            
-            // Conectar a la BD
-            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
-            if ($conn->connect_error) {
-                die("Error de conexión: " . $conn->connect_error);
+            // Definir el directorio donde se guardará el archivo
+            $directorioDestino = './cvs/';
+            if (!is_dir($directorioDestino)) {
+                mkdir($directorioDestino, 0777, true); // Crear carpeta si no existe
             }
 
-            // Insertar en la BD
-            $stmt = $conn->prepare("INSERT INTO enviarCV (nombre_completo, correo_electronico, telefono, curriculum) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssss", $nombre, $email, $telefono, $archivoContenido);
+            // Crear un nombre único para evitar colisiones de nombres de archivo
+            $nombreArchivoDestino = uniqid() . '.' . $tipoArchivo;
 
-            if ($stmt->execute()) {
-                $mensaje = "✅ Currículum enviado con éxito.";
+            // Ruta completa donde se guardará el archivo
+            $rutaArchivoDestino = $directorioDestino . $nombreArchivoDestino;
+
+            // Mover el archivo a la carpeta destino
+            if (move_uploaded_file($archivo['tmp_name'], $rutaArchivoDestino)) {
+                // Conectar a la BD
+                $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+                if ($conn->connect_error) {
+                    die("Error de conexión: " . $conn->connect_error);
+                }
+
+                // Insertar en la base de datos solo el nombre del archivo (no el contenido binario)
+                $stmt = $conn->prepare("INSERT INTO enviarCV (nombre_completo, correo_electronico, telefono, curriculum) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param("ssss", $nombre, $email, $telefono, $nombreArchivoDestino);
+
+                if ($stmt->execute()) {
+                    $mensaje = "✅ Currículum enviado con éxito.";
+                } else {
+                    $mensaje = "❌ Error al guardar en la base de datos.";
+                }
+
+                $stmt->close();
+                $conn->close();
             } else {
-                $mensaje = "❌ Error al guardar en la base de datos.";
+                $mensaje = "❌ Error al mover el archivo a la carpeta de destino.";
             }
-
-            $stmt->close();
-            $conn->close();
         }
     }
 }
@@ -189,7 +203,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </nav>
 
-
 <main class="container">
     <section>
         <h2>Únete a Nuestro Equipo</h2>
@@ -235,4 +248,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

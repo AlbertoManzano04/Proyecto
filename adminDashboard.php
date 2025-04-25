@@ -10,6 +10,7 @@ if ($conn->connect_error) {
 $vehiculosConcesionario = $conn->query("SELECT * FROM vehiculos_km0");
 $vehiculosUsuarios = $conn->query("SELECT * FROM coche_usuario");
 $usuarios = $conn->query("SELECT * FROM usuarios");
+$enviarCV = $conn->query("SELECT * FROM enviarCV"); // Consulta para la tabla enviarCV
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -219,8 +220,37 @@ $usuarios = $conn->query("SELECT * FROM usuarios");
             </tbody>
         </table>
     </div>
+
+    <!-- Nueva Tabla de enviarCV -->
+    <div class="form-section">
+        <h3><i class="bi bi-file-earmark-text-fill"></i> CV Enviados</h3>
+        <table class="table table-striped">
+            <thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Curriculum</th><th>Acción</th></tr></thead>
+            <tbody>
+            <?php while($row = $enviarCV->fetch_assoc()): ?>
+                <tr>
+                    <td><?= htmlspecialchars($row['nombre_completo']) ?></td>
+                    <td><?= htmlspecialchars($row['correo_electronico']) ?></td>
+                    <td><?= htmlspecialchars($row['telefono']) ?></td>
+                    <td>
+                        <a href="./cvs/<?= htmlspecialchars($row['curriculum']) ?>" class="btn btn-info btn-sm" target="_blank">
+                            <i class="bi bi-file-earmark-arrow-down"></i> Descargar
+                        </a>
+                    </td>
+                    <td>
+                        <a href="EliminarCV.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash3"></i>
+                        </a>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
