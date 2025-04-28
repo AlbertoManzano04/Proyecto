@@ -10,7 +10,8 @@ if ($conn->connect_error) {
 $vehiculosConcesionario = $conn->query("SELECT * FROM vehiculos_km0");
 $vehiculosUsuarios = $conn->query("SELECT * FROM coche_usuario");
 $usuarios = $conn->query("SELECT * FROM usuarios");
-$enviarCV = $conn->query("SELECT * FROM enviarCV"); // Consulta para la tabla enviarCV
+$enviarCV = $conn->query("SELECT * FROM enviarCV");
+$Contacto = $conn->query("SELECT * FROM Contacto");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -247,7 +248,28 @@ $enviarCV = $conn->query("SELECT * FROM enviarCV"); // Consulta para la tabla en
             </tbody>
         </table>
     </div>
-
+    <div class="form-section">
+        <h3><i class="bi bi-people-fill"></i>Formulario de Contacto</h3>
+        <table class="table table-striped">
+            <thead><tr><th>Nombre</th><th>Email</th><th>Mensaje</th></tr></thead>
+            <tbody>
+            <?php while($row = $Contacto->fetch_assoc()): ?>
+                <tr>
+                    <td><?= htmlspecialchars($row['nombre']) ?></td>
+                    <td><?= htmlspecialchars($row['email']) ?></td>
+                    <td><?= htmlspecialchars($row['mensaje']) ?></td>
+                    <td>
+                        <?php if ($row['rol'] !== 'admin'): ?>
+                            <a href="eliminarUsuario.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro que deseas eliminar este mensaje del Formulario de contacto?')"><i class="bi bi-trash"></i></a>
+                        <?php else: ?>
+                            <span class="text-muted">No se puede eliminar</span>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
