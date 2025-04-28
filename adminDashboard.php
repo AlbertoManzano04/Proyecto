@@ -249,7 +249,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
         </table>
     </div>
     <div class="form-section">
-        <h3><i class="bi bi-people-fill"></i>Formulario de Contacto</h3>
+        <h3><i class="bi bi-chat-left-text-fill"></i>Formulario de Contacto</h3>
         <table class="table table-striped">
             <thead><tr><th>Nombre</th><th>Email</th><th>Mensaje</th></tr></thead>
             <tbody>
@@ -260,7 +260,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
                     <td><?= htmlspecialchars($row['mensaje']) ?></td>
                     <td>
                         <?php if ($row['rol'] !== 'admin'): ?>
-                            <a href="eliminarUsuario.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro que deseas eliminar este mensaje del Formulario de contacto?')"><i class="bi bi-trash"></i></a>
+                            <a href="eliminarContacto.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro que deseas eliminar este mensaje del Formulario de contacto?')"><i class="bi bi-trash"></i></a>
                         <?php else: ?>
                             <span class="text-muted">No se puede eliminar</span>
                         <?php endif; ?>
