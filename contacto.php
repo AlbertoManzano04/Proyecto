@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mensaje = "❌ Error al preparar la consulta: " . $conn->error;
         } else {
             if ($stmt->execute()) {
-                $mensaje = "✅ ¡Gracias por contactarnos! Te responderemos pronto.";
+                $mensaje = "✅ ¡Gracias por contactarnos! Te responderemos pronto por tu email.";
                 $nombre = $email = ''; // Limpiar campos tras envío exitoso si no está logueado
             } else {
                 $mensaje = "❌ Error al guardar los datos: " . $stmt->error;

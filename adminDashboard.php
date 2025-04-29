@@ -76,6 +76,25 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
             padding-left: 10px;
             margin-bottom: 20px;
         }
+        .postit-card {
+    background: #fff176;
+    padding: 1rem;
+    width: 200px;
+    min-height: 150px;
+    border: 1px solid #f0c000;
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    white-space: pre-wrap;
+    position: relative;
+    transform: rotate(-1deg);
+    transition: transform 0.2s;
+    }
+    .postit-card:hover {
+    transform: scale(1.05) rotate(0deg);
+    box-shadow: 3px 6px 12px rgba(0,0,0,0.15);
+    }
     </style>
 </head>
 <body>
@@ -153,6 +172,31 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
             <button type="submit" class="btn btn-success"><i class="bi bi-save2"></i> Guardar Vehículo</button>
         </form>
     </div>
+    <div class="form-section">
+    <h3><i class="bi bi-stickies-fill"></i> Notas Rápidas</h3>
+
+    <!-- Formulario -->
+    <form action="agregarNota.php" method="POST">
+        <textarea name="contenido" class="form-control mb-3" placeholder="Escribe una nota..." required></textarea>
+        <button type="submit" class="btn btn-warning"><i class="bi bi-plus-circle-fill"></i> Añadir Nota</button>
+    </form>
+
+    <!-- Mostrar notas existentes -->
+    <div class="d-flex flex-wrap gap-3 mt-4">
+        <?php
+        $notas = $conn->query("SELECT * FROM notas ORDER BY fecha DESC");
+        while($nota = $notas->fetch_assoc()):
+        ?>
+        <div class="postit-card position-relative">
+            <div class="text-dark"><?= nl2br(htmlspecialchars($nota['contenido'])) ?></div>
+            <form action="eliminarNota.php" method="POST" class="position-absolute top-0 end-0 m-1">
+                <input type="hidden" name="id" value="<?= $nota['id'] ?>">
+                <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar"><i class="bi bi-x-lg"></i></button>
+            </form>
+        </div>
+        <?php endwhile; ?>
+    </div>
+</div>
 
     <!-- Tabla de vehículos del concesionario -->
     <div class="form-section">
@@ -259,11 +303,13 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
                     <td><?= htmlspecialchars($row['email']) ?></td>
                     <td><?= htmlspecialchars($row['mensaje']) ?></td>
                     <td>
-                        <?php if ($row['rol'] !== 'admin'): ?>
-                            <a href="eliminarContacto.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro que deseas eliminar este mensaje del Formulario de contacto?')"><i class="bi bi-trash"></i></a>
-                        <?php else: ?>
-                            <span class="text-muted">No se puede eliminar</span>
-                        <?php endif; ?>
+                    <td>
+                <a href="mailto:<?= htmlspecialchars($row['email']) ?>?subject=Respuesta a tu consulta" class="btn btn-primary btn-sm">
+                 <i class="bi bi-envelope-fill"></i> Responder
+                </a>
+                <a href="eliminarContacto.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro que deseas eliminar este mensaje del Formulario de contacto?')"><i class="bi bi-trash"></i></a>
+                </td>
+
                     </td>
                 </tr>
             <?php endwhile; ?>
@@ -271,8 +317,13 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
         </table>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
+
+
+
 

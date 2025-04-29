@@ -43,7 +43,17 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error al crear el usuario administrador: " . $conn->error . "<br>";
 }
-
+//crear tabla notas
+$sql="CREATE TABLE notas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    contenido TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+if ($conn->query($sql) === TRUE) {
+    echo "Tabla notas creada con éxito.<br>";
+} else {
+    echo "Error al crear la tabla notas: " . $conn->error . "<br>";
+}
 // Crear tabla Contacto con relación a usuarios
 $sql = "CREATE TABLE IF NOT EXISTS Contacto (
     id INT AUTO_INCREMENT PRIMARY KEY,
