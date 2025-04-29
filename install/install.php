@@ -44,12 +44,14 @@ if ($conn->query($sql) === TRUE) {
     echo "Error al crear el usuario administrador: " . $conn->error . "<br>";
 }
 
-// Crear tabla Contacto
+// Crear tabla Contacto con relación a usuarios
 $sql = "CREATE TABLE IF NOT EXISTS Contacto (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    mensaje TEXT NOT NULL
+    mensaje TEXT NOT NULL,
+    usuario_id INT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
 )";
 if ($conn->query($sql) === TRUE) {
     echo "Tabla Contacto creada con éxito.<br>";

@@ -1,43 +1,57 @@
 <?php
 session_start();
-// Incluir archivo de configuración de la base de datos
 require_once './config/configBD.php';
 
-// Crear la conexión con la base de datos
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
-// Verificar la conexión
 if ($conn->connect_error) {
     die("❌ Error de conexión: " . $conn->connect_error);
 }
 
-// Variable para mostrar mensajes
 $mensaje = "";
 
-// Verificar si el formulario ha sido enviado
+// Variables para precargar datos si el usuario está logueado
+$nombre = '';
+$email = '';
+$usuario_id = null;
+
+if (isset($_SESSION['usuario_id'])) {
+    $usuario_id = $_SESSION['usuario_id'];
+    $stmt = $conn->prepare("SELECT nombre, email FROM usuarios WHERE id = ?");
+    $stmt->bind_param('i', $usuario_id);
+    $stmt->execute();
+    $stmt->bind_result($nombre, $email);
+    $stmt->fetch();
+    $stmt->close();
+}
+
+// Si el formulario ha sido enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Capturar datos del formulario
     $nombre = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $mensaje_usuario = trim($_POST['message'] ?? '');
 
-    // Validar que los campos no estén vacíos
     if (empty($nombre) || empty($email) || empty($mensaje_usuario)) {
         $mensaje = "❌ Todos los campos son obligatorios.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $mensaje = "❌ El correo electrónico no es válido.";
     } else {
-        // Preparar la consulta SQL
-        $query = "INSERT INTO Contacto (nombre, email, mensaje) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($query);
+        if ($usuario_id !== null) {
+            $query = "INSERT INTO Contacto (nombre, email, mensaje, usuario_id) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param('sssi', $nombre, $email, $mensaje_usuario, $usuario_id);
+        } else {
+            $query = "INSERT INTO Contacto (nombre, email, mensaje) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param('sss', $nombre, $email, $mensaje_usuario);
+        }
 
         if ($stmt === false) {
             $mensaje = "❌ Error al preparar la consulta: " . $conn->error;
         } else {
-            // Enlazar parámetros y ejecutar
-            $stmt->bind_param('sss', $nombre, $email, $mensaje_usuario);
             if ($stmt->execute()) {
                 $mensaje = "✅ ¡Gracias por contactarnos! Te responderemos pronto.";
+                $nombre = $email = ''; // Limpiar campos tras envío exitoso si no está logueado
             } else {
                 $mensaje = "❌ Error al guardar los datos: " . $stmt->error;
             }
@@ -46,9 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Cerrar la conexión
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -213,11 +227,11 @@ $conn->close();
             <form method="POST">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" name="name" value="<?= htmlspecialchars($nombre) ?>" <?= isset($_SESSION['usuario_id']) ? 'readonly' : '' ?> required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($email) ?>" <?= isset($_SESSION['usuario_id']) ? 'readonly' : '' ?> required>
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label">Mensaje</label>
@@ -254,4 +268,4 @@ $conn->close();
 
 </body>
 </html>
-s
+

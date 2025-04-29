@@ -193,9 +193,9 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
                             <i class="fas fa-heart"></i>
                         </a>
                     </li>
-                <?php endif; ?>
+                
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-
+                <?php endif; ?>
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <li class="nav-item"><a href="logout.php" class="nav-link">Cerrar Sesión</a></li>
                 <?php else: ?>
