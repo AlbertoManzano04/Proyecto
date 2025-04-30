@@ -227,6 +227,28 @@ session_start();
         </div>
     </div>
 </main>
+<h3>Simula tu Financiación</h3>
+<form id="simulador-form" class="mb-4">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label for="importe" class="form-label">Importe a financiar (€):</label>
+            <input type="number" class="form-control" id="importe" required>
+        </div>
+        <div class="col-md-4">
+            <label for="plazo" class="form-label">Plazo (meses):</label>
+            <select class="form-select" id="plazo" required>
+                <option value="12">12 meses (5.5% interés)</option>
+                <option value="24">24 meses (6.2% interés)</option>
+                <option value="36">36 meses (6.9% interés)</option>
+            </select>
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Calcular Cuota</button>
+        </div>
+    </div>
+</form>
+
+<div id="resultado-cuota" class="alert alert-info" style="display:none;"></div>
 
 <div class="location-contact">
     <p><strong>Visítanos:</strong> Calle Ejemplo, 123, Valencia, España</p>
@@ -241,7 +263,27 @@ session_start();
     <p>Telefono contacto: +34 608 60 23 02</p>
     <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
 </footer>
+<script>
+    document.getElementById('simulador-form').addEventListener('submit', function(e) {
+        e.preventDefault();
 
+        const importe = parseFloat(document.getElementById('importe').value);
+        const plazo = parseInt(document.getElementById('plazo').value);
+
+        let interesAnual;
+        if (plazo === 12) interesAnual = 5.5;
+        else if (plazo === 24) interesAnual = 6.2;
+        else interesAnual = 6.9;
+
+        const interesMensual = interesAnual / 12 / 100;
+        const cuota = (importe * interesMensual) / (1 - Math.pow(1 + interesMensual, -plazo));
+        const cuotaRedondeada = cuota.toFixed(2);
+
+        const resultado = document.getElementById('resultado-cuota');
+        resultado.style.display = 'block';
+        resultado.textContent = `Cuota estimada: ${cuotaRedondeada} €/mes durante ${plazo} meses.`;
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

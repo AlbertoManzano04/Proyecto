@@ -212,63 +212,67 @@ nav a:hover {
 
     <div class="form-container form-area">
         <h3 class="text-center">Formulario para Vender tu Vehículo</h3>
-        <form method="POST" action="subeTuCoche.php" enctype="multipart/form-data" class="row">
-            <div class="col-md-6 mb-3">
-                <label for="marca" class="form-label">Marca</label>
-                <input type="text" id="marca" name="marca" class="form-control" required>
-            </div>
+        <form method="POST" action="subeTuCoche.php" enctype="multipart/form-data" class="row needs-validation" novalidate>
+    <div class="col-md-6 mb-3">
+        <label for="marca" class="form-label"><i class="fas fa-car"></i> Marca</label>
+        <input type="text" id="marca" name="marca" class="form-control" required placeholder="Ej. Ford">
+    </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="modelo" class="form-label">Modelo</label>
-                <input type="text" id="modelo" name="modelo" class="form-control" required>
-            </div>
+    <div class="col-md-6 mb-3">
+        <label for="modelo" class="form-label"><i class="fas fa-cogs"></i> Modelo</label>
+        <input type="text" id="modelo" name="modelo" class="form-control" required placeholder="Ej. Focus">
+    </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="anio" class="form-label">Año</label>
-                <input type="number" id="anio" name="anio" class="form-control" required min="1990" max="2025">
-            </div>
+    <div class="col-md-6 mb-3">
+        <label for="anio" class="form-label"><i class="fas fa-calendar-alt"></i> Año</label>
+        <input type="number" id="anio" name="anio" class="form-control" required min="1990" max="2025" placeholder="Ej. 2020">
+    </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="color" class="form-label">Color</label>
-                <input type="text" id="color" name="color" class="form-control" required>
-            </div>
+    <div class="col-md-6 mb-3">
+        <label for="color" class="form-label"><i class="fas fa-palette"></i> Color</label>
+        <input type="text" id="color" name="color" class="form-control" required placeholder="Ej. Azul marino">
+    </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="tipo" class="form-label">Tipo</label>
-                <select id="tipo" name="tipo" class="form-select" required>
-                    <option value="">Seleccione el tipo</option>
-                    <option value="SUV">SUV</option>
-                    <option value="Sedán">Sedán</option>
-                    <option value="Deportivo">Deportivo</option>
-                    <option value="Camioneta">Camioneta</option>
-                    <option value="Hatchback">Hatchback</option>
-                </select>
-            </div>
+    <div class="col-md-6 mb-3">
+        <label for="tipo" class="form-label"><i class="fas fa-car-side"></i> Tipo</label>
+        <select id="tipo" name="tipo" class="form-select" required>
+            <option value="">Seleccione el tipo</option>
+            <option value="SUV">SUV</option>
+            <option value="Sedán">Sedán</option>
+            <option value="Deportivo">Deportivo</option>
+            <option value="Camioneta">Camioneta</option>
+            <option value="Hatchback">Hatchback</option>
+        </select>
+    </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="presupuesto" class="form-label">Presupuesto (€)</label>
-                <input type="number" id="presupuesto" name="presupuesto" class="form-control" required min="1000">
-            </div>
+    <div class="col-md-6 mb-3">
+        <label for="presupuesto" class="form-label"><i class="fas fa-euro-sign"></i> Precio Deseado</label>
+        <input type="number" id="presupuesto" name="presupuesto" class="form-control" required min="1000" step="100" placeholder="Ej. 15000">
+    </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="kilometros" class="form-label">Kilómetros recorridos</label>
-                <input type="number" id="kilometros" name="kilometros" class="form-control" required min="0">
-            </div>
+    <div class="col-md-6 mb-3">
+        <label for="kilometros" class="form-label"><i class="fas fa-road"></i> Kilómetros</label>
+        <input type="number" id="kilometros" name="kilometros" class="form-control" required min="0" step="1000" placeholder="Ej. 95000">
+    </div>
 
-            <div class="col-md-12 mb-3">
-                <label for="imagen" class="form-label">Sube Imagen del Coche</label>
-                <input type="file" id="imagen" name="imagen" class="form-control" required>
-            </div>
+    <div class="col-md-12 mb-3">
+        <label for="imagen" class="form-label"><i class="fas fa-camera"></i> Sube una imagen del coche</label>
+        <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required onchange="previewImagen(event)">
+        <div class="mt-3 text-center">
+            <img id="preview" src="#" alt="Vista previa" style="max-height: 200px; display: none; border-radius: 8px;"/>
+        </div>
+    </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="contacto" class="form-label">Número de Contacto</label>
-                <input type="tel" id="contacto" name="contacto" class="form-control" required pattern="[0-9]{9}" placeholder="Ej. 612345678">
-            </div>
+    <div class="col-md-6 mb-4">
+        <label for="contacto" class="form-label"><i class="fas fa-phone-alt"></i> Número de Contacto</label>
+        <input type="tel" id="contacto" name="contacto" class="form-control" required pattern="[0-9]{9}" placeholder="Ej. 612345678">
+    </div>
 
-            <div class="col-12 text-center">
-                <button type="submit" class="btn btn-primary">Subir Coche</button>
-            </div>
-        </form>
+    <div class="col-12 text-center">
+        <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-upload"></i> Subir Coche</button>
+    </div>
+</form>
+
     </div>
 </main>
 

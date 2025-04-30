@@ -28,7 +28,7 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
             background-size: cover;
             box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.5);
             color: white;
-        }
+               }
 
         header h1 {
             font-size: 3.5rem;
