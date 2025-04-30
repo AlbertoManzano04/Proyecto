@@ -190,7 +190,7 @@ session_start();
         <p><strong>¡Contáctanos hoy mismo para más información!</strong></p>
     </section>
 
-<main class="container">
+    <main class="container">
     <div class="row">
         <div class="col-md-4">
             <div class="financiacion-card">
@@ -198,7 +198,9 @@ session_start();
                 <p>Plazo: 12 meses</p>
                 <p>Interés: 5.5% anual</p>
                 <p>Cuota mensual: 350€</p>
-                <a href="contacto.php" class="contact-btn">Más Información</a>
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <a href="contacto.php" class="contact-btn">Más Información</a>
+                <?php endif; ?>
             </div>
         </div>
         <div class="col-md-4">
@@ -207,7 +209,9 @@ session_start();
                 <p>Plazo: 24 meses</p>
                 <p>Interés: 6.2% anual</p>
                 <p>Cuota mensual: 250€</p>
-                <a href="contacto.php" class="contact-btn">Más Información</a>
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <a href="contacto.php" class="contact-btn">Más Información</a>
+                <?php endif; ?>
             </div>
         </div>
         <div class="col-md-4">
@@ -216,7 +220,9 @@ session_start();
                 <p>Plazo: 36 meses</p>
                 <p>Interés: 6.9% anual</p>
                 <p>Cuota mensual: 180€</p>
-                <a href="contacto.php" class="contact-btn">Más Información</a>
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <a href="contacto.php" class="contact-btn">Más Información</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

@@ -14,7 +14,6 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        /* Fuentes y fondo */
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             background-color: #f8f9fa;
@@ -23,22 +22,26 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
 
         header {
             background: url('./images/concesionario1.jpg') no-repeat center/cover;
-            color: white;
-            padding: 5rem 0;
+            padding: 5rem 2rem;
             text-align: center;
-            font-size: 2rem;
-            background-position: center 68%;
+            background-position: center;
             background-size: cover;
+            box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.5);
+            color: white;
         }
 
         header h1 {
-            font-size: 3rem;
-            font-weight: 600;
-            color: darkblue;
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
         }
-        header p{
-            color: white;
+
+        header p {
+            font-size: 1.25rem;
+            color: #f0f0f0;
+            margin-top: 1rem;
         }
+
         nav {
             background-color: #003366;
         }
@@ -58,60 +61,33 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
         }
 
         .subtitulo {
-            color: #004A99;
-            font-size: 2rem;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
+            font-size: 1.75rem;
+            color: #003366;
+            margin-bottom: 1rem;
             display: block;
-            margin-top: 40px;
-        }
-
-        .subtitulo:hover {
-            text-decoration: underline;
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         main {
             padding: 4rem 2rem;
-            text-align: center;
         }
 
-        section {
-            margin-bottom: 3rem;
-            padding: 3rem;
-            background: white;
+        .card-custom {
+            border: none;
+            transition: transform 0.3s ease;
             border-radius: 12px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            width: 400px;
+            height: 100%;
         }
 
-        section:hover {
-            box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15);
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
 
-        /* Ajuste de imágenes para ser aún más pequeñas */
-        section img {
-            width: 50%;  /* Ajustamos el tamaño de las imágenes estáticas a 50% */
-            height: auto;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            margin: 0 auto;
-            display: block;
-        }
-
-        /* Ajuste del carrusel de vehículos para hacerlo un poco más pequeño */
-        #vehiculosCarrusel .carousel-item img {
-            width: 100%;
-            height: 450px;  /* Hacemos el carrusel más pequeño */
-            object-fit: cover;
-        }
-
-        .carousel-caption {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 8px;
-        }
         .whatsapp-btn {
             position: fixed;
             bottom: 20px;
@@ -124,15 +100,17 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
             z-index: 1000;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .whatsapp-btn:hover { background-color: #1ebe57; }
+
+        .whatsapp-btn:hover {
+            background-color: #1ebe57;
+        }
+
         footer {
             background: url('./images/vehiculos3.avif') no-repeat center/cover;
-            color: white;
             text-align: center;
             padding: 3rem;
             font-weight: 600;
-            background-size: cover;
-            color:darkblue;
+            color: darkblue;
         }
 
         footer a {
@@ -145,14 +123,13 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
             text-decoration: underline;
         }
 
-        .nav-item .fas.fa-heart {
-            color: red;
-            font-size: 1.5rem;
-        }
-
         .img-fluid {
             border-radius: 12px;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .nav-item .fas.fa-heart {
+            color: red; /* Cambiar el color del corazón */
+            font-size: 1.5rem; /* Ajustar el tamaño del ícono */
         }
     </style>
 </head>
@@ -188,13 +165,8 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <li class="nav-item"><a href="subeTuCoche.php" class="nav-link">Sube tu coche</a></li>
-                    <li class="nav-item">
-                        <a href="favoritos.php" class="nav-link">
-                            <i class="fas fa-heart"></i>
-                        </a>
-                    </li>
-                
-                <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
+                    <li class="nav-item"><a href="favoritos.php" class="nav-link"><i class="fas fa-heart"></i></a></li>
+                    <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
                 <?php endif; ?>
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <li class="nav-item"><a href="logout.php" class="nav-link">Cerrar Sesión</a></li>
@@ -202,107 +174,96 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
                     <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                     <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
                 <?php endif; ?>
-
                 <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] === 'admin'): ?>
-                    <li class="nav-item">
-                        <a href="adminDashboard.php" class="btn btn-warning nav-link">Panel Admin</a>
-                    </li>
+                    <li class="nav-item"><a href="adminDashboard.php" class="btn btn-warning nav-link">Panel Admin</a></li>
                 <?php endif; ?>
             </ul>
         </div>
     </div>
 </nav>
+
 <main>
     <section id="nosotros" class="container my-5">
-  <div class="card shadow">
-    <img src="./images/concesionariosManzano.png" class="card-img-top" alt="Nosotros">
-    <div class="card-body text-center">
-      <h5 class="card-title">¿Quiénes Somos?</h5>
-      <p class="card-text">Concesionario Manzano, tu mejor opción para comprar vehículos de calidad.</p>
-      <a href="nosotros.php" class="btn btn-primary">Conócenos</a>
-    </div>
-  </div>
-</section>
-    <section id="vehiculos">
-        <a href="vehiculos.php" class="subtitulo">Algunos De Nuestros Vehículos</a>
-        <div id="vehiculosCarrusel" class="carousel slide mt-4" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="./images/coche1.avif" class="d-block w-10" alt="Vehículo 1">
-                    <div class="carousel-caption">
-                        <h5>Potencia y Elegancia</h5>
-                        <p>Domina la carretera con un diseño sofisticado y un rendimiento sin límites.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="./images/coche2.avif" class="d-block w-100" alt="Vehículo 2">
-                    <div class="carousel-caption">
-                        <h5>Innovación y Confort</h5>
-                        <p>La tecnología más avanzada combinada con la comodidad que mereces.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="./images/coche3.avif" class="d-block w-100" alt="Vehículo 3">
-                    <div class="carousel-caption">
-                        <h5>Diseño Vanguardista</h5>
-                        <p>Estilo único, líneas aerodinámicas y un carácter inconfundible en cada detalle.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="./images/coche4.avif" class="d-block w-100" alt="Vehículo 4">
-                    <div class="carousel-caption">
-                        <h5>Seguridad y Confianza</h5>
-                        <p>Disfruta de cada viaje con la máxima protección y estabilidad</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="./images/coche5.avif" class="d-block w-100" alt="Vehículo 5">
-                    <div class="carousel-caption">
-                        <h5>Rendimiento Imparable</h5>
-                        <p>Un motor potente y eficiente para llevarte más lejos.</p>
+        <div class="card shadow">
+            <img src="./images/concesionariosManzano.png" class="card-img-top" alt="Nosotros">
+            <div class="card-body text-center">
+                <h5 class="card-title">¿Quiénes Somos?</h5>
+                <p class="card-text">Concesionario Manzano, tu mejor opción para comprar vehículos de calidad.</p>
+                <a href="nosotros.php" class="btn btn-primary">Conócenos</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="vehiculos" class="container my-5">
+        <h2 class="subtitulo text-center">Algunos De Nuestros Vehículos</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-custom">
+                    <img src="./images/coche1.avif" class="card-img-top" alt="Coche 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Potencia y Elegancia</h5>
+                        <p class="card-text">Domina la carretera con un diseño sofisticado y un rendimiento sin límites.</p>
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#vehiculosCarrusel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#vehiculosCarrusel" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-custom">
+                    <img src="./images/coche5.avif" class="card-img-top" alt="Coche 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Innovación y Confort</h5>
+                        <p class="card-text">Tecnología avanzada y comodidad excepcional.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-custom">
+                    <img src="./images/coche3.avif" class="card-img-top" alt="Coche 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Diseño Vanguardista</h5>
+                        <p class="card-text">Estilo único y carácter inconfundible.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="vehiculos.php" class="btn btn-outline-primary btn-lg">Ver todos los vehículos <i class="fas fa-car ms-2"></i></a>
         </div>
     </section>
-    <section id="financiacion">
+
+    <section id="financiacion" class="container my-5 text-center">
         <a href="financiacion.php" class="subtitulo">Opciones de Financiación</a>
         <p>Te ofrecemos planes de financiamiento a tu medida.</p>
-        <img src="./images/hombreFinanciero.avif" alt="Financiación" class="img-fluid">
+        <img src="./images/hombreFinanciero.avif" alt="Financiación" class="img-fluid mt-3">
     </section>
 
-    <section id="vehiculosUsuarios">
+    <section id="vehiculosUsuarios" class="container my-5 text-center">
         <a href="vehiculosUsuarios.php" class="subtitulo">Vehículos de Usuarios</a>
         <p>Explora opciones de otros usuarios a precios más accesibles.</p>
-        <img src="./images/ventas.jpg" alt="VehiculosUsuarios" class="img-fluid">
+        <img src="./images/ventas.jpg" alt="VehiculosUsuarios" class="img-fluid mt-3">
     </section>
 
     <?php if (isset($_SESSION['usuario_id'])): ?>
-    <section id="subeTuCoche">
+    <section id="subeTuCoche" class="container my-5 text-center">
         <a href="subeTuCoche.php" class="subtitulo">Sube tu Coche</a>
         <p>¿Tienes un coche para vender? ¡Súbelo fácilmente!</p>
-        <img src="./images/asesoramiento.avif" alt="Asesoramiento" class="img-fluid">
+        <img src="./images/asesoramiento.avif" alt="Asesoramiento" class="img-fluid mt-3">
     </section>
     <?php endif; ?>
 
-    <section id="contacto">
+    <section id="contacto" class="container my-5 text-center">
         <a href="contacto.php" class="subtitulo">Contáctanos</a>
         <p>Visítanos o llámanos para recibir atención personalizada.</p>
-        <img src="./images/instalaciones.avif" alt="Instalaciones" class="img-fluid">
+        <img src="./images/instalaciones.avif" alt="Instalaciones" class="img-fluid mt-3">
     </section>
 </main>
+
 <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
     <i class="fab fa-whatsapp"></i>
 </a>
+
 <footer>
     <p>&copy; 2025 Concesionario Manzano. Todos los derechos reservados.</p>
-    <p>Telefono de contacto +34 608 60 23 02</p>
+    <p>Teléfono de contacto +34 608 60 23 02</p>
     <p><a href="politicaPrivacidad.php">Política de Privacidad</a> | <a href="politicaCookies.php">Política de Cookies</a></p>
 </footer>
 
@@ -310,4 +271,5 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
 
 </body>
 </html>
+
 
