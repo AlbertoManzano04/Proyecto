@@ -33,7 +33,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
     <style>
         body { background-color: #f4f4f4; }
         h1, h2 { color: #003366; }
-        .vehicle-card {
+        .tarjeta-vehiculo {
             border: none;
             padding: 20px;
             border-radius: 16px;
@@ -42,18 +42,18 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
             text-align: center;
             transition: transform 0.2s ease-in-out;
         }
-        .vehicle-card:hover { transform: translateY(-5px); }
-        .vehicle-card img {
+        .tarjeta-vehiculo:hover { transform: translateY(-5px); }
+        .tarjeta-vehiculo img {
             max-width: 100%;
             height: 240px;
             object-fit: cover;
             border-radius: 12px;
         }
-        .badge {
+        .insignia {
             font-size: 0.9rem;
             padding: 0.5em 0.75em;
         }
-        .contact-btn {
+        .btn-contacto {
             display: block;
             background-color: #25D366;
             color: white;
@@ -63,8 +63,8 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
             font-weight: bold;
             margin-top: 10px;
         }
-        .contact-btn:hover { background-color: #1ebe57; }
-        .whatsapp-btn {
+        .btn-contacto:hover { background-color: #1ebe57; }
+        .btn-whatsapp {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -76,7 +76,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
             z-index: 1000;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .whatsapp-btn:hover { background-color: #1ebe57; }
+        .btn-whatsapp:hover { background-color: #1ebe57; }
         header {
             background: url('./images/vehiculoUsuario.jpg') no-repeat center/cover;
             color: white;
@@ -123,7 +123,6 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <!-- Menú desplegable funcional gracias a Bootstrap -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                         Concesionarios Manzano
@@ -136,7 +135,6 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                         <?php endif; ?>
                     </ul>
                 </li>
-
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
@@ -147,20 +145,16 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                             <i class="fas fa-heart"></i>
                         </a>
                     </li>
-                <?php endif; ?>
-
+                
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-
-                <!-- Si el usuario está logueado, no mostrar Login/Registro -->
+                <?php endif; ?>
                 <?php if (isset($_SESSION['usuario_id'])): ?>
-                    <!-- Aquí puedes colocar un enlace de Cerrar sesión o similar -->
                     <li class="nav-item"><a href="logout.php" class="nav-link">Cerrar Sesión</a></li>
                 <?php else: ?>
                     <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                     <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
                 <?php endif; ?>
 
-                <!-- Mostrar el enlace al Panel Admin solo si el usuario es admin -->
                 <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] === 'admin'): ?>
                     <li class="nav-item">
                         <a href="adminDashboard.php" class="btn btn-warning nav-link">Panel Admin</a>
@@ -170,11 +164,12 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         </div>
     </div>
 </nav>
+
 <main class="container my-4">
     <div class="row">
         <?php while ($row = $result->fetch_assoc()): ?>
             <div class="col-md-4 mb-4">
-                <div class="vehicle-card shadow-sm position-relative">
+                <div class="tarjeta-vehiculo shadow-sm position-relative">
                     <img src="<?= htmlspecialchars($row['imagen']) ?>" alt="<?= htmlspecialchars($row['modelo']) ?>">
                     <h5 class="mt-3"><?= htmlspecialchars($row['marca']) ?> <?= htmlspecialchars($row['modelo']) ?></h5>
                     <p><strong>Año:</strong> <?= htmlspecialchars($row['anio']) ?></p>
@@ -193,7 +188,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                         </form>
                     <?php endif; ?>
 
-                    <a href="https://wa.me/<?= htmlspecialchars($row['telefono']) ?>" class="contact-btn" target="_blank">
+                    <a href="https://wa.me/<?= htmlspecialchars($row['telefono']) ?>" class="btn-contacto" target="_blank">
                         <i class="fab fa-whatsapp me-1"></i> Contactar por WhatsApp
                     </a>
                 </div>
@@ -206,7 +201,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
     <p><strong>Visítanos:</strong> Calle Ejemplo, 123, Valencia, España</p>
 </div>
 
-<a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
+<a href="https://wa.me/608602302" class="btn-whatsapp" target="_blank">
     <i class="fab fa-whatsapp"></i>
 </a>
 
@@ -214,10 +209,12 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
     <p>&copy; 2025 Concesionario. Todos los derechos reservados.</p>
     <p>Telefono contacto: +34 608 60 23 02</p>
     <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
-</footer>º
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 
 
 

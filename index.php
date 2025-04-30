@@ -213,17 +213,22 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
     </div>
 </nav>
 <main>
-    <section id="nosotros">
-        <a href="nosotros.php" class="subtitulo">¿Quiénes Somos?</a>
-        <p>Concesionario Manzano, tu mejor opción para comprar vehículos de calidad.</p>
-        <img src="./images/concesionariosManzano.png" alt="Nosotros" class="img-fluid">
-    </section>
+    <section id="nosotros" class="container my-5">
+  <div class="card shadow">
+    <img src="./images/concesionariosManzano.png" class="card-img-top" alt="Nosotros">
+    <div class="card-body text-center">
+      <h5 class="card-title">¿Quiénes Somos?</h5>
+      <p class="card-text">Concesionario Manzano, tu mejor opción para comprar vehículos de calidad.</p>
+      <a href="nosotros.php" class="btn btn-primary">Conócenos</a>
+    </div>
+  </div>
+</section>
     <section id="vehiculos">
         <a href="vehiculos.php" class="subtitulo">Algunos De Nuestros Vehículos</a>
         <div id="vehiculosCarrusel" class="carousel slide mt-4" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="./images/coche1.avif" class="d-block w-100" alt="Vehículo 1">
+                    <img src="./images/coche1.avif" class="d-block w-10" alt="Vehículo 1">
                     <div class="carousel-caption">
                         <h5>Potencia y Elegancia</h5>
                         <p>Domina la carretera con un diseño sofisticado y un rendimiento sin límites.</p>

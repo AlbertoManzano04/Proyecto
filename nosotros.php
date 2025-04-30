@@ -139,7 +139,6 @@ session_start();
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <!-- Menú desplegable funcional gracias a Bootstrap -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                         Concesionarios Manzano
@@ -152,7 +151,6 @@ session_start();
                         <?php endif; ?>
                     </ul>
                 </li>
-
                 <li class="nav-item"><a href="vehiculos.php" class="nav-link">Vehículos km0</a></li>
                 <li class="nav-item"><a href="vehiculosUsuarios.php" class="nav-link">Vehículos de Usuarios</a></li>
                 <li class="nav-item"><a href="financiacion.php" class="nav-link">Financiación</a></li>
@@ -163,20 +161,16 @@ session_start();
                             <i class="fas fa-heart"></i>
                         </a>
                     </li>
-                <?php endif; ?>
-
+                
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
-
-                <!-- Si el usuario está logueado, no mostrar Login/Registro -->
+                <?php endif; ?>
                 <?php if (isset($_SESSION['usuario_id'])): ?>
-                    <!-- Aquí puedes colocar un enlace de Cerrar sesión o similar -->
                     <li class="nav-item"><a href="logout.php" class="nav-link">Cerrar Sesión</a></li>
                 <?php else: ?>
                     <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                     <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
                 <?php endif; ?>
 
-                <!-- Mostrar el enlace al Panel Admin solo si el usuario es admin -->
                 <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] === 'admin'): ?>
                     <li class="nav-item">
                         <a href="adminDashboard.php" class="btn btn-warning nav-link">Panel Admin</a>

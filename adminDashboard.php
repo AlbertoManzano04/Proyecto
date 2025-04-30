@@ -50,7 +50,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
         nav a:hover {
             color: #ffc107;
         }
-        .form-section {
+        .seccion-formulario {
             background: white;
             padding: 2rem;
             margin: 2rem auto;
@@ -58,7 +58,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: 0.3s;
         }
-        .form-section:hover {
+        .seccion-formulario:hover {
             box-shadow: 0 6px 25px rgba(0,0,0,0.15);
         }
         table th {
@@ -67,7 +67,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
         .btn-sm {
             font-size: 0.8rem;
         }
-        .alert {
+        .alerta {
             margin: 1rem auto;
             width: 80%;
         }
@@ -76,33 +76,33 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
             padding-left: 10px;
             margin-bottom: 20px;
         }
-        .postit-card {
-    background: #fff176;
-    padding: 1rem;
-    width: 200px;
-    min-height: 150px;
-    border: 1px solid #f0c000;
-    box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    font-size: 0.95rem;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    white-space: pre-wrap;
-    position: relative;
-    transform: rotate(-1deg);
-    transition: transform 0.2s;
-    }
-    .postit-card:hover {
-    transform: scale(1.05) rotate(0deg);
-    box-shadow: 3px 6px 12px rgba(0,0,0,0.15);
-    }
+        .nota-rapida {
+            background: #fff176;
+            padding: 1rem;
+            width: 200px;
+            min-height: 150px;
+            border: 1px solid #f0c000;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            white-space: pre-wrap;
+            position: relative;
+            transform: rotate(-1deg);
+            transition: transform 0.2s;
+        }
+        .nota-rapida:hover {
+            transform: scale(1.05) rotate(0deg);
+            box-shadow: 3px 6px 12px rgba(0,0,0,0.15);
+        }
     </style>
 </head>
 <body>
 
 <?php if (isset($_GET['message'])): ?>
-    <div class="alert alert-success text-center"><?= htmlspecialchars($_GET['message']) ?></div>
+    <div class="alerta alert-success text-center"><?= htmlspecialchars($_GET['message']) ?></div>
 <?php elseif (isset($_GET['error'])): ?>
-    <div class="alert alert-danger text-center"><?= htmlspecialchars($_GET['error']) ?></div>
+    <div class="alerta alert-danger text-center"><?= htmlspecialchars($_GET['error']) ?></div>
 <?php endif; ?>
 
 <header>
@@ -112,7 +112,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
 
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="adminDashboard.php"><i class="bi bi-house-fill"></i> Admin Panel</a>
+    <a class="navbar-brand" href="adminDashboard.php"><i class="bi bi-house-fill"></i> Panel de Administración</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -128,7 +128,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
 
 <div class="container">
     <!-- Formulario para añadir nuevo coche -->
-    <div class="form-section">
+    <div class="seccion-formulario">
         <h3><i class="bi bi-plus-circle"></i> Añadir nuevo vehículo de KM 0</h3>
         <form action="procesarCoche.php" method="POST" enctype="multipart/form-data">
             <div class="row mb-3">
@@ -172,7 +172,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
             <button type="submit" class="btn btn-success"><i class="bi bi-save2"></i> Guardar Vehículo</button>
         </form>
     </div>
-    <div class="form-section">
+    <div class="seccion-formulario">
     <h3><i class="bi bi-stickies-fill"></i> Notas Rápidas</h3>
 
     <!-- Formulario -->
@@ -187,7 +187,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
         $notas = $conn->query("SELECT * FROM notas ORDER BY fecha DESC");
         while($nota = $notas->fetch_assoc()):
         ?>
-        <div class="postit-card position-relative">
+        <div class="nota-rapida position-relative">
             <div class="text-dark"><?= nl2br(htmlspecialchars($nota['contenido'])) ?></div>
             <form action="eliminarNota.php" method="POST" class="position-absolute top-0 end-0 m-1">
                 <input type="hidden" name="id" value="<?= $nota['id'] ?>">
@@ -199,7 +199,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
 </div>
 
     <!-- Tabla de vehículos del concesionario -->
-    <div class="form-section">
+    <div class="seccion-formulario">
         <h3><i class="bi bi-car-front-fill"></i> Vehículos del Concesionario</h3>
         <table class="table table-striped">
             <thead><tr><th>Marca</th><th>Modelo</th><th>Precio</th><th>Acción</th></tr></thead>
@@ -220,7 +220,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     </div>
 
     <!-- Tabla de vehículos de usuarios -->
-    <div class="form-section">
+    <div class="seccion-formulario">
         <h3><i class="bi bi-person-badge-fill"></i> Vehículos de Usuarios</h3>
         <table class="table table-striped">
             <thead><tr><th>Marca</th><th>Modelo</th><th>Teléfono</th><th>Kilómetros</th><th>Precio</th><th>Acción</th></tr></thead>
@@ -243,7 +243,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     </div>
 
     <!-- Tabla de usuarios -->
-    <div class="form-section">
+    <div class="seccion-formulario">
         <h3><i class="bi bi-people-fill"></i> Usuarios</h3>
         <table class="table table-striped">
             <thead><tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Acción</th></tr></thead>
@@ -267,7 +267,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     </div>
 
     <!-- Nueva Tabla de enviarCV -->
-    <div class="form-section">
+    <div class="seccion-formulario">
         <h3><i class="bi bi-file-earmark-text-fill"></i> CV Enviados</h3>
         <table class="table table-striped">
             <thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Curriculum</th><th>Acción</th></tr></thead>
@@ -292,7 +292,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
             </tbody>
         </table>
     </div>
-    <div class="form-section">
+    <div class="seccion-formulario">
         <h3><i class="bi bi-chat-left-text-fill"></i>Formulario de Contacto</h3>
         <table class="table table-striped">
             <thead><tr><th>Nombre</th><th>Email</th><th>Mensaje</th></tr></thead>
@@ -320,10 +320,3 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
