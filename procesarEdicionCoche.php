@@ -140,7 +140,7 @@ if ($result->num_rows > 0) {
 <header>
     <h1><i class="bi bi-pencil-square"></i> Editar Vehículo</h1>
 </header>
-
+<!-- Barra de navegacion -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="adminDashboard.php">
@@ -151,7 +151,7 @@ if ($result->num_rows > 0) {
         </button>
     </div>
 </nav>
-
+ <!-- Fomrulario de edicion de coches -->
 <div class="container">
     <div class="form-section">
         <form action="guardarEdicionCoche.php" method="post" enctype="multipart/form-data">

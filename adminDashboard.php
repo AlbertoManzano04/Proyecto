@@ -1,4 +1,5 @@
 <?php
+//creamos sesion abrimos nuestro config y conectamos a la base de datos
 session_start();
 require_once './config/configBD.php';
 
@@ -6,7 +7,7 @@ $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
-
+//ejecutamos las distintas consultas para obtener los datos de las distintas tablas
 $vehiculosConcesionario = $conn->query("SELECT * FROM vehiculos_km0");
 $vehiculosUsuarios = $conn->query("SELECT * FROM coche_usuario");
 $usuarios = $conn->query("SELECT * FROM usuarios");
@@ -104,7 +105,11 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
 <?php elseif (isset($_GET['error'])): ?>
     <div class="alerta alert-danger text-center"><?= htmlspecialchars($_GET['error']) ?></div>
 <?php endif; ?>
-
+/**
+ * <!--
+ * Empezqamos el panel de admministrador con nuestro navegador y header
+ * -->
+ */
 <header>
     <h1><i class="bi bi-speedometer2"></i> Panel de Administración</h1>
     <p>Gestiona vehículos del concesionario y de los usuarios</p>
@@ -125,7 +130,11 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     </div>
   </div>
 </nav>
-
+/**
+ * <!--
+ * Aqui tenemos el formulario que nos va a subir coches km0 a nuestro concesionario
+ * -->
+ */
 <div class="container">
     <!-- Formulario para añadir nuevo coche -->
     <div class="seccion-formulario">
@@ -266,7 +275,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
         </table>
     </div>
 
-    <!-- Nueva Tabla de enviarCV -->
+    <!-- Tabla de enviarCV -->
     <div class="seccion-formulario">
         <h3><i class="bi bi-file-earmark-text-fill"></i> CV Enviados</h3>
         <table class="table table-striped">
@@ -292,6 +301,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
             </tbody>
         </table>
     </div>
+    <!-- Tabla de Contacto -->
     <div class="seccion-formulario">
         <h3><i class="bi bi-chat-left-text-fill"></i>Formulario de Contacto</h3>
         <table class="table table-striped">

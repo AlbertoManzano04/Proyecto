@@ -65,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
+    <!-- Fomrulario de Registro -->
     <div class="register-container">
         <h2>Regístrate</h2>
         <?php if (isset($error)) echo "<p class='text-danger'>$error</p>"; ?>

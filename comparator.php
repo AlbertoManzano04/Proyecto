@@ -172,6 +172,8 @@ $result2 = $conn->query($query2);
         </div>
     </div>
 </nav>
+<!-- Con un bucle recorremos las dos tablas de coches para mostrar todos los coches y poder 
+ elegir el que quieras para compararlo con los demas  -->
 <main class="container my-4">
     <div class="row">
         <?php while ($row = $result1->fetch_assoc()): ?>

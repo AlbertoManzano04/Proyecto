@@ -139,7 +139,7 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
     <h1>Bienvenido a Nuestro Concesionario</h1>
     <p>Encuentra el coche de tus sueños con las mejores condiciones</p>
 </header>
-
+<!-- Menú de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario Manzano</a>

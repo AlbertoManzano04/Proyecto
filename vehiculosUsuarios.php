@@ -114,7 +114,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
     <h1>Vehículos de Usuarios</h1>
     <p>Encuentra coches subidos por usuarios, disponibles para la compra</p>
 </header>
-
+<<!-- Menú de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
@@ -164,7 +164,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         </div>
     </div>
 </nav>
-
+<!-- Recorremos toda la tabla de coches de usuarios y vamos mostrando cada apartado  -->
 <main class="container my-4">
     <div class="row">
         <?php while ($row = $result->fetch_assoc()): ?>
@@ -177,7 +177,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                     <p><strong>Tipo:</strong> <?= htmlspecialchars($row['tipo']) ?></p>
                     <p><strong>Precio:</strong> €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
                     <p><strong>Kilómetros:</strong> <?= htmlspecialchars($row['kilometros']) ?> km</p>
-
+                    <!-- boton de contacto por whatsApp y agregar favoritos -->
                     <?php if ($usuario_id): ?>
                         <form action="agregar_favorito.php" method="POST" class="mt-2">
                             <input type="hidden" name="vehiculo_id" value="<?= $row['id'] ?>">
@@ -187,7 +187,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                             </button>
                         </form>
                     <?php endif; ?>
-
+                    
                     <a href="https://wa.me/<?= htmlspecialchars($row['telefono']) ?>" class="btn-contacto" target="_blank">
                         <i class="fab fa-whatsapp me-1"></i> Contactar por WhatsApp
                     </a>
@@ -200,7 +200,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
 <div class="location-contact text-center mb-4">
     <p><strong>Visítanos:</strong> Calle Ejemplo, 123, Valencia, España</p>
 </div>
-
+<!-- Botón de contacto por WhatsApp -->
 <a href="https://wa.me/608602302" class="btn-whatsapp" target="_blank">
     <i class="fab fa-whatsapp"></i>
 </a>

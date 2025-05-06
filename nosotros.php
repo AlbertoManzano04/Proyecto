@@ -131,6 +131,7 @@ session_start();
     <h1>Concesionarios Manzano</h1>
     <p>Conoce más sobre nosotros</p>
 </header>
+<!-- Menú de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
@@ -181,7 +182,7 @@ session_start();
     </div>
 </nav>
 
-
+<!-- Sección de imágenes -->
 <section>
     <h2>Nuestras Instalaciones</h2>
     <div class="imagenes-container">
@@ -191,7 +192,7 @@ session_start();
         <div><img src="./images/instalacion4.jpeg" alt="Instalación 4"></div>
     </div>
 </section>
-
+<!-- Sección de nuestros valores -->
 <main>
     <section>
         <h2>¿Quiénes Somos?</h2>
@@ -236,6 +237,7 @@ session_start();
         <p>Nos encantaría que nos visitaras. Nuestro concesionario está ubicado en el centro de la ciudad, donde podrás conocer a nuestro equipo, ver nuestra amplia oferta de vehículos y recibir asesoramiento personalizado.</p>
     </section>
 </main>
+<!-- Botón de WhatsApp -->
 <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
     <i class="fab fa-whatsapp"></i>
 </a>

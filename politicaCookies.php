@@ -111,7 +111,7 @@ session_start();
     </div>
 </nav>
 
-
+ <!-- Contenido principal -->
 <main>
     <section>
         <h2>¿Qué son las cookies?</h2>

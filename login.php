@@ -136,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
+    <!-- Formulario de Login -->
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
         <?php if (isset($error)) echo "<p class='text-danger'>$error</p>"; ?>

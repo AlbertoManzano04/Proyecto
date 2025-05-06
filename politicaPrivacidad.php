@@ -109,7 +109,7 @@ session_start(); // Iniciar la sesión
         </div>
     </div>
 </nav>
-
+<!-- Contenido principal -->
 <main>
     <section>
         <h2>Introducción</h2>

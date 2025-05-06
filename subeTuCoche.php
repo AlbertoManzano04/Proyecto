@@ -147,6 +147,7 @@ nav a:hover {
     <h1>Vende tu Vehículo</h1>
     <p>Comparte las características de tu coche y sube imágenes para venderlo</p>
 </header>
+<!-- Menú de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
