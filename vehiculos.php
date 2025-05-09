@@ -89,7 +89,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         .contact-btn:hover { background-color: #1ebe57; }
         .whatsapp-btn {
             position: fixed;
-            bottom: 20px;
+            bottom: 80px;
             right: 20px;
             background-color: #25D366;
             color: white;
@@ -221,7 +221,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                     <p><strong>Precio:</strong> €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
                     <p><strong>Kilómetros:</strong> <?= htmlspecialchars($row['kilometros']) ?> km</p>
                     
-                    <<!-- opcion de añadir a favoritos y de contacto de cada coche-->
+                    <!-- opcion de añadir a favoritos y de contacto de cada coche-->
                     <?php if ($usuario_id): ?>
                         <form action="agregar_favorito.php" method="POST" class="mt-2">
                             <input type="hidden" name="vehiculo_id" value="<?= $row['id'] ?>">
@@ -251,6 +251,9 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fR533L_q2EJkWgWU9cATj";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
 </body>
 </html>
 

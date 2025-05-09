@@ -171,8 +171,8 @@ session_start(); // Iniciar la sesión
         <p>Si tienes alguna pregunta o inquietud sobre nuestra política de privacidad o sobre cómo manejamos tus datos personales, por favor contáctanos a través de los siguientes medios:</p>
         <ul>
             <li>Correo electrónico: contacto@concesionariosmanzano.com</li>
-            <li>Teléfono: +34 123 456 789</li>
-            <li>Dirección: Calle Ficticia 123, Ciudad, País</li>
+            <li>Teléfono: +34 608 60 23 02</li>
+            <li>Dirección:  Av. de America, Córdoba, España/li>
         </ul>
     </section>
 </main>
@@ -184,6 +184,8 @@ session_start(); // Iniciar la sesión
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fR533L_q2EJkWgWU9cATj";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
 </body>
 </html>

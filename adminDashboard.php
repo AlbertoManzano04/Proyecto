@@ -105,11 +105,10 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
 <?php elseif (isset($_GET['error'])): ?>
     <div class="alerta alert-danger text-center"><?= htmlspecialchars($_GET['error']) ?></div>
 <?php endif; ?>
-/**
- * <!--
+<!--
  * Empezqamos el panel de admministrador con nuestro navegador y header
  * -->
- */
+
 <header>
     <h1><i class="bi bi-speedometer2"></i> Panel de Administración</h1>
     <p>Gestiona vehículos del concesionario y de los usuarios</p>
@@ -130,11 +129,9 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     </div>
   </div>
 </nav>
-/**
- * <!--
+<!--
  * Aqui tenemos el formulario que nos va a subir coches km0 a nuestro concesionario
  * -->
- */
 <div class="container">
     <!-- Formulario para añadir nuevo coche -->
     <div class="seccion-formulario">

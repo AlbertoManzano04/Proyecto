@@ -44,7 +44,7 @@ if ($conn->query($sql) === TRUE) {
     echo "Error al crear el usuario administrador: " . $conn->error . "<br>";
 }
 //crear tabla notas
-$sql="CREATE TABLE notas (
+$sql="CREATE TABLE IF NOT EXISTS notas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     contenido TEXT NOT NULL,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -79,6 +79,8 @@ $sql = "CREATE TABLE IF NOT EXISTS vehiculos_km0 (
     tipo VARCHAR(30),
     presupuesto DECIMAL(10,2),
     kilometros INT,
+    combustible ENUM('diesel', 'gasolina'),
+    potencia_cv INT,
     imagen VARCHAR(255)
 )";
 if ($conn->query($sql) === TRUE) {
@@ -98,6 +100,8 @@ $sql = "CREATE TABLE IF NOT EXISTS coche_usuario (
     tipo VARCHAR(30),
     presupuesto DECIMAL(10,2),
     kilometros INT,
+    combustible ENUM('diesel', 'gasolina'),
+    potencia_cv INT,
     imagen VARCHAR(255),
     telefono VARCHAR(15) NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
@@ -147,7 +151,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error al crear la tabla enviarCV: " . $conn->error . "<br>";
 }
-$sql= "CREATE TABLE usuarios_favoritos (
+$sql= "CREATE TABLE IF NOT EXISTS usuarios_favoritos (
     usuario_id INT NOT NULL,
     vehiculo_id INT NOT NULL,
     PRIMARY KEY (usuario_id, vehiculo_id),

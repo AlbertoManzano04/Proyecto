@@ -83,7 +83,7 @@ session_start();
         }
         .whatsapp-btn {
             position: fixed;
-            bottom: 20px;
+            bottom: 80px;
             right: 20px;
             background-color: #25D366;
             color: white;
@@ -251,7 +251,7 @@ session_start();
 <div id="resultado-cuota" class="alert alert-info" style="display:none;"></div>
 
 <div class="location-contact">
-    <p><strong>Visítanos:</strong> Calle Ejemplo, 123, Valencia, España</p>
+    <p><strong>Visítanos:</strong> Av. de America, Córdoba, España</p>
 </div>
 
 <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
@@ -285,6 +285,9 @@ session_start();
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fR533L_q2EJkWgWU9cATj";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
 </body>
 </html>
 
