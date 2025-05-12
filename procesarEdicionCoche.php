@@ -45,6 +45,7 @@ if ($result->num_rows > 0) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.js"></script>
     <style>
+        /* Estilos */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f8fa;
@@ -56,25 +57,10 @@ if ($result->num_rows > 0) {
             text-align: center;
             border-bottom: 5px solid #004a99;
         }
-        
         header h1 {
             font-size: 2.5rem;
             font-weight: 700;
         }
-
-        nav {
-            background-color: #003366;
-        }
-
-        nav a.nav-link, nav .navbar-brand {
-            color: white;
-            font-weight: 500;
-        }
-
-        nav a:hover {
-            color: #ffc107;
-        }
-
         .form-section {
             background-color: #fff;
             padding: 3rem;
@@ -83,55 +69,24 @@ if ($result->num_rows > 0) {
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
-
-        label {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            display: block;
-            color: #333;
-        }
-
         .form-control {
             border-radius: 10px;
             border: 1px solid #ccc;
             padding: 0.8rem;
-            transition: all 0.3s ease-in-out;
         }
-
-        .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0,123,255,0.5);
-        }
-
         .form-section img {
             border-radius: 12px;
             max-height: 150px;
             margin-top: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
             font-weight: 600;
-            padding: 0.7rem 1.4rem;
-            border-radius: 10px;
         }
-
         .btn-primary:hover {
             background-color: #0056b3;
-        }
-
-        .btn-secondary {
-            margin-left: 10px;
-            border-radius: 10px;
-            padding: 0.7rem 1.4rem;
-        }
-
-        .status-message {
-            margin: 2rem auto;
-            width: 90%;
-            max-width: 600px;
         }
     </style>
 </head>
@@ -140,24 +95,15 @@ if ($result->num_rows > 0) {
 <header>
     <h1><i class="bi bi-pencil-square"></i> Editar Vehículo</h1>
 </header>
-<!-- Barra de navegacion -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm">
-    <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="adminDashboard.php">
-            <i class="bi bi-house-door-fill me-2"></i> Inicio
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBarContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</nav>
- <!-- Fomrulario de edicion de coches -->
+
+<!-- Formulario de edición de coche -->
 <div class="container">
     <div class="form-section">
         <form action="guardarEdicionCoche.php" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?= $vehiculo['id'] ?>">
             <input type="hidden" name="tabla" value="<?= $tabla ?>">
 
+            <!-- Campos existentes -->
             <div class="row mb-3">
                 <div class="col">
                     <label>Marca</label>
@@ -191,11 +137,28 @@ if ($result->num_rows > 0) {
                 </div>
             </div>
 
+            <!-- Nuevos campos -->
+            <div class="mb-3">
+                <label>Potencia (CV)</label>
+                <input type="number" name="potencia_cv" class="form-control" value="<?= htmlspecialchars($vehiculo['potencia_cv']) ?>">
+            </div>
+
+            <div class="mb-3">
+                <label>Combustible</label>
+                <select name="combustible" class="form-select">
+                    <option value="Gasolina" <?= $vehiculo['combustible'] === 'Gasolina' ? 'selected' : '' ?>>Gasolina</option>
+                    <option value="Diésel" <?= $vehiculo['combustible'] === 'Diésel' ? 'selected' : '' ?>>Diésel</option>
+                    <option value="Eléctrico" <?= $vehiculo['combustible'] === 'Eléctrico' ? 'selected' : '' ?>>Eléctrico</option>
+                    <option value="Híbrido" <?= $vehiculo['combustible'] === 'Híbrido' ? 'selected' : '' ?>>Híbrido</option>
+                </select>
+            </div>
+
             <div class="mb-3">
                 <label>Kilómetros</label>
                 <input type="number" name="kilometros" class="form-control" value="<?= htmlspecialchars($vehiculo['kilometros']) ?>" required>
             </div>
 
+            <!-- Imagen -->
             <div class="mb-3">
                 <label>Imagen (opcional)</label>
                 <input type="file" name="imagen" class="form-control">
@@ -205,6 +168,7 @@ if ($result->num_rows > 0) {
                 <?php endif; ?>
             </div>
 
+            <!-- Botones -->
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary"><i class="bi bi-save2"></i> Guardar Cambios</button>
                 <a href="adminDashboard.php" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Cancelar</a>

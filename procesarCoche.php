@@ -15,10 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $color = trim($_POST['color'] ?? '');
     $tipo = trim($_POST['tipo'] ?? '');
     $presupuesto = floatval($_POST['presupuesto'] ?? 0);
-    $kilometros = 0;
+    $kilometros = 0;  // Asumimos que es 0 por defecto (nuevo vehículo)
+    $potencia = intval($_POST['potencia'] ?? 0); // Potencia en caballos
+    $combustible = trim($_POST['combustible'] ?? ''); // Gasolina, Diésel, Eléctrico, Híbrido
     $imagen = $_FILES['imagen'] ?? null;
 
-    if (empty($marca) || empty($modelo) || $anio === 0 || $presupuesto === 0) {
+    // Validación de campos obligatorios
+    if (empty($marca) || empty($modelo) || $anio === 0 || $presupuesto === 0 || empty($combustible)) {
         header("Location: adminDashboard.php?error=Faltan datos obligatorios.");
         exit();
     }
@@ -56,15 +59,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $imagenRutaRelativa = 'images/' . $nombreSeguro;
     }
 
-    $sql = "INSERT INTO vehiculos_km0 (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    // Insertar los datos del vehículo en la base de datos
+    $sql = "INSERT INTO vehiculos_km0 (marca, modelo, anio, color, tipo, presupuesto, kilometros, potencia_cv, combustible, imagen)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
         die("❌ Error al preparar la consulta: " . $conn->error);
     }
 
-    $stmt->bind_param("ssissids", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $imagenRutaRelativa);
+    $stmt->bind_param("ssissdssss", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $potencia, $combustible, $imagenRutaRelativa);
 
     if ($stmt->execute()) {
         header("Location: adminDashboard.php?message=Vehículo KM0 añadido con éxito");
@@ -80,4 +84,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
-

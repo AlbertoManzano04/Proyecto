@@ -219,7 +219,8 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                     <p><strong>Color:</strong> <?= htmlspecialchars($row['color']) ?></p>
                     <p><strong>Tipo:</strong> <?= htmlspecialchars($row['tipo']) ?></p>
                     <p><strong>Precio:</strong> €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
-                    <p><strong>Kilómetros:</strong> <?= htmlspecialchars($row['kilometros']) ?> km</p>
+                    <p><strong>Combustible:</strong> <?= htmlspecialchars($row['combustible']) ?></p>
+                    <p><strong>Potencia:</strong> <?= htmlspecialchars($row['potencia_cv']) ?> CV</p>
                     
                     <!-- opcion de añadir a favoritos y de contacto de cada coche-->
                     <?php if ($usuario_id): ?>

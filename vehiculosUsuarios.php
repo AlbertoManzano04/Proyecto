@@ -177,6 +177,8 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                     <p><strong>Tipo:</strong> <?= htmlspecialchars($row['tipo']) ?></p>
                     <p><strong>Precio:</strong> €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
                     <p><strong>Kilómetros:</strong> <?= htmlspecialchars($row['kilometros']) ?> km</p>
+                    <p><strong>Combustible:</strong> <?= htmlspecialchars($row['combustible']) ?></p>
+                    <p><strong>Potencia:</strong> <?= htmlspecialchars($row['potencia_cv']) ?> CV</p>
                     <!-- boton de contacto por whatsApp y agregar favoritos -->
                     <?php if ($usuario_id): ?>
                         <form action="agregar_favorito.php" method="POST" class="mt-2">
@@ -198,7 +200,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
 </main>
 
 <div class="location-contact text-center mb-4">
-    <p><strong>Visítanos:</strong> Calle Ejemplo, 123, Valencia, España</p>
+    <p><strong>Visítanos:</strong> Av. de America, Córdoba, España</p>
 </div>
 <!-- Botón de contacto por WhatsApp -->
 <a href="https://wa.me/608602302" class="btn-whatsapp" target="_blank">

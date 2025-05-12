@@ -172,7 +172,7 @@ session_start(); // Iniciar la sesión
         <ul>
             <li>Correo electrónico: contacto@concesionariosmanzano.com</li>
             <li>Teléfono: +34 608 60 23 02</li>
-            <li>Dirección:  Av. de America, Córdoba, España/li>
+            <li>Dirección:  Av. de America, Córdoba, España</li>
         </ul>
     </section>
 </main>

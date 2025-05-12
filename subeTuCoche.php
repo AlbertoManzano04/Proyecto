@@ -3,6 +3,11 @@ session_start();
 // Incluir configuración de base de datos
 require_once __DIR__ . '/config/configBD.php';
 
+// Verificar que el usuario esté logueado
+if (!isset($_SESSION['usuario_id'])) {
+    die("No estás logueado. Por favor, inicia sesión.");
+}
+
 // Conectar a la base de datos
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
@@ -22,6 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $presupuesto = $_POST['presupuesto'];
     $kilometros = $_POST['kilometros'];
     $telefono = $_POST['contacto']; // Añadido para recoger el teléfono
+    $usuario_id = $_SESSION['usuario_id']; // Obtener el usuario_id de la sesión
+    $potencia_cv = $_POST['potencia_cv']; // Obtener la potencia
+    $combustible = $_POST['combustible']; // Obtener el combustible
 
     // Manejo de la imagen
     $directorio = "images/";
@@ -29,12 +37,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mkdir($directorio, 0777, true);
     }
     $archivoImagen = $directorio . basename($_FILES["imagen"]["name"]);
-    move_uploaded_file($_FILES["imagen"]["tmp_name"], $archivoImagen);
+    if (!file_exists($archivoImagen)) {
+        move_uploaded_file($_FILES["imagen"]["tmp_name"], $archivoImagen);
+    } else {
+        echo "<script>alert('La imagen ya existe en el directorio.');</script>";
+    }
 
     // Insertar en la base de datos
-    $stmt = $conn->prepare("INSERT INTO coche_usuario (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen, telefono) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssisssiss", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $archivoImagen, $telefono);
+    $stmt = $conn->prepare("INSERT INTO coche_usuario (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen, telefono, usuario_id, potencia_cv, combustible) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssissdisssss", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $archivoImagen, $telefono, $usuario_id, $potencia_cv, $combustible);
 
     if ($stmt->execute()) {
         echo "<script>alert('Coche subido con éxito'); window.location.href='vehiculosUsuarios.php';</script>";
@@ -255,7 +267,21 @@ nav a:hover {
         <label for="kilometros" class="form-label"><i class="fas fa-road"></i> Kilómetros</label>
         <input type="number" id="kilometros" name="kilometros" class="form-control" required min="0" step="1000" placeholder="Ej. 95000">
     </div>
+<!-- Campo para ingresar los caballos de potencia -->
+<div class="col-md-6 mb-3">
+    <label for="potencia_cv" class="form-label"><i class="fas fa-tachometer-alt"></i> Caballos de Potencia</label>
+    <input type="number" id="potencia_cv" name="potencia_cv" class="form-control" required placeholder="Ej. 150">
+</div>
 
+<!-- Campo para seleccionar el tipo de combustible con iconos -->
+<div class="col-md-6 mb-3">
+    <label for="combustible" class="form-label"><i class="fas fa-gas-pump"></i> Tipo de Combustible</label>
+    <select id="combustible" name="combustible" class="form-select" required>
+        <option value="">Seleccione el combustible</option>
+        <option value="Gasolina">Gasolina</option>
+        <option value="Diesel">Diesel</option>
+    </select>
+</div>
     <div class="col-md-12 mb-3">
         <label for="imagen" class="form-label"><i class="fas fa-camera"></i> Sube una imagen del coche</label>
         <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required onchange="previewImagen(event)">

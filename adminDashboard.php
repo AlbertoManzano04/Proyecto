@@ -20,6 +20,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     <meta charset="UTF-8">
     <title>Panel de Administración</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
@@ -137,46 +138,59 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     <div class="seccion-formulario">
         <h3><i class="bi bi-plus-circle"></i> Añadir nuevo vehículo de KM 0</h3>
         <form action="procesarCoche.php" method="POST" enctype="multipart/form-data">
-            <div class="row mb-3">
-                <div class="col">
-                    <label>Marca</label>
-                    <input type="text" name="marca" class="form-control" required>
-                </div>
-                <div class="col">
-                    <label>Modelo</label>
-                    <input type="text" name="modelo" class="form-control" required>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <label>Año</label>
-                    <input type="number" name="anio" class="form-control" required>
-                </div>
-                <div class="col">
-                    <label>Color</label>
-                    <input type="text" name="color" class="form-control">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <label>Tipo</label>
-                    <input type="text" name="tipo" class="form-control">
-                </div>
-                <div class="col">
-                    <label>Precio</label>
-                    <input type="number" name="presupuesto" class="form-control">
-                </div>
-            </div>
-            <div class="mb-3">
-                <label>Kilómetros</label>
-                <input type="number" name="kilometros" class="form-control" value="0" readonly>
-            </div>
-            <div class="mb-3">
-                <label>Imagen</label>
-                <input type="file" name="imagen" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success"><i class="bi bi-save2"></i> Guardar Vehículo</button>
-        </form>
+    <div class="row mb-3">
+        <div class="col">
+            <label><i class="fas fa-car"></i> Marca</label>
+            <input type="text" name="marca" class="form-control" required>
+        </div>
+        <div class="col">
+            <label><i class="fas fa-cogs"></i> Modelo</label>
+            <input type="text" name="modelo" class="form-control" required>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <label><i class="fas fa-calendar"></i> Año</label>
+            <input type="number" name="anio" class="form-control" required>
+        </div>
+        <div class="col">
+            <label><i class="fas fa-palette"></i> Color</label>
+            <input type="text" name="color" class="form-control">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <label><i class="fas fa-car-side"></i> Tipo</label>
+            <input type="text" name="tipo" class="form-control">
+        </div>
+        <div class="col">
+            <label><i class="fas fa-dollar-sign"></i> Precio</label>
+            <input type="number" name="presupuesto" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label><i class="fas fa-tachometer-alt"></i> Kilómetros</label>
+        <input type="number" name="kilometros" class="form-control" value="0" readonly>
+    </div>
+    <div class="mb-3">
+        <label><i class="fas fa-bolt"></i> Potencia</label>
+        <input type="number" name="potencia" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label><i class="fas fa-gas-pump"></i> Combustible</label>
+        <select name="combustible" class="form-select">
+            <option value="Gasolina">Gasolina</option>
+            <option value="Diésel">Diésel</option>
+            <option value="Eléctrico">Eléctrico</option>
+            <option value="Híbrido">Híbrido</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label><i class="fas fa-image"></i> Imagen</label>
+        <input type="file" name="imagen" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-success"><i class="bi bi-save2"></i> Guardar Vehículo</button>
+</form>
     </div>
     <div class="seccion-formulario">
     <h3><i class="bi bi-stickies-fill"></i> Notas Rápidas</h3>
@@ -208,13 +222,15 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     <div class="seccion-formulario">
         <h3><i class="bi bi-car-front-fill"></i> Vehículos del Concesionario</h3>
         <table class="table table-striped">
-            <thead><tr><th>Marca</th><th>Modelo</th><th>Precio</th><th>Acción</th></tr></thead>
+            <thead><tr><th>Marca</th><th>Modelo</th><th>Precio</th><th>Combustible</th><th>Potencia</th><th>Acción</th></tr></thead>
             <tbody>
             <?php while($row = $vehiculosConcesionario->fetch_assoc()): ?>
                 <tr>
                     <td><?= htmlspecialchars($row['marca']) ?></td>
                     <td><?= htmlspecialchars($row['modelo']) ?></td>
                     <td><?= number_format($row['presupuesto'], 2) ?> €</td>
+                    <td><?= htmlspecialchars($row['combustible']) ?></td>
+                    <td><?= htmlspecialchars($row['potencia_cv']) ?> cv</td>
                     <td>
                         <a href="procesarEdicionCoche.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></a>
                         <a href="eliminarCoche.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></a>
@@ -229,7 +245,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     <div class="seccion-formulario">
         <h3><i class="bi bi-person-badge-fill"></i> Vehículos de Usuarios</h3>
         <table class="table table-striped">
-            <thead><tr><th>Marca</th><th>Modelo</th><th>Teléfono</th><th>Kilómetros</th><th>Precio</th><th>Acción</th></tr></thead>
+            <thead><tr><th>Marca</th><th>Modelo</th><th>Teléfono</th><th>Kilómetros</th><th>Precio</th><th>Combustible</th><th>potencia</th><th>Acción</th></tr></thead>
             <tbody>
             <?php while($row = $vehiculosUsuarios->fetch_assoc()): ?>
                 <tr>
@@ -238,6 +254,8 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
                     <td><?= htmlspecialchars($row['telefono']) ?></td>
                     <td><?= htmlspecialchars($row['kilometros']) ?> km</td>
                     <td><?= number_format($row['presupuesto'], 2) ?> €</td>
+                    <td><?= htmlspecialchars($row['combustible']) ?></td>
+                    <td><?= htmlspecialchars($row['potencia_cv']) ?> CV</td>
                     <td>
                         <a href="procesarEdicionCoche.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></a>
                         <a href="eliminarCoche.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></a>

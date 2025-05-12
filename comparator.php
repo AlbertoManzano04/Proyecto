@@ -6,10 +6,12 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-$query1 = "SELECT id, marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen FROM vehiculos_km0";
-$result1 = $conn->query($query1);
 
-$query2 = "SELECT id, marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen FROM coche_usuario";
+
+
+$query1 = "SELECT id, marca, modelo, anio, color, tipo, presupuesto, kilometros, combustible, potencia_cv, imagen FROM vehiculos_km0";
+$result1 = $conn->query($query1);
+$query2 = "SELECT id, marca, modelo, anio, color, tipo, presupuesto, kilometros, combustible, potencia_cv, imagen FROM coche_usuario";
 $result2 = $conn->query($query2);
 ?>
 <!DOCTYPE html>
@@ -187,6 +189,8 @@ $result2 = $conn->query($query2);
                      data-tipo="<?= htmlspecialchars($row['tipo']) ?>"
                      data-presupuesto="<?= $row['presupuesto'] ?>"
                      data-kilometros="<?= $row['kilometros'] ?>"
+                     data-combustible="<?= htmlspecialchars($row['combustible']) ?>"
+                     data-cv="<?= $row['potencia_cv'] ?>"
                      data-imagen="<?= $row['imagen'] ?>">
                     <img src="<?= $row['imagen'] ?>" alt="<?= $row['modelo'] ?>" class="img-fluid mb-2">
                     <h5><?= $row['marca'] . " " . $row['modelo'] ?></h5>
@@ -195,6 +199,8 @@ $result2 = $conn->query($query2);
                     <p>Tipo: <?= $row['tipo'] ?></p>
                     <p>Precio: €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
                     <p>Kilómetros: <?= number_format($row['kilometros'], 0, ',', '.') ?></p>
+                    <p>Combustible: <?= htmlspecialchars($row['combustible']) ?></p>
+                    <p>Potencia: <?= $row['potencia_cv'] ?> CV</p>
                 </div>
             </div>
         <?php endwhile; ?>
@@ -210,6 +216,8 @@ $result2 = $conn->query($query2);
                      data-tipo="<?= htmlspecialchars($row['tipo']) ?>"
                      data-presupuesto="<?= $row['presupuesto'] ?>"
                      data-kilometros="<?= $row['kilometros'] ?>"
+                     data-combustible="<?= htmlspecialchars($row['combustible']) ?>"
+                     data-cv="<?= $row['potencia_cv'] ?>"
                      data-imagen="<?= $row['imagen'] ?>">
                     <img src="<?= $row['imagen'] ?>" alt="<?= $row['modelo'] ?>" class="img-fluid mb-2">
                     <h5><?= $row['marca'] . " " . $row['modelo'] ?></h5>
@@ -218,6 +226,8 @@ $result2 = $conn->query($query2);
                     <p>Tipo: <?= $row['tipo'] ?></p>
                     <p>Precio: €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
                     <p>Kilómetros: <?= number_format($row['kilometros'], 0, ',', '.') ?></p>
+                    <p>Combustible: <?= htmlspecialchars($row['combustible']) ?></p>
+                    <p>Potencia: <?= $row['potencia_cv'] ?> CV</p>
                 </div>
             </div>
         <?php endwhile; ?>
@@ -244,39 +254,46 @@ $result2 = $conn->query($query2);
         item.dataset.anio = data.anio;
         item.dataset.presupuesto = data.presupuesto;
         item.dataset.kilometros = data.kilometros;
-
+        item.dataset.cv = data.cv;
+        item.dataset.combustible = data.combustible;
         item.innerHTML = `
-            <button class="remove-btn" onclick="this.parentElement.remove(); resaltarCampos()">×</button>
-            <img src="${data.imagen}" class="img-fluid mb-2" alt="${data.modelo}">
-            <h6>${data.marca} ${data.modelo}</h6>
-            <p class="anio">Año: ${data.anio}</p>
-            <p class="precio">Precio: €${parseInt(data.presupuesto).toLocaleString()}</p>
-            <p class="km">Kilómetros: ${parseInt(data.kilometros).toLocaleString()}</p>
-        `;
+    <button class="remove-btn" onclick="this.parentElement.remove(); resaltarCampos()">×</button>
+    <img src="${data.imagen}" class="img-fluid mb-2" alt="${data.modelo}">
+    <h6>${data.marca} ${data.modelo}</h6>
+    <p class="anio">Año: ${data.anio}</p>
+    <p class="precio">Precio: €${parseInt(data.presupuesto).toLocaleString()}</p>
+    <p class="km">Kilómetros: ${parseInt(data.kilometros).toLocaleString()}</p>
+    <p class="cv">Potencia: ${data.cv} CV</p>
+    <p class="combustible">Combustible: ${data.combustible}</p>
+    `;
         document.getElementById('comparator').appendChild(item);
         resaltarCampos();
     }
 
     function resaltarCampos() {
-        const items = document.querySelectorAll('#comparator .comparator-item');
-        let maxAnio = 0, minPrecio = Infinity, minKm = Infinity;
+    const items = document.querySelectorAll('#comparator .comparator-item');
+    let maxAnio = 0, minPrecio = Infinity, minKm = Infinity, maxCV = 0;
 
-        items.forEach(item => {
-            maxAnio = Math.max(maxAnio, parseInt(item.dataset.anio));
-            minPrecio = Math.min(minPrecio, parseInt(item.dataset.presupuesto));
-            minKm = Math.min(minKm, parseInt(item.dataset.kilometros));
-        });
+    items.forEach(item => {
+        maxAnio = Math.max(maxAnio, parseInt(item.dataset.anio));
+        minPrecio = Math.min(minPrecio, parseInt(item.dataset.presupuesto));
+        minKm = Math.min(minKm, parseInt(item.dataset.kilometros));
+        maxCV = Math.max(maxCV, parseInt(item.dataset.cv || 0));
+    });
 
-        items.forEach(item => {
-            const anio = parseInt(item.dataset.anio);
-            const precio = parseInt(item.dataset.presupuesto);
-            const km = parseInt(item.dataset.kilometros);
+    items.forEach(item => {
+        const anio = parseInt(item.dataset.anio);
+        const precio = parseInt(item.dataset.presupuesto);
+        const km = parseInt(item.dataset.kilometros);
+        const cv = parseInt(item.dataset.cv || 0);
 
-            item.querySelector(".anio").classList.toggle("highlight", anio === maxAnio);
-            item.querySelector(".precio").classList.toggle("highlight", precio === minPrecio);
-            item.querySelector(".km").classList.toggle("highlight", km === minKm);
-        });
-    }
+        item.querySelector(".anio").classList.toggle("highlight", anio === maxAnio);
+        item.querySelector(".precio").classList.toggle("highlight", precio === minPrecio);
+        item.querySelector(".km").classList.toggle("highlight", km === minKm);
+        item.querySelector(".cv").classList.toggle("highlight", cv === maxCV);
+    });
+}
+
 </script>
 
 <!-- Incluir JavaScript de Bootstrap -->

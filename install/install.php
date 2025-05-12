@@ -79,7 +79,7 @@ $sql = "CREATE TABLE IF NOT EXISTS vehiculos_km0 (
     tipo VARCHAR(30),
     presupuesto DECIMAL(10,2),
     kilometros INT,
-    combustible ENUM('diesel', 'gasolina'),
+    combustible ENUM('diesel', 'gasolina', 'electrico', 'hibrido'),
     potencia_cv INT,
     imagen VARCHAR(255)
 )";
