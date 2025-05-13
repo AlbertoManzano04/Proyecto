@@ -264,6 +264,7 @@ session_start();
     <p><a href="politicaPrivacidad.php" style="color: white;">Política de Privacidad</a> | <a href="politicaCookies.php" style="color: white;">Política de Cookies</a></p>
 </footer>
 <script>
+    //pequeño script para el simulador de financiación
     document.getElementById('simulador-form').addEventListener('submit', function(e) {
         e.preventDefault();
 

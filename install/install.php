@@ -112,32 +112,6 @@ if ($conn->query($sql) === TRUE) {
     echo "Error al crear la tabla coche_usuario: " . $conn->error . "<br>";
 }
 
-// Crear tabla opciones_financiacion
-$sql = "CREATE TABLE IF NOT EXISTS opciones_financiacion (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    tipo_financiacion VARCHAR(100) NOT NULL,
-    plazo INT NOT NULL,
-    interes DECIMAL(5,2) NOT NULL,
-    cuota DECIMAL(10,2) NOT NULL
-)";
-if ($conn->query($sql) === TRUE) {
-    echo "Tabla opciones_financiacion creada con éxito.<br>";
-} else {
-    echo "Error al crear la tabla opciones_financiacion: " . $conn->error . "<br>";
-}
-
-// Insertar opciones de financiación
-$sql = "INSERT INTO opciones_financiacion (tipo_financiacion, plazo, interes, cuota) VALUES
-('Financiación a 12 meses', 12, 5.5, 350.00),
-('Financiación a 24 meses', 24, 6.0, 250.00),
-('Financiación a 36 meses', 36, 6.5, 180.00)
-ON DUPLICATE KEY UPDATE id=id";
-if ($conn->query($sql) === TRUE) {
-    echo "Opciones de financiación insertadas con éxito.<br>";
-} else {
-    echo "Error al insertar las opciones de financiación: " . $conn->error . "<br>";
-}
-
 // Crear tabla enviarCV
 $sql = "CREATE TABLE IF NOT EXISTS enviarCV (
     id INT AUTO_INCREMENT PRIMARY KEY,
