@@ -1,0 +1,1722 @@
+# Copyright (C) 2025 VWThemes
+# This file is distributed under the GPLv3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Auto Car Dealership 1.5.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/auto-car-dealership\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-27T17:49:29+05:30\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: auto-car-dealership\n"
+
+#. Theme Name of the theme
+#: style.css
+#: inc/core/theme-info.php:7
+msgid "Auto Car Dealership"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://www.vwthemes.com/products/free-car-dealership-wordpress-theme"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Auto Car Dealership is a spectacular block based theme for websites designed for car and automobile businesses, car rentals, bike rental, car mechanic, automotive and car dealerships, auto dealers, car listings, electric cars and vehicles, auto part shops, car repair services, etc. This theme is loaded with full site editing features, block patterns, block editor patterns and much more. Crafted by WordPress experts, this theme makes use of lightweight design and the latest HTML codes that are further optimized to give you a faster page load speed. The overall look is elegant and at the same time professional to represent your business in a very presentable manner. This theme is retina-ready and has a responsive design that makes it work well across any device. There is a beautifully designed banner and many sections for displaying information about your Team, showing the client Testimonials, and more. There are plenty of customization options available for you to tweak the design and add your own flavor. To make the design SEO-friendly, developers have implemented the best coding practices so that you don’t need to take extra effort. Call to Action Button (CTA) will ensure that your visitors will get the proper guidance for the next step. There are many social media options available for your website and the theme is also made translation-ready to support multiple languages. Demo: https://www.vwthemes.net/auto-car-dealership/"
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "VWThemes"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://www.vwthemes.com/"
+msgstr ""
+
+#: functions.php:60
+msgid "Primary Navigation"
+msgstr ""
+
+#: functions.php:78
+msgid "Thank you for choosing Auto Car Dealership. Would like to have you on our Welcome page so that you can reap all the benefits of our Auto Car Dealership."
+msgstr ""
+
+#: functions.php:79
+msgid "GET STARTED"
+msgstr ""
+
+#: functions.php:80
+msgid "VIEW DEMO"
+msgstr ""
+
+#: functions.php:81
+msgid "UPGRADE PRO"
+msgstr ""
+
+#: functions.php:82
+msgid "THEME BUNDLE"
+msgstr ""
+
+#. Translators: If there are characters in your language that are not supported by Poppins, translate this to 'off'. Do not translate into your own language.
+#: functions.php:103
+msgctxt "Poppins font: on or off"
+msgid "on"
+msgstr ""
+
+#: functions.php:158
+msgid "https://www.vwthemes.com/products/car-wordpress-theme"
+msgstr ""
+
+#: functions.php:159
+msgid "https://wordpress.org/support/theme/auto-car-dealership/"
+msgstr ""
+
+#: functions.php:160
+msgid "https://wordpress.org/support/theme/auto-car-dealership/reviews/"
+msgstr ""
+
+#: functions.php:161
+msgid "https://www.vwthemes.net/auto-car-dealership/"
+msgstr ""
+
+#: functions.php:162
+msgid "https://preview.vwthemesdemo.com/docs/vw-automobile-pro/"
+msgstr ""
+
+#: functions.php:163
+msgid "https://preview.vwthemesdemo.com/docs/free-auto-car-dealership/"
+msgstr ""
+
+#: functions.php:164
+msgid "https://www.vwthemes.com/faqs/"
+msgstr ""
+
+#: functions.php:165
+msgid "https://www.vwthemes.com/contact/"
+msgstr ""
+
+#: functions.php:166
+msgid "https://www.vwthemes.com/products/wp-theme-bundle"
+msgstr ""
+
+#: functions.php:167
+msgid "https://preview.vwthemesdemo.com/docs/theme-bundle/"
+msgstr ""
+
+#: inc/block-patterns.php:33
+msgid "Default header"
+msgstr ""
+
+#: inc/block-patterns.php:38
+msgid "Default footer"
+msgstr ""
+
+#: inc/block-patterns.php:43
+msgid "Home Banner"
+msgstr ""
+
+#: inc/block-patterns.php:47
+msgid "Service One"
+msgstr ""
+
+#: inc/block-patterns.php:51
+msgid "Brand Section"
+msgstr ""
+
+#: inc/block-patterns.php:55
+#: inc/block-patterns.php:109
+msgid "Featured Cars"
+msgstr ""
+
+#: inc/block-patterns.php:59
+#: inc/block-patterns.php:110
+msgid "Blog Section"
+msgstr ""
+
+#: inc/block-patterns.php:63
+#: inc/block-patterns.php:111
+msgid "Gallery Section"
+msgstr ""
+
+#: inc/block-patterns.php:67
+msgid "Primary Sidebar"
+msgstr ""
+
+#: inc/block-patterns.php:71
+msgid "404 content"
+msgstr ""
+
+#: inc/block-patterns.php:75
+msgid "Post Single Column"
+msgstr ""
+
+#: inc/block-patterns.php:79
+msgid "Post Two Column"
+msgstr ""
+
+#: inc/block-patterns.php:83
+msgid "Post Three Column"
+msgstr ""
+
+#: inc/block-patterns.php:87
+msgid "Post Four Column"
+msgstr ""
+
+#: inc/block-patterns.php:91
+msgid "Cover With Post Title"
+msgstr ""
+
+#: inc/block-patterns.php:95
+#: inc/block-patterns.php:113
+msgid "Theme Button"
+msgstr ""
+
+#: inc/block-patterns.php:101
+msgid "Headers"
+msgstr ""
+
+#: inc/block-patterns.php:102
+msgid "Footers"
+msgstr ""
+
+#: inc/block-patterns.php:103
+#: patterns/primary-sidebar.php:28
+msgid "Pages"
+msgstr ""
+
+#: inc/block-patterns.php:104
+msgid "Query"
+msgstr ""
+
+#: inc/block-patterns.php:105
+msgid "Sidebars"
+msgstr ""
+
+#: inc/block-patterns.php:106
+msgid "Banner Sections"
+msgstr ""
+
+#: inc/block-patterns.php:107
+msgid "Services"
+msgstr ""
+
+#: inc/block-patterns.php:108
+msgid "Brands Section"
+msgstr ""
+
+#: inc/block-patterns.php:112
+msgid "Page Banner Section"
+msgstr ""
+
+#: inc/core/theme-info.php:7
+msgid "Automobile Theme"
+msgstr ""
+
+#: inc/core/theme-info.php:29
+msgid "Welcome to Auto Car Dealership Theme"
+msgstr ""
+
+#: inc/core/theme-info.php:30
+msgid "All our WordPress themes are modern, minimalist, 100% responsive, seo-friendly,feature-rich, and multipurpose that best suit designers, bloggers and other professionals who are working in the creative fields."
+msgstr ""
+
+#: inc/core/theme-info.php:38
+msgid "Try Premium "
+msgstr ""
+
+#: inc/core/theme-info.php:39
+msgid "Auto Car Dealership Theme"
+msgstr ""
+
+#: inc/core/theme-info.php:40
+msgid "at 20% Discount"
+msgstr ""
+
+#: inc/core/theme-info.php:41
+msgid "Use Coupon"
+msgstr ""
+
+#: inc/core/theme-info.php:41
+msgid "vwpro20"
+msgstr ""
+
+#: inc/core/theme-info.php:43
+#: inc/core/theme-info.php:296
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: inc/core/theme-info.php:56
+msgid "Free Setup"
+msgstr ""
+
+#: inc/core/theme-info.php:57
+msgid "Get Premium"
+msgstr ""
+
+#: inc/core/theme-info.php:58
+msgid "Free Vs Premium"
+msgstr ""
+
+#: inc/core/theme-info.php:59
+#: inc/core/theme-info.php:111
+msgid "Get 250+ Themes Bundle at $99"
+msgstr ""
+
+#: inc/core/theme-info.php:64
+msgid "Lite Theme Information"
+msgstr ""
+
+#: inc/core/theme-info.php:66
+msgid "Auto Car Dealership is a spectacular block based theme for websites designed for car and automobile businesses, car rentals, automotive and car dealerships, auto dealers, car listings, electric cars and vehicles, auto part shops, car repair services, etc. This theme is loaded with full site editing features, block patterns, block editor patterns and much more. Crafted by WordPress experts, this theme makes use of lightweight design and the latest HTML codes that are further optimized to give you a faster page load speed. The overall look is elegant and at the same time professional to represent your business in a very presentable manner. This theme is retina-ready and has a responsive design that makes it work well across any device. There is a beautifully designed banner and many sections for displaying information about your Team, showing the client Testimonials, and more. There are plenty of customization options available for you to tweak the design and add your own flavor. To make the design SEO-friendly, developers have implemented the best coding practices so that you don’t need to take extra effort. Call to Action Button (CTA) will ensure that your visitors will get the proper guidance for the next step. There are many social media options available for your website and the theme is also made translation-ready to support multiple languages."
+msgstr ""
+
+#: inc/core/theme-info.php:69
+msgid "Edit Your Site"
+msgstr ""
+
+#: inc/core/theme-info.php:70
+msgid "Visit Your Site"
+msgstr ""
+
+#: inc/core/theme-info.php:74
+msgid "Having Trouble, Need Support?"
+msgstr ""
+
+#: inc/core/theme-info.php:75
+msgid "Our dedicated team is well prepared to help you out in case of queries and doubts regarding our theme."
+msgstr ""
+
+#: inc/core/theme-info.php:77
+msgid "Support Forum"
+msgstr ""
+
+#: inc/core/theme-info.php:81
+msgid "Reviews & Testimonials"
+msgstr ""
+
+#: inc/core/theme-info.php:82
+msgid "All the features and aspects of this WordPress Theme are phenomenal. I'd recommend this theme to all."
+msgstr ""
+
+#: inc/core/theme-info.php:84
+msgid "Reviews"
+msgstr ""
+
+#: inc/core/theme-info.php:88
+msgid "Theme Documentation"
+msgstr ""
+
+#: inc/core/theme-info.php:89
+msgid "If you need any assistance regarding setting up and configuring the Theme, our documentation is there."
+msgstr ""
+
+#: inc/core/theme-info.php:91
+msgid "Free Theme Documentation"
+msgstr ""
+
+#: inc/core/theme-info.php:100
+msgid "Premium Theme Information"
+msgstr ""
+
+#: inc/core/theme-info.php:103
+msgid "This spectacular premium Automobile WordPress Theme is made for the motor-heads. We have created our Automobile themes Stunning design with respect to the automotive industry. The frenzy for keeping our cars immaculate and shiny is well known. We assure you that it will be well reflected in our theme. As they are made with utilizing clean coding standards and it will function well with current WordPress version. It is built on the foundation of being responsive & user-friendly. This allows it to function at its optimal best across all platforms. This takes care of all the visitors and users, regardless of the source of traffic is being driven from."
+msgstr ""
+
+#: inc/core/theme-info.php:108
+msgid "Live Demo"
+msgstr ""
+
+#: inc/core/theme-info.php:109
+msgid "Buy Pro"
+msgstr ""
+
+#: inc/core/theme-info.php:110
+msgid "Pro Documentation"
+msgstr ""
+
+#: inc/core/theme-info.php:121
+msgid "Theme Features"
+msgstr ""
+
+#: inc/core/theme-info.php:127
+msgid "Features"
+msgstr ""
+
+#: inc/core/theme-info.php:128
+msgid "Free Themes"
+msgstr ""
+
+#: inc/core/theme-info.php:129
+msgid "Premium Themes"
+msgstr ""
+
+#: inc/core/theme-info.php:134
+msgid "Easy Setup"
+msgstr ""
+
+#: inc/core/theme-info.php:139
+msgid "Responsive Design"
+msgstr ""
+
+#: inc/core/theme-info.php:144
+msgid "SEO Friendly"
+msgstr ""
+
+#: inc/core/theme-info.php:149
+msgid "Banner Settings"
+msgstr ""
+
+#: inc/core/theme-info.php:154
+msgid "Number of Slider/ Banner"
+msgstr ""
+
+#: inc/core/theme-info.php:155
+msgid "Banner"
+msgstr ""
+
+#: inc/core/theme-info.php:156
+msgid "Unlimited Slides"
+msgstr ""
+
+#: inc/core/theme-info.php:159
+msgid "Template Pages"
+msgstr ""
+
+#: inc/core/theme-info.php:160
+msgid "3"
+msgstr ""
+
+#: inc/core/theme-info.php:161
+msgid "6"
+msgstr ""
+
+#: inc/core/theme-info.php:164
+msgid "Home Page Template"
+msgstr ""
+
+#: inc/core/theme-info.php:165
+#: inc/core/theme-info.php:166
+#: inc/core/theme-info.php:176
+msgid "1"
+msgstr ""
+
+#: inc/core/theme-info.php:169
+msgid "Theme sections"
+msgstr ""
+
+#: inc/core/theme-info.php:170
+msgid "2"
+msgstr ""
+
+#: inc/core/theme-info.php:171
+msgid "10"
+msgstr ""
+
+#: inc/core/theme-info.php:174
+msgid "Contact us Page Template"
+msgstr ""
+
+#: inc/core/theme-info.php:179
+msgid "Blog Templates & Layout"
+msgstr ""
+
+#: inc/core/theme-info.php:181
+msgid "3(Full width/Left/Right Sidebar)"
+msgstr ""
+
+#: inc/core/theme-info.php:184
+msgid "Page Templates & Layout"
+msgstr ""
+
+#: inc/core/theme-info.php:186
+msgid "2(Left/Right Sidebar)"
+msgstr ""
+
+#: inc/core/theme-info.php:189
+msgid "Section Reordering"
+msgstr ""
+
+#: inc/core/theme-info.php:194
+msgid "Demo Importer"
+msgstr ""
+
+#: inc/core/theme-info.php:199
+msgid "Full Documentation"
+msgstr ""
+
+#: inc/core/theme-info.php:204
+msgid "Latest WordPress Compatibility"
+msgstr ""
+
+#: inc/core/theme-info.php:209
+msgid "Woo-Commerce Compatibility"
+msgstr ""
+
+#: inc/core/theme-info.php:214
+msgid "Support 3rd Party Plugins"
+msgstr ""
+
+#: inc/core/theme-info.php:219
+msgid "Secure and Optimized Code"
+msgstr ""
+
+#: inc/core/theme-info.php:224
+msgid "Exclusive Functionalities"
+msgstr ""
+
+#: inc/core/theme-info.php:229
+msgid "Section Enable / Disable"
+msgstr ""
+
+#: inc/core/theme-info.php:234
+msgid "Section Google Font Choices"
+msgstr ""
+
+#: inc/core/theme-info.php:239
+#: patterns/primary-sidebar.php:44
+msgid "Gallery"
+msgstr ""
+
+#: inc/core/theme-info.php:244
+msgid "Simple & Mega Menu Option"
+msgstr ""
+
+#: inc/core/theme-info.php:249
+msgid "Support to add custom CSS / JS "
+msgstr ""
+
+#: inc/core/theme-info.php:254
+msgid "Shortcodes"
+msgstr ""
+
+#: inc/core/theme-info.php:259
+msgid "Custom Background, Colors, Header, Logo & Menu"
+msgstr ""
+
+#: inc/core/theme-info.php:264
+msgid "Premium Membership"
+msgstr ""
+
+#: inc/core/theme-info.php:269
+msgid "Budget Friendly Value"
+msgstr ""
+
+#: inc/core/theme-info.php:274
+msgid "Priority Error Fixing"
+msgstr ""
+
+#: inc/core/theme-info.php:279
+msgid "Custom Feature Addition"
+msgstr ""
+
+#: inc/core/theme-info.php:284
+msgid "All Access Theme Pass"
+msgstr ""
+
+#: inc/core/theme-info.php:289
+msgid "Seamless Customer Support"
+msgstr ""
+
+#: inc/core/theme-info.php:308
+msgid "WP Theme Bundle"
+msgstr ""
+
+#: inc/core/theme-info.php:309
+msgid "Enhance your website effortlessly with our WP Theme Bundle. Get access to 250+ premium WordPress themes and 5+ powerful plugins, all designed to meet diverse business needs. Enjoy seamless integration with any plugins, ultimate customization flexibility, and regular updates to keep your site current and secure. Plus, benefit from our dedicated customer support, ensuring a smooth and professional web experience."
+msgstr ""
+
+#: inc/core/theme-info.php:311
+msgid "Features:"
+msgstr ""
+
+#: inc/core/theme-info.php:312
+msgid "250+ Premium Themes & 5+ Plugins."
+msgstr ""
+
+#: inc/core/theme-info.php:313
+msgid "Seamless Integration."
+msgstr ""
+
+#: inc/core/theme-info.php:314
+msgid "Customization Flexibility."
+msgstr ""
+
+#: inc/core/theme-info.php:315
+msgid "Regular Updates."
+msgstr ""
+
+#: inc/core/theme-info.php:316
+msgid "Dedicated Support."
+msgstr ""
+
+#: inc/core/theme-info.php:320
+msgid "Buy Now"
+msgstr ""
+
+#: inc/core/theme-info.php:321
+msgid "Documentation"
+msgstr ""
+
+#: inc/customizer.php:23
+msgid "Homepage Settings"
+msgstr ""
+
+#: inc/customizer.php:30
+msgid "Animation"
+msgstr ""
+
+#: inc/customizer.php:41
+msgid "Animation "
+msgstr ""
+
+#: inc/customizer.php:42
+msgid "Here you can disable overall site animation effect"
+msgstr ""
+
+#: inc/patterns/blog-section.php:3
+#: patterns/blog-section.php:11
+msgid "LATEST NEWS"
+msgstr ""
+
+#: inc/patterns/blog-section.php:11
+#: patterns/blog-section.php:19
+msgid "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+msgstr ""
+
+#: inc/patterns/brand-section.php:3
+#: patterns/brand-section.php:10
+msgid "OUR BRANDS"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:3
+#: patterns/featured-cars.php:10
+msgid "FEATURED CAR"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:11
+#: patterns/featured-cars.php:18
+msgid "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+msgstr ""
+
+#: inc/patterns/featured-cars.php:23
+#: inc/patterns/featured-cars.php:71
+#: inc/patterns/featured-cars.php:119
+#: inc/patterns/featured-cars.php:169
+#: inc/patterns/featured-cars.php:217
+#: inc/patterns/featured-cars.php:265
+#: patterns/featured-cars.php:30
+#: patterns/featured-cars.php:78
+#: patterns/featured-cars.php:126
+#: patterns/featured-cars.php:176
+#: patterns/featured-cars.php:224
+#: patterns/featured-cars.php:272
+msgid "$169,921"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:29
+#: inc/patterns/featured-cars.php:77
+#: inc/patterns/featured-cars.php:125
+#: inc/patterns/featured-cars.php:175
+#: inc/patterns/featured-cars.php:223
+#: inc/patterns/featured-cars.php:271
+#: patterns/featured-cars.php:36
+#: patterns/featured-cars.php:84
+#: patterns/featured-cars.php:132
+#: patterns/featured-cars.php:182
+#: patterns/featured-cars.php:230
+#: patterns/featured-cars.php:278
+msgid "Mumbai"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:35
+#: patterns/featured-cars.php:42
+msgid "SILVER AUDI"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:39
+#: inc/patterns/featured-cars.php:87
+#: inc/patterns/featured-cars.php:135
+#: inc/patterns/featured-cars.php:185
+#: inc/patterns/featured-cars.php:233
+#: inc/patterns/featured-cars.php:281
+#: patterns/featured-cars.php:46
+#: patterns/featured-cars.php:94
+#: patterns/featured-cars.php:142
+#: patterns/featured-cars.php:192
+#: patterns/featured-cars.php:240
+#: patterns/featured-cars.php:288
+msgid "Sed ut perspiciatis unde omnis iste natus error sit"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:45
+#: inc/patterns/featured-cars.php:93
+#: inc/patterns/featured-cars.php:141
+#: inc/patterns/featured-cars.php:191
+#: inc/patterns/featured-cars.php:239
+#: inc/patterns/featured-cars.php:287
+#: patterns/featured-cars.php:52
+#: patterns/featured-cars.php:100
+#: patterns/featured-cars.php:148
+#: patterns/featured-cars.php:198
+#: patterns/featured-cars.php:246
+#: patterns/featured-cars.php:294
+msgid "2017"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:51
+#: inc/patterns/featured-cars.php:99
+#: inc/patterns/featured-cars.php:147
+#: inc/patterns/featured-cars.php:197
+#: inc/patterns/featured-cars.php:245
+#: inc/patterns/featured-cars.php:293
+#: patterns/featured-cars.php:58
+#: patterns/featured-cars.php:106
+#: patterns/featured-cars.php:154
+#: patterns/featured-cars.php:204
+#: patterns/featured-cars.php:252
+#: patterns/featured-cars.php:300
+msgid "Automatic"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:57
+#: inc/patterns/featured-cars.php:105
+#: inc/patterns/featured-cars.php:153
+#: inc/patterns/featured-cars.php:203
+#: inc/patterns/featured-cars.php:251
+#: inc/patterns/featured-cars.php:299
+#: patterns/featured-cars.php:64
+#: patterns/featured-cars.php:112
+#: patterns/featured-cars.php:160
+#: patterns/featured-cars.php:210
+#: patterns/featured-cars.php:258
+#: patterns/featured-cars.php:306
+msgid "21,000 ml"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:83
+#: patterns/featured-cars.php:90
+msgid "BLACK JAGUAR"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:131
+#: patterns/featured-cars.php:138
+msgid "BLUE BMW"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:181
+#: patterns/featured-cars.php:188
+msgid "BLACK BMW"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:229
+#: patterns/featured-cars.php:236
+msgid "WHITE BMW"
+msgstr ""
+
+#: inc/patterns/featured-cars.php:277
+#: patterns/featured-cars.php:284
+msgid "SILVER MERCEDES BENZ"
+msgstr ""
+
+#: inc/patterns/footer-default.php:76
+#: patterns/footer-default.php:83
+msgid "By VWThemes"
+msgstr ""
+
+#: inc/patterns/gallery-section.php:3
+#: patterns/gallery-section.php:10
+msgid "CAR GALLERY"
+msgstr ""
+
+#: inc/patterns/home-banner.php:9
+#: patterns/home-banner.php:17
+msgid "EXPLORE YOUR DREAM CAR"
+msgstr ""
+
+#: inc/patterns/home-banner.php:17
+#: patterns/home-banner.php:25
+msgid "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+msgstr ""
+
+#: inc/patterns/home-banner.php:22
+#: patterns/home-banner.php:30
+msgid "DISCOVER MORE"
+msgstr ""
+
+#: inc/patterns/services-one.php:3
+#: patterns/services-one.php:10
+msgid "WELCOME TO AUTOMOBILE SERVICES"
+msgstr ""
+
+#: inc/patterns/services-one.php:17
+#: inc/patterns/services-one.php:61
+#: patterns/services-one.php:24
+#: patterns/services-one.php:68
+msgid "HIGHLY TRAINED - STAFF"
+msgstr ""
+
+#: inc/patterns/services-one.php:21
+#: inc/patterns/services-one.php:35
+#: inc/patterns/services-one.php:49
+#: inc/patterns/services-one.php:65
+#: inc/patterns/services-one.php:79
+#: inc/patterns/services-one.php:93
+#: patterns/services-one.php:28
+#: patterns/services-one.php:42
+#: patterns/services-one.php:56
+#: patterns/services-one.php:72
+#: patterns/services-one.php:86
+#: patterns/services-one.php:100
+msgid "Lorem Ipsum has been the industry standard. Lorem Ipsum has been the industry standard. Lorem Ipsum has been the industry"
+msgstr ""
+
+#: inc/patterns/services-one.php:31
+#: inc/patterns/services-one.php:75
+#: patterns/services-one.php:38
+#: patterns/services-one.php:82
+msgid "FAST & EFFECTIVE SERVICES"
+msgstr ""
+
+#: inc/patterns/services-one.php:45
+#: inc/patterns/services-one.php:89
+#: patterns/services-one.php:52
+#: patterns/services-one.php:96
+msgid "SUPPORT 24/7"
+msgstr ""
+
+#: inc/section-pro/customizer.php:73
+msgid "Auto Car Dealership Pro"
+msgstr ""
+
+#: inc/section-pro/customizer.php:74
+msgid "Upgrade Pro"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:327
+msgid "Install Required Plugins"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:328
+msgid "Install Plugins"
+msgstr ""
+
+#. translators: %s: plugin name.
+#: inc/tgm/class-tgm-plugin-activation.php:330
+msgid "Installing Plugin: %s"
+msgstr ""
+
+#. translators: %s: plugin name.
+#: inc/tgm/class-tgm-plugin-activation.php:332
+msgid "Updating Plugin: %s"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:333
+msgid "Something went wrong with the plugin API."
+msgstr ""
+
+#. translators: 1: plugin name(s).
+#: inc/tgm/class-tgm-plugin-activation.php:334
+msgid "This theme requires the following plugin: %1$s."
+msgid_plural "This theme requires the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: plugin name(s).
+#: inc/tgm/class-tgm-plugin-activation.php:340
+msgid "This theme recommends the following plugin: %1$s."
+msgid_plural "This theme recommends the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: plugin name(s).
+#: inc/tgm/class-tgm-plugin-activation.php:346
+msgid "The following plugin needs to be updated to its latest version to ensure maximum compatibility with this theme: %1$s."
+msgid_plural "The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: plugin name(s).
+#: inc/tgm/class-tgm-plugin-activation.php:352
+msgid "There is an update available for: %1$s."
+msgid_plural "There are updates available for the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: plugin name(s).
+#: inc/tgm/class-tgm-plugin-activation.php:358
+msgid "The following required plugin is currently inactive: %1$s."
+msgid_plural "The following required plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: plugin name(s).
+#: inc/tgm/class-tgm-plugin-activation.php:364
+msgid "The following recommended plugin is currently inactive: %1$s."
+msgid_plural "The following recommended plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:370
+msgid "Begin installing plugin"
+msgid_plural "Begin installing plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:375
+msgid "Begin updating plugin"
+msgid_plural "Begin updating plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:380
+msgid "Begin activating plugin"
+msgid_plural "Begin activating plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:385
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:386
+#: inc/tgm/class-tgm-plugin-activation.php:821
+#: inc/tgm/class-tgm-plugin-activation.php:2527
+#: inc/tgm/class-tgm-plugin-activation.php:3574
+msgid "Return to the Dashboard"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:387
+#: inc/tgm/class-tgm-plugin-activation.php:3153
+msgid "Plugin activated successfully."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:388
+#: inc/tgm/class-tgm-plugin-activation.php:2946
+msgid "The following plugin was activated successfully:"
+msgid_plural "The following plugins were activated successfully:"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: plugin name.
+#: inc/tgm/class-tgm-plugin-activation.php:390
+msgid "No action taken. Plugin %1$s was already active."
+msgstr ""
+
+#. translators: 1: plugin name.
+#: inc/tgm/class-tgm-plugin-activation.php:392
+msgid "Plugin not activated. A higher version of %s is needed for this theme. Please update the plugin."
+msgstr ""
+
+#. translators: 1: dashboard link.
+#: inc/tgm/class-tgm-plugin-activation.php:394
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:395
+msgid "Dismiss this notice"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:396
+msgid "There are one or more required or recommended plugins to install, update or activate."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:397
+msgid "Please contact the administrator of this site for help."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:516
+msgid "This plugin needs to be updated to be compatible with your theme."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:517
+msgid "Update Required"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:928
+msgid "The remote plugin package does not contain a folder with the desired slug and renaming did not work."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:928
+#: inc/tgm/class-tgm-plugin-activation.php:931
+msgid "Please contact the plugin provider and ask them to package their plugin according to the WordPress guidelines."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:931
+msgid "The remote plugin package consists of more than one file, but the files are not packaged in a folder."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:1115
+#: inc/tgm/class-tgm-plugin-activation.php:2942
+msgctxt "plugin A *and* plugin B"
+msgid "and"
+msgstr ""
+
+#. translators: %s: version number
+#: inc/tgm/class-tgm-plugin-activation.php:1976
+msgid "TGMPA v%s"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2267
+msgid "Required"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2270
+msgid "Recommended"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2286
+msgid "WordPress Repository"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2289
+msgid "External Source"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2292
+msgid "Pre-Packaged"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2309
+msgid "Not Installed"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2313
+msgid "Installed But Not Activated"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2315
+msgid "Active"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2321
+msgid "Required Update not Available"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2324
+msgid "Requires Update"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2327
+msgid "Update recommended"
+msgstr ""
+
+#. translators: 1: install status, 2: update status
+#: inc/tgm/class-tgm-plugin-activation.php:2336
+msgctxt "Install/Update Status"
+msgid "%1$s, %2$s"
+msgstr ""
+
+#. translators: 1: number of plugins.
+#: inc/tgm/class-tgm-plugin-activation.php:2382
+msgctxt "plugins"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: number of plugins.
+#: inc/tgm/class-tgm-plugin-activation.php:2386
+msgid "To Install <span class=\"count\">(%s)</span>"
+msgid_plural "To Install <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: number of plugins.
+#: inc/tgm/class-tgm-plugin-activation.php:2390
+msgid "Update Available <span class=\"count\">(%s)</span>"
+msgid_plural "Update Available <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: number of plugins.
+#: inc/tgm/class-tgm-plugin-activation.php:2394
+msgid "To Activate <span class=\"count\">(%s)</span>"
+msgid_plural "To Activate <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2476
+msgctxt "as in: \"version nr unknown\""
+msgid "unknown"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2484
+msgid "Installed version:"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2492
+msgid "Minimum required version:"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2504
+msgid "Available version:"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2527
+msgid "No plugins to install, update or activate."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2541
+msgid "Plugin"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2542
+msgid "Source"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2543
+msgid "Type"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2547
+msgid "Version"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2548
+msgid "Status"
+msgstr ""
+
+#. translators: %2$s: plugin name in screen reader markup
+#: inc/tgm/class-tgm-plugin-activation.php:2597
+msgid "Install %2$s"
+msgstr ""
+
+#. translators: %2$s: plugin name in screen reader markup
+#: inc/tgm/class-tgm-plugin-activation.php:2602
+msgid "Update %2$s"
+msgstr ""
+
+#. translators: %2$s: plugin name in screen reader markup
+#: inc/tgm/class-tgm-plugin-activation.php:2608
+msgid "Activate %2$s"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2678
+msgid "Upgrade message from the plugin author:"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2711
+msgid "Install"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2717
+msgid "Update"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2720
+msgid "Activate"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2751
+msgid "No plugins were selected to be installed. No action taken."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2753
+msgid "No plugins were selected to be updated. No action taken."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2794
+msgid "No plugins are available to be installed at this time."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2796
+msgid "No plugins are available to be updated at this time."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2902
+msgid "No plugins were selected to be activated. No action taken."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:2928
+msgid "No plugins are available to be activated at this time."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:3152
+msgid "Plugin activation failed."
+msgstr ""
+
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: inc/tgm/class-tgm-plugin-activation.php:3492
+msgid "Updating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#. translators: 1: plugin name, 2: error message.
+#: inc/tgm/class-tgm-plugin-activation.php:3495
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+#. translators: 1: plugin name.
+#: inc/tgm/class-tgm-plugin-activation.php:3497
+msgid "The installation of %1$s failed."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:3501
+msgid "The installation and activation process is starting. This process may take a while on some hosts, so please be patient."
+msgstr ""
+
+#. translators: 1: plugin name.
+#: inc/tgm/class-tgm-plugin-activation.php:3503
+msgid "%1$s installed and activated successfully."
+msgstr ""
+
+#. translators: 1: plugin name.
+#: inc/tgm/class-tgm-plugin-activation.php:3503
+#: inc/tgm/class-tgm-plugin-activation.php:3511
+msgid "Show Details"
+msgstr ""
+
+#. translators: 1: plugin name.
+#: inc/tgm/class-tgm-plugin-activation.php:3503
+#: inc/tgm/class-tgm-plugin-activation.php:3511
+msgid "Hide Details"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:3504
+msgid "All installations and activations have been completed."
+msgstr ""
+
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: inc/tgm/class-tgm-plugin-activation.php:3506
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:3509
+msgid "The installation process is starting. This process may take a while on some hosts, so please be patient."
+msgstr ""
+
+#. translators: 1: plugin name.
+#: inc/tgm/class-tgm-plugin-activation.php:3511
+msgid "%1$s installed successfully."
+msgstr ""
+
+#: inc/tgm/class-tgm-plugin-activation.php:3512
+msgid "All installations have been completed."
+msgstr ""
+
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: inc/tgm/class-tgm-plugin-activation.php:3514
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: inc/tgm/tgm.php:10
+msgid "Ibtana - WordPress Website Builder"
+msgstr ""
+
+#: patterns/blog-section.php
+msgctxt "Pattern title"
+msgid "Blog Section"
+msgstr ""
+
+#: patterns/brand-section.php
+msgctxt "Pattern title"
+msgid "Brand Section"
+msgstr ""
+
+#: patterns/comment-section-1.php
+msgctxt "Pattern title"
+msgid "Comment Section 1"
+msgstr ""
+
+#: patterns/cover-with-post-title.php
+msgctxt "Pattern title"
+msgid "Cover With Post Title"
+msgstr ""
+
+#: patterns/featured-cars.php
+msgctxt "Pattern title"
+msgid "Featured Cars"
+msgstr ""
+
+#: patterns/footer-default.php
+msgctxt "Pattern title"
+msgid "Footer Default"
+msgstr ""
+
+#: patterns/gallery-section.php
+msgctxt "Pattern title"
+msgid "Gallery Section"
+msgstr ""
+
+#: patterns/header-default.php
+msgctxt "Pattern title"
+msgid "Header Default"
+msgstr ""
+
+#: patterns/hidden-404.php
+msgctxt "Pattern title"
+msgid "Hidden 404"
+msgstr ""
+
+#: patterns/hidden-404.php:16
+msgid "Page Not Found"
+msgstr ""
+
+#: patterns/hidden-404.php:20
+msgid "This page could not be found. Maybe try a search?"
+msgstr ""
+
+#: patterns/home-banner.php
+msgctxt "Pattern title"
+msgid "Home Banner"
+msgstr ""
+
+#: patterns/home.php
+msgctxt "Pattern title"
+msgid "Home"
+msgstr ""
+
+#: patterns/post-content-1.php
+msgctxt "Pattern title"
+msgid "Post Content 1"
+msgstr ""
+
+#: patterns/post-listing-four-column.php
+msgctxt "Pattern title"
+msgid "Post Listing Four Column"
+msgstr ""
+
+#: patterns/post-listing-single-column.php
+msgctxt "Pattern title"
+msgid "Post Listing Single Column"
+msgstr ""
+
+#: patterns/post-listing-three-column.php
+msgctxt "Pattern title"
+msgid "Post Listing Three Column"
+msgstr ""
+
+#: patterns/post-listing-two-column.php
+msgctxt "Pattern title"
+msgid "Post Listing Two Column"
+msgstr ""
+
+#: patterns/primary-sidebar.php
+msgctxt "Pattern title"
+msgid "Primary Sidebar"
+msgstr ""
+
+#: patterns/primary-sidebar.php:12
+msgid "Search"
+msgstr ""
+
+#: patterns/primary-sidebar.php:20
+msgid "Archive"
+msgstr ""
+
+#: patterns/primary-sidebar.php:36
+msgid "Tags"
+msgstr ""
+
+#: patterns/primary-sidebar.php:76
+msgid "Recent Posts"
+msgstr ""
+
+#: patterns/primary-sidebar.php:84
+msgid "Social Media"
+msgstr ""
+
+#: patterns/product-sidebar.php
+msgctxt "Pattern title"
+msgid "Product Sidebar"
+msgstr ""
+
+#: patterns/product-sidebar.php:11
+msgid "Filter by price"
+msgstr ""
+
+#: patterns/product-sidebar.php:21
+msgid "Categories"
+msgstr ""
+
+#: patterns/product-sidebar.php:29
+msgid "Active filters"
+msgstr ""
+
+#: patterns/product-sidebar.php:49
+msgid "Filter by attribute"
+msgstr ""
+
+#: patterns/product-sidebar.php:59
+msgid "Filter by rating"
+msgstr ""
+
+#: patterns/services-one.php
+msgctxt "Pattern title"
+msgid "Services One"
+msgstr ""
+
+#: patterns/shop-title-cover.php
+msgctxt "Pattern title"
+msgid "Shop Title Cover"
+msgstr ""
+
+#: patterns/shop-title-cover.php:11
+msgid "Shop"
+msgstr ""
+
+#: patterns/theme-button.php
+msgctxt "Pattern title"
+msgid "Theme Button"
+msgstr ""
+
+#: styles/dark-green.json
+msgctxt "Style variation name"
+msgid "Red"
+msgstr ""
+
+#: styles/dark-green.json
+#: styles/gray.json
+#: styles/lite-pink.json
+#: styles/purple.json
+#: styles/yellow-color.json
+#: theme.json
+msgctxt "Color name"
+msgid "Primary"
+msgstr ""
+
+#: styles/dark-green.json
+#: styles/gray.json
+#: styles/lite-pink.json
+#: styles/purple.json
+#: styles/yellow-color.json
+#: theme.json
+msgctxt "Color name"
+msgid "Secondary"
+msgstr ""
+
+#: styles/dark-green.json
+#: styles/gray.json
+#: styles/lite-pink.json
+#: styles/purple.json
+#: styles/yellow-color.json
+#: theme.json
+msgctxt "Color name"
+msgid "Foreground"
+msgstr ""
+
+#: styles/dark-green.json
+#: styles/gray.json
+#: styles/lite-pink.json
+#: styles/purple.json
+#: styles/yellow-color.json
+#: theme.json
+msgctxt "Color name"
+msgid "Background"
+msgstr ""
+
+#: styles/gray.json
+msgctxt "Style variation name"
+msgid "Lite Green"
+msgstr ""
+
+#: styles/lite-pink.json
+msgctxt "Style variation name"
+msgid "Lite Pink"
+msgstr ""
+
+#: styles/purple.json
+msgctxt "Style variation name"
+msgid "Purple"
+msgstr ""
+
+#: styles/yellow-color.json
+msgctxt "Style variation name"
+msgid "Yellow"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Blank"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Page (No Title / Feature Image)"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Blog Page (Sidebar on Left)"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Blog Page (Sidebar on Right)"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Single Page (Sidebar on Right)"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Single Page (Sidebar on Left)"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Single Post (Sidebar on Right)"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Single Post (Sidebar on Left)"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Sidebar"
+msgstr ""
+
+#: theme.json
+msgctxt "Duotone name"
+msgid "Foreground and background"
+msgstr ""
+
+#: theme.json
+msgctxt "Duotone name"
+msgid "Foreground and secondary"
+msgstr ""
+
+#: theme.json
+msgctxt "Duotone name"
+msgid "Foreground and tertiary"
+msgstr ""
+
+#: theme.json
+msgctxt "Duotone name"
+msgid "Primary and background"
+msgstr ""
+
+#: theme.json
+msgctxt "Duotone name"
+msgid "Primary and secondary"
+msgstr ""
+
+#: theme.json
+msgctxt "Duotone name"
+msgid "Primary and tertiary"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Vertical secondary to tertiary"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Vertical secondary to background"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Vertical background to secondary"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Secondary background to Secondary dark background"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Secondary background dark to Secondary  background"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal primary to foreground"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal secondary to background"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal secondary to background left"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal secondary to background right"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal background to secondary"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal tertiary to background"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal background to tertiary"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Button color Hover"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Secondary Background"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Body Text"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Border"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Tertiary"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Secondary dark Background"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "1"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "2"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "3"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "4"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "5"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "6"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "7"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Barlow Condensed"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Roboto Flex"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Lato"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Poppins"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "League Spartan"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Montserrat"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Tiny"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Upper Heading"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Normal"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Content Heading"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra large (Recent Post Title)"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Huge (Display)"
+msgstr ""

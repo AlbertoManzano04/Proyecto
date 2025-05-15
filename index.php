@@ -1,5 +1,7 @@
 <?php
 session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha iniciado sesión
+require_once __DIR__ . '/tienda/wp-load.php'; // Ruta relativa desde index.php
+$cart_url = wc_get_cart_url();
 ?>
 
 <!DOCTYPE html>
@@ -178,6 +180,12 @@ session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha i
                 <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] === 'admin'): ?>
                     <li class="nav-item"><a href="adminDashboard.php" class="btn btn-warning nav-link">Panel Admin</a></li>
                 <?php endif; ?>
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                <li class="nav-item">
+                <a href="<?php echo esc_url($cart_url); ?>"><i class="fas fa-shopping-cart"></i> Carrito</a>
+            </a>
+        </li>
+        <?php endif; ?>
             </ul>
         </div>
     </div>

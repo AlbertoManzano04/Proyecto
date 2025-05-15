@@ -126,6 +126,19 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         h1, h2 {
             color: darkblue;
         }
+        /* Cuadrado verde con el precio */
+        .precio-cuadrado {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #28a745; /* Verde */
+        color: white;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
         .boton-contacto {
         display: block;
         background-color: #007bff; /* Color azul */
@@ -210,34 +223,36 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
     <div class="row">
         <?php while ($row = $result->fetch_assoc()): ?>
             <div class="col-md-4 mb-4">
-                <div class="tarjeta-vehiculo shadow-sm position-relative">
-                    <span class="distintivo bg-success position-absolute top-0 start-0 m-2">Km0</span>
+    <div class="tarjeta-vehiculo shadow-sm position-relative">
+        <span class="distintivo bg-success position-absolute top-0 start-0 m-2">Km0</span>
+        
+        <!-- Cuadrado verde con el precio -->
+        <span class="precio-cuadrado">€<?= number_format($row['presupuesto'], 0, ',', '.') ?></span>
 
-                    <img src="<?= htmlspecialchars($row['imagen']) ?>" alt="<?= htmlspecialchars($row['modelo']) ?>">
-                    <h5 class="mt-3"><?= htmlspecialchars($row['marca']) ?> <?= htmlspecialchars($row['modelo']) ?></h5>
-                    <p><strong>Año:</strong> <?= htmlspecialchars($row['anio']) ?></p>
-                    <p><strong>Color:</strong> <?= htmlspecialchars($row['color']) ?></p>
-                    <p><strong>Tipo:</strong> <?= htmlspecialchars($row['tipo']) ?></p>
-                    <p><strong>Precio:</strong> €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
-                    <p><strong>Combustible:</strong> <?= htmlspecialchars($row['combustible']) ?></p>
-                    <p><strong>Potencia:</strong> <?= htmlspecialchars($row['potencia_cv']) ?> CV</p>
-                    
-                    <!-- opcion de añadir a favoritos y de contacto de cada coche-->
-                    <?php if ($usuario_id): ?>
-                        <form action="agregar_favorito.php" method="POST" class="mt-2">
-                            <input type="hidden" name="vehiculo_id" value="<?= $row['id'] ?>">
-                            <button type="submit" class="btn <?= esFavorito($row['id'], $usuario_id, $conn) ? 'btn-danger' : 'btn-outline-secondary' ?> btn-sm w-100">
-                                <i class="fas fa-heart me-1"></i>
-                                <?= esFavorito($row['id'], $usuario_id, $conn) ? 'Quitar de Favoritos' : 'Agregar a Favoritos' ?>
-                            </button>
-                        </form>
-                    <?php endif; ?>
+        <img src="<?= htmlspecialchars($row['imagen']) ?>" alt="<?= htmlspecialchars($row['modelo']) ?>">
+        <h5 class="mt-3"><?= htmlspecialchars($row['marca']) ?> <?= htmlspecialchars($row['modelo']) ?></h5>
+        <p><strong>Año:</strong> <?= htmlspecialchars($row['anio']) ?></p>
+        <p><strong>Color:</strong> <?= htmlspecialchars($row['color']) ?></p>
+        <p><strong>Tipo:</strong> <?= htmlspecialchars($row['tipo']) ?></p>
+        <p><strong>Combustible:</strong> <?= htmlspecialchars($row['combustible']) ?></p>
+        <p><strong>Potencia:</strong> <?= htmlspecialchars($row['potencia_cv']) ?> CV</p>
+        
+        <!-- opción de añadir a favoritos y de contacto de cada coche -->
+        <?php if ($usuario_id): ?>
+        <form action="agregar_favorito.php" method="POST" class="mt-2">
+        <input type="hidden" name="vehiculo_id" value="<?= $row['id'] ?>">
+        <button type="submit" class="btn <?= esFavorito($row['id'], $usuario_id, $conn) ? 'btn-danger' : 'btn-outline-secondary' ?> btn-sm w-100">
+            <i class="fas fa-heart me-1"></i>
+            <?= esFavorito($row['id'], $usuario_id, $conn) ? 'Quitar de Favoritos' : 'Agregar a Favoritos' ?>
+        </button>
+        </form>
+        <?php endif; ?>
 
                     <div class="informacion-contacto">
-                        <a href="contacto.php" class="boton-contacto">📞 Contáctanos</a>
-                    </div>
-                </div>
+                <a href="contacto.php" class="boton-contacto">📞 Contáctanos</a>
             </div>
+        </div>
+    </div>
         <?php endwhile; ?>
     </div>
 </main>

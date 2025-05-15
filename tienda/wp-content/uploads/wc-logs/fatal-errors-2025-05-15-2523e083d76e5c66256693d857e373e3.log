@@ -1,0 +1,1 @@
+2025-05-15T12:19:00+00:00 CRITICAL Uncaught Error: Call to undefined function wc_get_shop_url() in /var/www/html/php/Proyecto/index.php:4 CONTEXT: {"error":{"type":1,"file":"/var/www/html/php/Proyecto/index.php","line":4},"remote-logging":true,"backtrace":["","#0 {main}","thrown"]}

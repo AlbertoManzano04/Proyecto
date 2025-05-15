@@ -106,6 +106,18 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
             color: red;
             font-size: 1.5rem;
         }
+        .precio-cuadrado {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #28a745; /* Verde */
+        color: white;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -164,22 +176,23 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         </div>
     </div>
 </nav>
-<!-- Recorremos toda la tabla de coches de usuarios y vamos mostrando cada apartado  -->
 <main class="container my-4">
     <div class="row">
         <?php while ($row = $result->fetch_assoc()): ?>
             <div class="col-md-4 mb-4">
                 <div class="tarjeta-vehiculo shadow-sm position-relative">
+                    <!-- Cuadro verde con precio -->
+                    <span class="precio-cuadrado">€<?= number_format($row['presupuesto'], 0, ',', '.') ?></span>
+
                     <img src="<?= htmlspecialchars($row['imagen']) ?>" alt="<?= htmlspecialchars($row['modelo']) ?>">
                     <h5 class="mt-3"><?= htmlspecialchars($row['marca']) ?> <?= htmlspecialchars($row['modelo']) ?></h5>
                     <p><strong>Año:</strong> <?= htmlspecialchars($row['anio']) ?></p>
                     <p><strong>Color:</strong> <?= htmlspecialchars($row['color']) ?></p>
                     <p><strong>Tipo:</strong> <?= htmlspecialchars($row['tipo']) ?></p>
-                    <p><strong>Precio:</strong> €<?= number_format($row['presupuesto'], 0, ',', '.') ?></p>
                     <p><strong>Kilómetros:</strong> <?= htmlspecialchars($row['kilometros']) ?> km</p>
                     <p><strong>Combustible:</strong> <?= htmlspecialchars($row['combustible']) ?></p>
                     <p><strong>Potencia:</strong> <?= htmlspecialchars($row['potencia_cv']) ?> CV</p>
-                    <!-- boton de contacto por whatsApp y agregar favoritos -->
+
                     <?php if ($usuario_id): ?>
                         <form action="agregar_favorito.php" method="POST" class="mt-2">
                             <input type="hidden" name="vehiculo_id" value="<?= $row['id'] ?>">
@@ -189,8 +202,8 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
                             </button>
                         </form>
                     <?php endif; ?>
-                    
-                    <a href="https://wa.me/<?= htmlspecialchars($row['telefono']) ?>" class="btn-contacto" target="_blank">
+
+                    <a href="https://wa.me/<?= htmlspecialchars($row['telefono']) ?>" class="btn btn-success d-block mt-2" target="_blank">
                         <i class="fab fa-whatsapp me-1"></i> Contactar por WhatsApp
                     </a>
                 </div>
@@ -198,6 +211,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         <?php endwhile; ?>
     </div>
 </main>
+
 
 <div class="location-contact text-center mb-4">
     <p><strong>Visítanos:</strong> Av. de America, Córdoba, España</p>

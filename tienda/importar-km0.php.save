@@ -1,0 +1,85 @@
+<?php
+
+// Incluye el archivo wp-load.php para cargar el entorno de WordPress y WooCommerce
+require_once('/ruta/a/tu/wordpress/wp-load.php'); // Cambia esta ruta a la de tu instalación WP
+
+// Configuración base de datos (ajusta a tu config)
+define('DB_HOST', 'localhost'); // o 172.21.0.2 si usas Docker u otro host
+define('DB_USER', 'tu_usuario_db');
+define('DB_PASS', 'tu_password_db');
+define('DB_NAME', 'coches_db');
+define('DB_PORT', 3306);
+
+// Crear conexión
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+if ($conn->connect_error) {
+    die("Error conexión DB: " . $conn->connect_error);
+}
+
+// Consulta vehículos km0
+$sql = "SELECT * FROM vehiculos_km0";
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("Error en consulta: " . $conn->error);
+}
+
+// Para cada vehículo, crear producto WooCommerce
+while ($vehiculo = $result->fetch_assoc()) {
+    // Verificar si ya existe producto con este meta
+    $existing = wc_get_products(array(
+        'meta_key' => '_vehiculo_id',
+        'meta_value' => $vehiculo['id'],
+        'limit' => 1,
+    ));
+    if ($existing) {
+        echo "El vehículo ID {$vehiculo['id']} ya está importado.<br>";
+        continue;
+    }
+
+    // Crear producto WC
+    $producto = new WC_Product_Simple();
+
+    $producto->set_name($vehiculo['marca'] . ' ' . $vehiculo['modelo']);
+    $producto->set_status('publish');
+    $producto->set_catalog_visibility('visible');
+    $producto->set_description("Año: {$vehiculo['anio']}\nColor: {$vehiculo['color']}\nTipo: {$vehiculo['tipo']}\nCombustible: {$vehiculo['combustible']}\nPotencia: {$vehiculo['potencia_cv']} CV");
+    $producto->set_price($vehiculo['presupuesto']); // Precio
+
+    // Guarda el producto para obtener ID
+    $producto_id = $producto->save();
+
+    // Guardar meta con el id de vehículo para evitar duplicados
+    update_post_meta($producto_id, '_vehiculo_id', $vehiculo['id']);
+
+    // Si tienes imágenes, asignarlas al producto
+    if (!empty($vehiculo['imagen'])) {
+        $image_url = $vehiculo['imagen']; // URL o ruta local
+        // Función para subir imagen a WP y asignar al producto
+        $attachment_id = media_sideload_image_to_product($image_url, $producto_id);
+        if ($attachment_id) {
+            set_post_thumbnail($producto_id, $attachment_id);
+        }
+    }
+
+    echo "Producto creado para vehículo ID {$vehiculo['id']} - {$vehiculo['marca']} {$vehiculo['modelo']}<br>";
+}
+
+// Función para subir imagen desde URL y devolver ID attachment
+function media_sideload_image_to_product($file, $post_id) {
+    if (!function_exists('media_sideload_image')) {
+        require_once(ABSPATH . 'wp-admin/includes/media.php');
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+    }
+
+    // Descarga la imagen y la asocia al post
+    $media = media_sideload_image($file, $post_id, null, 'id');
+
+    if (is_wp_error($media)) {
+        echo "Error cargando imagen: " . $media->get_error_message() . "<br>";
+        return false;
+    }
+    return $media; // ID del attachment
+}
+?>

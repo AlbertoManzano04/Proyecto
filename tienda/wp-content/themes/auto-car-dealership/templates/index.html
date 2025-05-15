@@ -1,0 +1,39 @@
+<!-- wp:template-part {"slug":"header","theme":"auto-car-dealership","tagName":"header"} /-->
+
+<!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group"><!-- wp:cover {"customOverlayColor":"#23393d","isUserOverlayColor":true,"minHeight":100,"layout":{"type":"constrained"}} -->
+<div class="wp-block-cover" style="min-height:100px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim" style="background-color:#23393d"></span><div class="wp-block-cover__inner-container"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="wp-block-heading has-text-align-center">BLOG</h2>
+<!-- /wp:heading --></div></div>
+<!-- /wp:cover --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"40px","right":"40px","bottom":"40px","left":"40px"},"blockGap":"0px"}},"layout":{"inherit":true,"type":"constrained","contentSize":"80%"}} -->
+<main class="wp-block-group" style="padding-top:40px;padding-right:40px;padding-bottom:40px;padding-left:40px"><!-- wp:query {"queryId":6,"query":{"perPage":11,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":null,"parents":[],"format":[]}} -->
+<div class="wp-block-query"><!-- wp:post-template {"className":"post-grid-layout","layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:post-featured-image /-->
+
+<!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group"><!-- wp:post-title {"isLink":true,"fontSize":"upper-heading"} /-->
+
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+<div class="wp-block-group"><!-- wp:post-date {"style":{"typography":{"fontStyle":"normal","fontWeight":"600"}},"fontSize":"small"} /-->
+
+<!-- wp:post-author-name {"isLink":true,"fontSize":"medium"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:post-excerpt {"moreText":"Read More","excerptLength":20} /--></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+
+<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous /-->
+
+<!-- wp:query-pagination-numbers /-->
+
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination --></div>
+<!-- /wp:query --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","theme":"auto-car-dealership","tagName":"footer"} /-->
