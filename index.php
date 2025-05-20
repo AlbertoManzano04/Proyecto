@@ -1,6 +1,6 @@
 <?php
-session_start(); // Necesario para usar $_SESSION y controlar si el usuario ha iniciado sesión
-require_once __DIR__ . '/tienda/wp-load.php'; // Ruta relativa desde index.php
+session_start(); // Necesario para usar $_SESSION 
+require_once __DIR__ . '/tienda/wp-load.php'; // Cargar WordPress
 $cart_url = wc_get_cart_url();
 ?>
 

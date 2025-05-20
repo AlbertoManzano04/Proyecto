@@ -252,8 +252,8 @@ $conn->close();
             <div class="whatsapp-container">
                 <span class="whatsapp-text">Contáctanos por WhatsApp</span>
                 <a href="https://wa.me/608602302" class="whatsapp-btn" target="_blank">
-                    &#x1F4AC;
-                </a>
+                    <i class="fab fa-whatsapp"></i>
+                    </a>
             </div>
         </div>
     </div>

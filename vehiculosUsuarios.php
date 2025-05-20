@@ -126,7 +126,7 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
     <h1>Vehículos de Usuarios</h1>
     <p>Encuentra coches subidos por usuarios, disponibles para la compra</p>
 </header>
-<<!-- Menú de navegación -->
+<!-- Menú de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario Manzano</a>

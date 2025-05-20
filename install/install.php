@@ -1,15 +1,15 @@
 <?php
 require_once '../config/configBD.php';
 
-// Conectar con MySQL
+// Conectar con la base de datos 
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, "", DB_PORT);
 
-// Verificar conexión
+// Verificamos la conexión
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-// Crear la base de datos si no existe
+// Creamos la base de datos si no existe
 $sql = "CREATE DATABASE IF NOT EXISTS " . DB_NAME;
 if ($conn->query($sql) === TRUE) {
     echo "Base de datos creada o ya existente.<br>";
@@ -17,7 +17,7 @@ if ($conn->query($sql) === TRUE) {
     die("Error al crear la base de datos: " . $conn->error);
 }
 
-// Seleccionar la base de datos
+// Seleccionamos la base de datos
 $conn->select_db(DB_NAME);
 
 // Crear tabla usuarios con roles
