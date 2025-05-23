@@ -118,12 +118,19 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         font-size: 1rem;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        .titulo{
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    display: inline-block;
+    color: white;
+}
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Vehículos de Usuarios</h1>
+    <h1><span class="titulo">Vehículos de Usuarios</span></h1>
     <p>Encuentra coches subidos por usuarios, disponibles para la compra</p>
 </header>
 <!-- Menú de navegación -->

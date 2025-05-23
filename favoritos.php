@@ -115,12 +115,19 @@ $mysqli->close();
             color: red;
             font-size: 1.5rem;
         }
+        .titulo{
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    display: inline-block;
+    color: white;
+}
     </style>
 </head>
 <body>
 
 <header class="text-center py-5">
-    <h1>Mis Coches Favoritos</h1>
+    <h1><span class="titulo">Mis Coches Favoritos</span></h1>
     <p>Estos son los coches que has marcado como favoritos</p>
 </header>
 

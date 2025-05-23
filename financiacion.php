@@ -101,12 +101,19 @@ session_start();
         h3,h2{
             color: darkblue;
         }
+        .titulo{
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    display: inline-block;
+    color: white;
+}
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Opciones de Financiación</h1>
+    <h1><span class="titulo">Opciones de Financiación</span></h1>
     <p>Elige la financiación que mejor se adapte a tus necesidades</p>
 </header>
 

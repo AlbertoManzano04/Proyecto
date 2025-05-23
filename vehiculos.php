@@ -161,11 +161,19 @@ function esFavorito($vehiculo_id, $usuario_id, $conn) {
         padding: 2rem 0;
         text-align: center;
     }
+    .titulo{
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    display: inline-block;
+    color: white;
+}
+
     </style>
 </head>
 <body>
 <header>
-    <h1>Nuestros Vehículos (Km0)</h1>
+    <h1><span class="titulo">Nuestros Vehículos (Km0)</span></h1>
     <p>Encuentra el coche de tus sueños según tus preferencias</p>
 </header>
 <!-- Menú de navegación -->

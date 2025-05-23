@@ -151,12 +151,19 @@ nav a:hover {
     text-align: center;
     margin-bottom: 30px;
 }
+.titulo{
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    display: inline-block;
+    color: white;
+}
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Vende tu Vehículo</h1>
+    <h1><span class="titulo">Vende tu Vehículo</span></h1>
     <p>Comparte las características de tu coche y sube imágenes para venderlo</p>
 </header>
 <!-- Menú de navegación -->

@@ -139,7 +139,7 @@ $cart_url = wc_get_cart_url();
 <body>
 
 <header>
-    <h1>Bienvenido a Nuestro Concesionario</h1>
+    <span><h1>Bienvenido a Nuestro Concesionario</h1></span>
     <p>Encuentra el coche de tus sueños con las mejores condiciones</p>
 </header>
 <!-- Menú de navegación -->

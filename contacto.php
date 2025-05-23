@@ -147,12 +147,19 @@ $conn->close();
         .whatsapp-btn:hover {
             background-color: #1ebe57;
         }
+        .titulo{
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    display: inline-block;
+    color: white;
+}
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Contacta con Nosotros</h1>
+    <h1><span class="titulo">Contacta con Nosotros</span></h1>
 </header>
 
 <nav class="navbar navbar-expand-lg navbar-dark">

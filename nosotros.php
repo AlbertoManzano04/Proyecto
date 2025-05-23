@@ -123,12 +123,19 @@ session_start();
         h1, h2 {
             color: darkblue;
         }
+        .titulo{
+        background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+        padding: 0.5em 1em;
+        border-radius: 8px;
+        display: inline-block;
+        color: white;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Concesionarios Manzano</h1>
+    <h1><span class="titulo">Concesionarios Manzano</span></h1>
     <p>Conoce más sobre nosotros</p>
 </header>
 <!-- Menú de navegación -->
