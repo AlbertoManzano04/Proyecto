@@ -5,7 +5,9 @@ require_once __DIR__ . '/config/configBD.php';
 
 // Verificar que el usuario esté logueado
 if (!isset($_SESSION['usuario_id'])) {
-    die("No estás logueado. Por favor, inicia sesión.");
+    // Redirige al usuario al login si no está logueado
+    header("Location: login.php?error=Debes iniciar sesión para subir un coche.");
+    exit();
 }
 
 // Conectar a la base de datos
@@ -13,51 +15,121 @@ $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
 // Verificar conexión
 if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+    // Manejo de error de conexión más robusto
+    die("Error de conexión a la base de datos: " . $conn->connect_error);
 }
 
 // Manejo del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recoger los datos del formulario
-    $marca = $_POST['marca'];
-    $modelo = $_POST['modelo'];
-    $anio = $_POST['anio'];
-    $color = $_POST['color'];
-    $tipo = $_POST['tipo'];
-    $presupuesto = $_POST['presupuesto'];
-    $kilometros = $_POST['kilometros'];
-    $telefono = $_POST['contacto']; // Añadido para recoger el teléfono
+    // Recoger y sanear los datos del formulario
+    $marca = trim($_POST['marca'] ?? '');
+    $modelo = trim($_POST['modelo'] ?? '');
+    $anio = intval($_POST['anio'] ?? 0);
+    $color = trim($_POST['color'] ?? '');
+    $tipo = trim($_POST['tipo'] ?? '');
+    $presupuesto = floatval($_POST['presupuesto'] ?? 0);
+    $kilometros = intval($_POST['kilometros'] ?? 0);
+    $telefono = trim($_POST['contacto'] ?? ''); // 'contacto' es el nombre del campo en tu formulario
+    $potencia_cv = intval($_POST['potencia_cv'] ?? 0);
+    $combustible = trim($_POST['combustible'] ?? '');
+    
     $usuario_id = $_SESSION['usuario_id']; // Obtener el usuario_id de la sesión
-    $potencia_cv = $_POST['potencia_cv']; // Obtener la potencia
-    $combustible = $_POST['combustible']; // Obtener el combustible
 
-    // Manejo de la imagen
-    $directorio = "images/";
+    // --- Validación de campos obligatorios ---
+    if (empty($marca) || empty($modelo) || $anio === 0 || $presupuesto <= 0 || $kilometros < 0 || empty($combustible) || empty($telefono) || $potencia_cv === 0) {
+        echo "<script>alert('Error: Por favor, completa todos los campos obligatorios.'); window.location.href='subeTuCoche.php';</script>";
+        exit();
+    }
+
+    // --- Validación específica del tipo de combustible para coche_usuario ---
+    // (Asegúrate de que esta validación coincida con el ENUM de tu tabla coche_usuario)
+    $combustibles_validos_usuario = ['Gasolina', 'Diesel']; // Revisa si los valores en tu DB son 'Gasolina'/'Diesel' o 'gasolina'/'diesel'
+    if (!in_array($combustible, $combustibles_validos_usuario)) {
+        echo "<script>alert('Error: Tipo de combustible no válido. Solo Gasolina o Diesel.'); window.location.href='subeTuCoche.php';</script>";
+        exit();
+    }
+
+    // --- Manejo de la imagen ---
+    $imagenRutaRelativa = '';
+    $directorio = "images/"; // Ruta donde guardas las imágenes. Asegúrate de que sea accesible desde subir_coche_wp.php
+    
     if (!is_dir($directorio)) {
-        mkdir($directorio, 0777, true);
-    }
-    $archivoImagen = $directorio . basename($_FILES["imagen"]["name"]);
-    if (!file_exists($archivoImagen)) {
-        move_uploaded_file($_FILES["imagen"]["tmp_name"], $archivoImagen);
-    } else {
-        echo "<script>alert('La imagen ya existe en el directorio.');</script>";
+        mkdir($directorio, 0777, true); // Crea el directorio si no existe con permisos de escritura
     }
 
-    // Insertar en la base de datos
+    if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === 0) {
+        $tiposValidos = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!in_array($_FILES["imagen"]["type"], $tiposValidos)) {
+            echo "<script>alert('Error: Tipo de archivo de imagen no válido. Solo JPG, PNG o WEBP.'); window.location.href='subeTuCoche.php';</script>";
+            exit();
+        }
+
+        $nombreSeguro = time() . "_" . basename($_FILES["imagen"]["name"]);
+        $archivoImagen = $directorio . $nombreSeguro;
+        
+        // Evitar sobrescritura de archivos con el mismo nombre si time() no es suficiente
+        $contador = 1;
+        while (file_exists($archivoImagen)) {
+            $nombreSeguro = time() . "_" . $contador . "_" . basename($_FILES["imagen"]["name"]);
+            $archivoImagen = $directorio . $nombreSeguro;
+            $contador++;
+        }
+
+        if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $archivoImagen)) {
+            $imagenRutaRelativa = $directorio . $nombreSeguro; // Guarda la ruta relativa para la DB y para WP
+        } else {
+            echo "<script>alert('Error: No se pudo guardar la imagen.'); window.location.href='subeTuCoche.php';</script>";
+            exit();
+        }
+    } else {
+        echo "<script>alert('Error: No se ha subido ninguna imagen o hubo un error en la subida.'); window.location.href='subeTuCoche.php';</script>";
+        exit();
+    }
+
+
+    // --- Insertar en la base de datos local (coche_usuario) ---
     $stmt = $conn->prepare("INSERT INTO coche_usuario (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen, telefono, usuario_id, potencia_cv, combustible) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssissdisssss", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $archivoImagen, $telefono, $usuario_id, $potencia_cv, $combustible);
+    // El tipo de los parámetros debe ser: ssissdisssss
+    // s: string (marca), s: string (modelo), i: int (anio), s: string (color), s: string (tipo), d: double (presupuesto), i: int (kilometros), s: string (imagen), s: string (telefono), i: int (usuario_id), s: string (potencia_cv), s: string (combustible)
+    // ¡Asegúrate de que los tipos de datos en la BD coincidan con estos! Especialmente el telefono puede ser VARCHAR
+    $stmt->bind_param("ssissdisssss", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $imagenRutaRelativa, $telefono, $usuario_id, $potencia_cv, $combustible);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Coche subido con éxito'); window.location.href='vehiculosUsuarios.php';</script>";
+        $vehiculo_local_id = $stmt->insert_id; // Obtiene el ID del coche recién insertado
+        
+        // Cierra el statement y la conexión a la DB local
+        $stmt->close();
+        $conn->close();
+
+        // --- Preparar datos para la migración a WordPress ---
+        $wp_coche_nombre = $marca . ' ' . $modelo . ' ' . $anio . ' (Vehículo de Usuario)'; 
+        $wp_coche_descripcion = 'Color: ' . $color . '<br>' .
+                                'Combustible: ' . $combustible . '<br>' .
+                                'Potencia: ' . $potencia_cv . ' CV<br>' .
+                                'Tipo: ' . $tipo . '<br>' .
+                                'Kilómetros: ' . $kilometros . ' km<br>' .
+                                'Teléfono de Contacto: ' . $telefono; // Incluir teléfono de contacto
+        $wp_coche_precio = $presupuesto;
+
+        // Redirigir a subir_coche_wp.php para crear el producto en WordPress
+        // y actualizar el wp_post_id en tu base de datos local.
+        header("Location: /php/Proyecto/subir_coche_wp.php?" . // Ajusta la ruta a tu subir_coche_wp.php
+               "vehiculo_id=" . urlencode($vehiculo_local_id) . "&" .
+               "tipo_coche=" . urlencode('usuario') . "&" . // Indica que es un coche de usuario
+               "nombre=" . urlencode($wp_coche_nombre) . "&" .
+               "descripcion=" . urlencode($wp_coche_descripcion) . "&" .
+               "precio=" . urlencode($wp_coche_precio) . "&" .
+               "imagen_url=" . urlencode($imagenRutaRelativa));
+        exit(); // Es crucial salir después de la redirección
     } else {
-        echo "<script>alert('Error al subir el coche');</script>";
+        echo "<script>alert('Error al subir el coche a la base de datos: " . $stmt->error . "'); window.location.href='subeTuCoche.php';</script>";
     }
 
-    $stmt->close();
+    $conn->close(); // Esta línea puede no ejecutarse si hay un exit() antes
 }
 
-$conn->close();
+// --- HTML del formulario (sin cambios, excepto que ahora el PHP lo procesa completamente) ---
 ?>
 
 <!DOCTYPE html>
@@ -69,95 +141,96 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* Tus estilos CSS existentes */
         .nav-item .fas.fa-heart {
             color: red; /* Cambiar el color del corazón */
             font-size: 1.5rem; /* Ajustar el tamaño del ícono */
         }
         body {
-    background-color: lightgray;
-}
+            background-color: lightgray;
+        }
         h1, h2 {
             color: darkblue;
         }
-header, footer {
-    background: url('./images/subeCoche.jpg') no-repeat center/cover;
-    color: white;
-    padding: 2rem 0;
-    text-align: center;
-    background-position: center 75%;
-}
-
-.form-container {
-    position: relative; /* Esto asegura que los elementos dentro de este contenedor no se vean afectados por el fondo */
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1; /* Asegura que el formulario esté por encima de la imagen de fondo */
-}
-
-.form-container label {
-    font-weight: bold;
-}
-
-.form-area input, .form-area button {
-            position: relative;
-            z-index: 1; /* Asegura que los campos estén encima de la imagen */
+        header, footer {
+            background: url('./images/subeCoche.jpg') no-repeat center/cover;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            background-position: center 75%;
         }
 
-.form-area::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('./images/venta.avif');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.3; /* Ajusta la opacidad para que la imagen no opaque los campos */
-    z-index: -1; /* Esto asegura que la imagen esté detrás del formulario */
-}
+        .form-container {
+            position: relative;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
 
-nav {
-    background-color: #004A99;
-}
+        .form-container label {
+            font-weight: bold;
+        }
 
-nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 15px 20px;
-    display: inline-block;
-}
+        .form-area input, .form-area button {
+            position: relative;
+            z-index: 1;
+        }
 
-nav a:hover {
-    background-color: #0066CC;
-    border-radius: 5px;
-}
+        .form-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./images/venta.avif');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: -1;
+        }
 
-.highlight-text {
-    font-size: 1.2rem;
-    color: #007bff;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
+        nav {
+            background-color: #004A99;
+        }
 
-.sube-coche-description {
-    background-color: #f7f7f7;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 30px;
-}
-.titulo{
-    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
-    padding: 0.5em 1em;
-    border-radius: 8px;
-    display: inline-block;
-    color: white;
-}
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 15px 20px;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background-color: #0066CC;
+            border-radius: 5px;
+        }
+
+        .highlight-text {
+            font-size: 1.2rem;
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .sube-coche-description {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .titulo{
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 0.5em 1em;
+            border-radius: 8px;
+            display: inline-block;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -166,7 +239,6 @@ nav a:hover {
     <h1><span class="titulo">Vende tu Vehículo</span></h1>
     <p>Comparte las características de tu coche y sube imágenes para venderlo</p>
 </header>
-<!-- Menú de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Concesionario Manzano</a>
@@ -175,7 +247,6 @@ nav a:hover {
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <!-- Menú desplegable funcional gracias a Bootstrap -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                         Concesionarios Manzano
@@ -203,16 +274,13 @@ nav a:hover {
 
                 <li class="nav-item"><a href="contacto.php" class="nav-link">Contacto</a></li>
 
-                <!-- Si el usuario está logueado, no mostrar Login/Registro -->
                 <?php if (isset($_SESSION['usuario_id'])): ?>
-                    <!-- Aquí puedes colocar un enlace de Cerrar sesión o similar -->
                     <li class="nav-item"><a href="logout.php" class="nav-link">Cerrar Sesión</a></li>
                 <?php else: ?>
                     <li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>
                     <li class="nav-item"><a href="registro.php" class="nav-link">Registro</a></li>
                 <?php endif; ?>
 
-                <!-- Mostrar el enlace al Panel Admin solo si el usuario es admin -->
                 <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] === 'admin'): ?>
                     <li class="nav-item">
                         <a href="adminDashboard.php" class="btn btn-warning nav-link">Panel Admin</a>
@@ -223,7 +291,6 @@ nav a:hover {
     </div>
 </nav>
 
-<!-- Fomrulario para subir tu coche  -->
 <main class="container my-4">
     <div class="sube-coche-description">
         <h3 class="highlight-text">¡Vende tu coche de manera rápida y fácil!</h3>
@@ -233,79 +300,77 @@ nav a:hover {
     <div class="form-container form-area">
         <h3 class="text-center">Formulario para Vender tu Vehículo</h3>
         <form method="POST" action="subeTuCoche.php" enctype="multipart/form-data" class="row needs-validation" novalidate>
-    <div class="col-md-6 mb-3">
-        <label for="marca" class="form-label"><i class="fas fa-car"></i> Marca</label>
-        <input type="text" id="marca" name="marca" class="form-control" required placeholder="Ej. Ford">
-    </div>
+            <div class="col-md-6 mb-3">
+                <label for="marca" class="form-label"><i class="fas fa-car"></i> Marca</label>
+                <input type="text" id="marca" name="marca" class="form-control" required placeholder="Ej. Ford">
+            </div>
 
-    <div class="col-md-6 mb-3">
-        <label for="modelo" class="form-label"><i class="fas fa-cogs"></i> Modelo</label>
-        <input type="text" id="modelo" name="modelo" class="form-control" required placeholder="Ej. Focus">
-    </div>
+            <div class="col-md-6 mb-3">
+                <label for="modelo" class="form-label"><i class="fas fa-cogs"></i> Modelo</label>
+                <input type="text" id="modelo" name="modelo" class="form-control" required placeholder="Ej. Focus">
+            </div>
 
-    <div class="col-md-6 mb-3">
-        <label for="anio" class="form-label"><i class="fas fa-calendar-alt"></i> Año</label>
-        <input type="number" id="anio" name="anio" class="form-control" required min="1990" max="2025" placeholder="Ej. 2020">
-    </div>
+            <div class="col-md-6 mb-3">
+                <label for="anio" class="form-label"><i class="fas fa-calendar-alt"></i> Año</label>
+                <input type="number" id="anio" name="anio" class="form-control" required min="1990" max="2025" placeholder="Ej. 2020">
+            </div>
 
-    <div class="col-md-6 mb-3">
-        <label for="color" class="form-label"><i class="fas fa-palette"></i> Color</label>
-        <input type="text" id="color" name="color" class="form-control" required placeholder="Ej. Azul marino">
-    </div>
+            <div class="col-md-6 mb-3">
+                <label for="color" class="form-label"><i class="fas fa-palette"></i> Color</label>
+                <input type="text" id="color" name="color" class="form-control" required placeholder="Ej. Azul marino">
+            </div>
 
-    <div class="col-md-6 mb-3">
-        <label for="tipo" class="form-label"><i class="fas fa-car-side"></i> Tipo</label>
-        <select id="tipo" name="tipo" class="form-select" required>
-            <option value="">Seleccione el tipo</option>
-            <option value="SUV">SUV</option>
-            <option value="Sedán">Sedán</option>
-            <option value="Deportivo">Deportivo</option>
-            <option value="Camioneta">Camioneta</option>
-            <option value="Hatchback">Hatchback</option>
-        </select>
-    </div>
+            <div class="col-md-6 mb-3">
+                <label for="tipo" class="form-label"><i class="fas fa-car-side"></i> Tipo</label>
+                <select id="tipo" name="tipo" class="form-select" required>
+                    <option value="">Seleccione el tipo</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Sedán">Sedán</option>
+                    <option value="Deportivo">Deportivo</option>
+                    <option value="Camioneta">Camioneta</option>
+                    <option value="Hatchback">Hatchback</option>
+                </select>
+            </div>
 
-    <div class="col-md-6 mb-3">
-        <label for="presupuesto" class="form-label"><i class="fas fa-euro-sign"></i> Precio Deseado</label>
-        <input type="number" id="presupuesto" name="presupuesto" class="form-control" required min="1000" step="100" placeholder="Ej. 15000">
-    </div>
+            <div class="col-md-6 mb-3">
+                <label for="presupuesto" class="form-label"><i class="fas fa-euro-sign"></i> Precio Deseado</label>
+                <input type="number" id="presupuesto" name="presupuesto" class="form-control" required min="1000" step="100" placeholder="Ej. 15000">
+            </div>
 
-    <div class="col-md-6 mb-3">
-        <label for="kilometros" class="form-label"><i class="fas fa-road"></i> Kilómetros</label>
-        <input type="number" id="kilometros" name="kilometros" class="form-control" required min="0" step="1000" placeholder="Ej. 95000">
-    </div>
-<!-- Campo para ingresar los caballos de potencia -->
-<div class="col-md-6 mb-3">
-    <label for="potencia_cv" class="form-label"><i class="fas fa-tachometer-alt"></i> Caballos de Potencia</label>
-    <input type="number" id="potencia_cv" name="potencia_cv" class="form-control" required placeholder="Ej. 150">
-</div>
+            <div class="col-md-6 mb-3">
+                <label for="kilometros" class="form-label"><i class="fas fa-road"></i> Kilómetros</label>
+                <input type="number" id="kilometros" name="kilometros" class="form-control" required min="0" step="1000" placeholder="Ej. 95000">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="potencia_cv" class="form-label"><i class="fas fa-tachometer-alt"></i> Caballos de Potencia</label>
+                <input type="number" id="potencia_cv" name="potencia_cv" class="form-control" required placeholder="Ej. 150">
+            </div>
 
-<!-- Campo para seleccionar el tipo de combustible con iconos -->
-<div class="col-md-6 mb-3">
-    <label for="combustible" class="form-label"><i class="fas fa-gas-pump"></i> Tipo de Combustible</label>
-    <select id="combustible" name="combustible" class="form-select" required>
-        <option value="">Seleccione el combustible</option>
-        <option value="Gasolina">Gasolina</option>
-        <option value="Diesel">Diesel</option>
-    </select>
-</div>
-    <div class="col-md-12 mb-3">
-        <label for="imagen" class="form-label"><i class="fas fa-camera"></i> Sube una imagen del coche</label>
-        <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required onchange="previewImagen(event)">
-        <div class="mt-3 text-center">
-            <img id="preview" src="#" alt="Vista previa" style="max-height: 200px; display: none; border-radius: 8px;"/>
-        </div>
-    </div>
+            <div class="col-md-6 mb-3">
+                <label for="combustible" class="form-label"><i class="fas fa-gas-pump"></i> Tipo de Combustible</label>
+                <select id="combustible" name="combustible" class="form-select" required>
+                    <option value="">Seleccione el combustible</option>
+                    <option value="Gasolina">Gasolina</option>
+                    <option value="Diesel">Diesel</option>
+                </select>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label for="imagen" class="form-label"><i class="fas fa-camera"></i> Sube una imagen del coche</label>
+                <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required onchange="previewImagen(event)">
+                <div class="mt-3 text-center">
+                    <img id="preview" src="#" alt="Vista previa" style="max-height: 200px; display: none; border-radius: 8px;"/>
+                </div>
+            </div>
 
-    <div class="col-md-6 mb-4">
-        <label for="contacto" class="form-label"><i class="fas fa-phone-alt"></i> Número de Contacto</label>
-        <input type="tel" id="contacto" name="contacto" class="form-control" required pattern="[0-9]{9}" placeholder="Ej. 612345678">
-    </div>
+            <div class="col-md-6 mb-4">
+                <label for="contacto" class="form-label"><i class="fas fa-phone-alt"></i> Número de Contacto</label>
+                <input type="tel" id="contacto" name="contacto" class="form-control" required pattern="[0-9]{9}" placeholder="Ej. 612345678">
+            </div>
 
-    <div class="col-12 text-center">
-        <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-upload"></i> Subir Coche</button>
-    </div>
-</form>
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-upload"></i> Subir Coche</button>
+            </div>
+        </form>
 
     </div>
 </main>
@@ -317,6 +382,34 @@ nav a:hover {
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Función para mostrar la vista previa de la imagen
+    function previewImagen(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('preview');
+            output.src = reader.result;
+            output.style.display = 'block'; // Muestra la imagen de vista previa
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    // Validación de Bootstrap (si la usas)
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
 <script>
 (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fR533L_q2EJkWgWU9cATj";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
 </script>
