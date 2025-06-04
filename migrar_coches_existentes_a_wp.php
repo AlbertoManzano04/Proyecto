@@ -36,14 +36,14 @@ if ($conn->connect_error) {
 $sql = "(SELECT 
             id, marca, modelo, anio, color, tipo, presupuesto, kilometros, 
             combustible, potencia_cv, imagen, NULL as telefono, NULL as usuario_id,
-            'km0' as source_table 
+            'vehiculos_km0' as source_table  -- Cambiado para usar el nombre completo de la tabla
          FROM vehiculos_km0 
          WHERE wp_post_id IS NULL OR wp_post_id = 0)
         UNION ALL
         (SELECT 
             id, marca, modelo, anio, color, tipo, presupuesto, kilometros, 
             combustible, potencia_cv, imagen, telefono, usuario_id,
-            'usuario' as source_table 
+            'coche_usuario' as source_table -- Cambiado para usar el nombre completo de la tabla
          FROM coche_usuario 
          WHERE wp_post_id IS NULL OR wp_post_id = 0)";
 
@@ -53,14 +53,14 @@ if ($result->num_rows > 0) {
     echo "<p>Se encontraron " . $result->num_rows . " vehículos sin ID de WordPress para migrar.</p>";
     while ($coche_local = $result->fetch_assoc()) {
         $vehiculo_local_id = $coche_local['id'];
-        $source_table = $coche_local['source_table'];
+        $source_table = $coche_local['source_table']; // Will now be 'vehiculos_km0' or 'coche_usuario'
 
         echo "<hr><p>Procesando vehículo local ID: " . $vehiculo_local_id . " de tabla: " . $source_table . " (" . $coche_local['marca'] . " " . $coche_local['modelo'] . " " . $coche_local['anio'] . ")...</p>";
 
         // Prepara los datos para WordPress
         $wp_coche_nombre = $coche_local['marca'] . ' ' . $coche_local['modelo'] . ' ' . $coche_local['anio'];
         // Añadir distinción para coches de usuario en el título si lo deseas
-        if ($source_table === 'usuario') {
+        if ($source_table === 'coche_usuario') { // Use 'coche_usuario' for the check
             $wp_coche_nombre .= ' (Vehículo de Usuario)'; 
         }
         
@@ -71,7 +71,7 @@ if ($result->num_rows > 0) {
                                 'Kilómetros: ' . $coche_local['kilometros'] . ' km';
         
         // Si es un coche de usuario, añade el teléfono a la descripción
-        if ($source_table === 'usuario' && !empty($coche_local['telefono'])) {
+        if ($source_table === 'coche_usuario' && !empty($coche_local['telefono'])) { // Use 'coche_usuario' for the check
             $wp_coche_descripcion .= '<br>Teléfono de Contacto: ' . $coche_local['telefono'];
             // Opcional: Si quieres mostrar el nombre del usuario vendedor (requeriría otra consulta a la tabla 'usuarios' usando $coche_local['usuario_id'])
             // $nombre_usuario = obtener_nombre_usuario_por_id($coche_local['usuario_id']);
@@ -97,7 +97,7 @@ if ($result->num_rows > 0) {
             update_post_meta($post_id, '_manage_stock', 'no');
 
             // Opcional: Asignar una categoría al producto (ej. 'vehiculos-km0' o 'vehiculos-usuario')
-            $category_slug = ($source_table === 'km0') ? 'vehiculos-km0' : 'vehiculos-usuario'; // Ajusta slugs
+            $category_slug = ($source_table === 'vehiculos_km0') ? 'vehiculos-km0' : 'vehiculos-usuario'; // Use 'vehiculos_km0' here
             $term = get_term_by('slug', $category_slug, 'product_cat');
             if ($term) {
                 wp_set_object_terms($post_id, $term->term_id, 'product_cat');
@@ -108,9 +108,8 @@ if ($result->num_rows > 0) {
 
             // 3. Procesar y subir la imagen a la biblioteca de medios de WordPress
             if (!empty($coche_imagen_url)) {
-                // Asegúrate de que la ruta de la imagen local es correcta.
-                // Si 'imagen' en tu DB ya incluye 'images/', solo necesita __DIR__ . '/'
-                // Si solo guarda el nombre del archivo, necesitarás __DIR__ . '/images/' .
+                // Corrected image path: Assuming 'imagen' column stores paths like 'images/roll.jpeg'
+                // If it stores just 'roll.jpeg', change to __DIR__ . '/images/' . $coche_imagen_url;
                 $imagen_path_abs = __DIR__ . '/' . $coche_imagen_url; 
 
                 if (file_exists($imagen_path_abs)) {
@@ -132,13 +131,14 @@ if ($result->num_rows > 0) {
                         error_log("Error al subir imagen para coche ID " . $vehiculo_local_id . " de " . $source_table . ": " . $attachment_id->get_error_message());
                     }
                 } else {
-                    echo "<p style='color: orange;'>⚠️ Aviso: La imagen local '" . $coche_imagen_url . "' no se encontró en el servidor.</p>";
+                    echo "<p style='color: orange;'>⚠️ Aviso: La imagen local '" . $imagen_path_abs . "' no se encontró en el servidor. Verifica la ruta.</p>"; // Improved error message
                 }
             } else {
                 echo "<p>No hay imagen asignada para este vehículo local.</p>";
             }
 
             // 4. Actualizar tu base de datos local con el ID de WordPress (en la tabla correcta)
+            // The $source_table variable now correctly holds 'vehiculos_km0' or 'coche_usuario'
             $sql_update_local = "UPDATE " . $source_table . " SET wp_post_id = ? WHERE id = ?";
             $stmt_update = $conn->prepare($sql_update_local);
             if ($stmt_update) {
