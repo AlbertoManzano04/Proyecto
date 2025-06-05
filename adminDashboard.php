@@ -174,7 +174,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
     </div>
     <div class="mb-3">
         <label><i class="fas fa-bolt"></i> Potencia</label>
-        <input type="number" name="potencia" class="form-control">
+        <input type="number" name="potencia_cv" class="form-control">
     </div>
     <div class="mb-3">
         <label><i class="fas fa-gas-pump"></i> Combustible</label>
@@ -217,7 +217,12 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
         <?php endwhile; ?>
     </div>
 </div>
-
+<div class="d-flex align-items-center gap-2 mb-3">
+    <form method="post" action="limpiarProductosHuerfanos.php" class="m-0">
+        <button type="submit" class="btn btn-danger">Eliminar Productos Huérfanos de WordPress</button>
+    </form>
+    <a href="migrar_coches_existentes_a_wp.php" class="btn btn-primary">Actualizar Coches Existentes en WP</a>
+</div>
     <!-- Tabla de vehículos del concesionario -->
     <div class="seccion-formulario">
         <h3><i class="bi bi-car-front-fill"></i> Vehículos del Concesionario</h3>
@@ -265,6 +270,7 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
             </tbody>
         </table>
     </div>
+
 
     <!-- Tabla de usuarios -->
     <div class="seccion-formulario">

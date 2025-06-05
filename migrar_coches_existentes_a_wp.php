@@ -1,87 +1,155 @@
 <?php
 // migrar_coches_existentes_a_wp.php
-// ¡¡ADVERTENCIA!!
-// ANTES DE EJECUTAR ESTE SCRIPT, HAZ UNA COPIA DE SEGURIDAD COMPLETA DE TU BASE DE DATOS Y DE WORDPRESS.
-// Este script insertará datos en WordPress y modificará tu base de datos.
-
-// Incluir tu configuración de base de datos local
 require_once __DIR__ . '/config/configBD.php';
-
-// Incluir el núcleo de WordPress
 require_once __DIR__ . '/tienda/wp-load.php';
 
-// Cargar funciones de WordPress necesarias para crear posts y medios
 require_once ABSPATH . 'wp-admin/includes/post.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/media.php';
 
-// Activar la visualización de errores solo para depuración
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Migración de Coches a WordPress</title>
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f1f1f1;
+    margin: 20px;
+    color: #23282d;
+  }
+  h1, h2 {
+    color: #0073aa;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+  p {
+    line-height: 1.5;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+  }
+  .btn {
+    display: inline-block;
+    background: #0073aa;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 3px;
+    font-weight: 600;
+    margin: 20px 0;
+    transition: background-color 0.2s ease-in-out;
+  }
+  .btn:hover {
+    background: #005177;
+  }
+  .message {
+    padding: 8px 12px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .success {
+    background: #dff0d8;
+    border: 1px solid #3c763d;
+    color: #3c763d;
+  }
+  .error {
+    background: #f2dede;
+    border: 1px solid #a94442;
+    color: #a94442;
+  }
+  .warning {
+    background: #fcf8e3;
+    border: 1px solid #8a6d3b;
+    color: #8a6d3b;
+  }
+  .info {
+    background: #d9edf7;
+    border: 1px solid #31708f;
+    color: #31708f;
+  }
+</style>
+</head>
+<body>
 
-echo "<h1>Iniciando migración de coches existentes a WordPress...</h1>";
+<?php
 
-// Conexión a la base de datos local
+echo "<h1>Iniciando migración/verificación de coches a WordPress...</h1>";
+
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 if ($conn->connect_error) {
-    die("<p style='color: red;'>Error de conexión a la base de datos local: " . $conn->connect_error . "</p>");
+    die("<p class='message error'>Error de conexión a la base de datos local: " . $conn->connect_error . "</p></body></html>");
 }
 
-// 1. Obtener coches de ambas tablas que NO tienen un wp_post_id (o que tienen 0)
-// Usamos UNION ALL para combinar los resultados de vehiculos_km0 y coche_usuario.
-// Añadimos una columna 'source_table' para saber de dónde viene el coche.
-// También incluimos el 'telefono' y 'usuario_id' de coche_usuario que no existen en vehiculos_km0.
 $sql = "(SELECT 
             id, marca, modelo, anio, color, tipo, presupuesto, kilometros, 
-            combustible, potencia_cv, imagen, NULL as telefono, NULL as usuario_id,
-            'vehiculos_km0' as source_table  -- Cambiado para usar el nombre completo de la tabla
-         FROM vehiculos_km0 
-         WHERE wp_post_id IS NULL OR wp_post_id = 0)
+            combustible, potencia_cv, imagen, wp_post_id, NULL as telefono, NULL as usuario_id,
+            'vehiculos_km0' as source_table
+         FROM vehiculos_km0)
         UNION ALL
         (SELECT 
             id, marca, modelo, anio, color, tipo, presupuesto, kilometros, 
-            combustible, potencia_cv, imagen, telefono, usuario_id,
-            'coche_usuario' as source_table -- Cambiado para usar el nombre completo de la tabla
-         FROM coche_usuario 
-         WHERE wp_post_id IS NULL OR wp_post_id = 0)";
+            combustible, potencia_cv, imagen, wp_post_id, telefono, usuario_id,
+            'coche_usuario' as source_table
+         FROM coche_usuario)";
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "<p>Se encontraron " . $result->num_rows . " vehículos sin ID de WordPress para migrar.</p>";
+    echo "<p class='message info'>Se encontraron " . $result->num_rows . " vehículos en total para verificar/migrar.</p>";
+
     while ($coche_local = $result->fetch_assoc()) {
         $vehiculo_local_id = $coche_local['id'];
-        $source_table = $coche_local['source_table']; // Will now be 'vehiculos_km0' or 'coche_usuario'
+        $source_table = $coche_local['source_table'];
+        $wp_post_id_local_db = $coche_local['wp_post_id'];
 
-        echo "<hr><p>Procesando vehículo local ID: " . $vehiculo_local_id . " de tabla: " . $source_table . " (" . $coche_local['marca'] . " " . $coche_local['modelo'] . " " . $coche_local['anio'] . ")...</p>";
+        echo "<hr><p>Procesando vehículo local ID: <strong>" . $vehiculo_local_id . "</strong> de tabla: <strong>" . $source_table . "</strong> (" . htmlspecialchars($coche_local['marca']) . " " . htmlspecialchars($coche_local['modelo']) . " " . htmlspecialchars($coche_local['anio']) . ")...</p>";
 
-        // Prepara los datos para WordPress
-        $wp_coche_nombre = $coche_local['marca'] . ' ' . $coche_local['modelo'] . ' ' . $coche_local['anio'];
-        // Añadir distinción para coches de usuario en el título si lo deseas
-        if ($source_table === 'coche_usuario') { // Use 'coche_usuario' for the check
-            $wp_coche_nombre .= ' (Vehículo de Usuario)'; 
+        $is_wp_product_valid = false;
+        if (!empty($wp_post_id_local_db) && $wp_post_id_local_db > 0) {
+            $existing_wp_post = get_post($wp_post_id_local_db);
+            if ($existing_wp_post && $existing_wp_post->post_type === 'product' && $existing_wp_post->post_status !== 'trash') {
+                $is_wp_product_valid = true;
+            }
         }
-        
+
+        $wp_coche_precio = $coche_local['presupuesto'];
+
+        if ($is_wp_product_valid) {
+            echo "<p class='message info'>✅ Este vehículo ya está en WordPress con ID válido: <strong>" . $wp_post_id_local_db . "</strong>. Actualizando el precio...</p>";
+
+            update_post_meta($wp_post_id_local_db, '_regular_price', $wp_coche_precio);
+            update_post_meta($wp_post_id_local_db, '_price', $wp_coche_precio);
+            echo "<p class='message success'>✔️ Precio actualizado correctamente para el producto con ID <strong>$wp_post_id_local_db</strong>.</p>";
+
+            continue;
+        }
+
+        echo "<p>🚀 Este vehículo no está migrado o tiene un ID inválido. Se intentará crear.</p>";
+
+        $wp_coche_nombre = $coche_local['marca'] . ' ' . $coche_local['modelo'] . ' ' . $coche_local['anio'];
+        if ($source_table === 'coche_usuario') {
+            $wp_coche_nombre .= ' (Vehículo de Usuario)';
+        }
+
         $wp_coche_descripcion = 'Color: ' . $coche_local['color'] . '<br>' .
                                 'Combustible: ' . $coche_local['combustible'] . '<br>' .
                                 'Potencia: ' . $coche_local['potencia_cv'] . ' CV<br>' .
                                 'Tipo: ' . $coche_local['tipo'] . '<br>' .
                                 'Kilómetros: ' . $coche_local['kilometros'] . ' km';
-        
-        // Si es un coche de usuario, añade el teléfono a la descripción
-        if ($source_table === 'coche_usuario' && !empty($coche_local['telefono'])) { // Use 'coche_usuario' for the check
-            $wp_coche_descripcion .= '<br>Teléfono de Contacto: ' . $coche_local['telefono'];
-            // Opcional: Si quieres mostrar el nombre del usuario vendedor (requeriría otra consulta a la tabla 'usuarios' usando $coche_local['usuario_id'])
-            // $nombre_usuario = obtener_nombre_usuario_por_id($coche_local['usuario_id']);
-            // $wp_coche_descripcion .= '<br>Vendido por: ' . $nombre_usuario;
+
+        if ($source_table === 'coche_usuario' && !empty($coche_local['telefono'])) {
+            $wp_coche_descripcion .= '<br>Teléfono de Contacto: ' . htmlspecialchars($coche_local['telefono']);
         }
 
-        $wp_coche_precio = $coche_local['presupuesto'];
-        $coche_imagen_url = $coche_local['imagen']; // Ruta relativa de la imagen local
-
-        // 2. Crear el producto en WooCommerce
         $post_id = wp_insert_post(array(
             'post_title'    => $wp_coche_nombre,
             'post_content'  => $wp_coche_descripcion,
@@ -90,31 +158,29 @@ if ($result->num_rows > 0) {
         ));
 
         if ($post_id) {
-            echo "<p style='color: blue;'>✔️ Producto creado en WordPress con ID: " . $post_id . "</p>";
+            echo "<p class='message success'>✔️ Producto creado en WordPress con ID: <strong>" . $post_id . "</strong></p>";
+
             update_post_meta($post_id, '_regular_price', $wp_coche_precio);
             update_post_meta($post_id, '_price', $wp_coche_precio);
             update_post_meta($post_id, '_stock_status', 'instock');
             update_post_meta($post_id, '_manage_stock', 'no');
 
-            // Opcional: Asignar una categoría al producto (ej. 'vehiculos-km0' o 'vehiculos-usuario')
-            $category_slug = ($source_table === 'vehiculos_km0') ? 'vehiculos-km0' : 'vehiculos-usuario'; // Use 'vehiculos_km0' here
+            $category_slug = ($source_table === 'vehiculos_km0') ? 'vehiculos-km0' : 'vehiculos-usuario';
             $term = get_term_by('slug', $category_slug, 'product_cat');
             if ($term) {
                 wp_set_object_terms($post_id, $term->term_id, 'product_cat');
             } else {
-                error_log("Categoría de producto no encontrada para slug: " . $category_slug);
-                // Opcional: Crear la categoría si no existe: wp_insert_term($category_slug, 'product_cat');
+                echo "<p class='message warning'>⚠️ Categoría '$category_slug' no encontrada. Créala manualmente.</p>";
             }
 
-            // 3. Procesar y subir la imagen a la biblioteca de medios de WordPress
-            if (!empty($coche_imagen_url)) {
-                // Corrected image path: Assuming 'imagen' column stores paths like 'images/roll.jpeg'
-                // If it stores just 'roll.jpeg', change to __DIR__ . '/images/' . $coche_imagen_url;
-                $imagen_path_abs = __DIR__ . '/' . $coche_imagen_url; 
+            if (!empty($coche_local['imagen'])) {
+                $carpeta_imagenes = __DIR__ . 'images/';
+                $nombre_archivo = basename($coche_local['imagen']);
+                $imagen_path_abs = $carpeta_imagenes . $nombre_archivo;
 
                 if (file_exists($imagen_path_abs)) {
                     $file_array = array(
-                        'name'     => basename($imagen_path_abs),
+                        'name'     => $nombre_archivo,
                         'tmp_name' => $imagen_path_abs,
                         'error'    => 0,
                         'size'     => filesize($imagen_path_abs),
@@ -122,48 +188,40 @@ if ($result->num_rows > 0) {
                     );
 
                     $attachment_id = media_handle_sideload($file_array, $post_id);
-
-                    if ( ! is_wp_error( $attachment_id ) ) {
-                        set_post_thumbnail( $post_id, $attachment_id );
-                        echo "<p style='color: green;'>✔️ Imagen subida a WordPress y asignada como destacada.</p>";
+                    if (!is_wp_error($attachment_id)) {
+                        set_post_thumbnail($post_id, $attachment_id);
+                        echo "<p class='message success'>✔️ Imagen subida correctamente.</p>";
                     } else {
-                        echo "<p style='color: orange;'>⚠️ Error al subir imagen a WordPress: " . $attachment_id->get_error_message() . "</p>";
-                        error_log("Error al subir imagen para coche ID " . $vehiculo_local_id . " de " . $source_table . ": " . $attachment_id->get_error_message());
+                        echo "<p class='message warning'>⚠️ Error al subir imagen: " . $attachment_id->get_error_message() . "</p>";
                     }
                 } else {
-                    echo "<p style='color: orange;'>⚠️ Aviso: La imagen local '" . $imagen_path_abs . "' no se encontró en el servidor. Verifica la ruta.</p>"; // Improved error message
+                    echo "<p class='message warning'>⚠️ Imagen no encontrada en: " . htmlspecialchars($imagen_path_abs) . "</p>";
                 }
-            } else {
-                echo "<p>No hay imagen asignada para este vehículo local.</p>";
             }
 
-            // 4. Actualizar tu base de datos local con el ID de WordPress (en la tabla correcta)
-            // The $source_table variable now correctly holds 'vehiculos_km0' or 'coche_usuario'
             $sql_update_local = "UPDATE " . $source_table . " SET wp_post_id = ? WHERE id = ?";
             $stmt_update = $conn->prepare($sql_update_local);
             if ($stmt_update) {
                 $stmt_update->bind_param("ii", $post_id, $vehiculo_local_id);
                 if ($stmt_update->execute()) {
-                    echo "<p style='color: green;'>✔️ ID de WordPress (" . $post_id . ") guardado en tu DB local para vehículo ID " . $vehiculo_local_id . " (Tabla: " . $source_table . ").</p>";
+                    echo "<p class='message success'>✔️ ID de WordPress guardado en tu DB local.</p>";
                 } else {
-                    echo "<p style='color: red;'>❌ ERROR: No se pudo actualizar wp_post_id en tu DB local (" . $source_table . "): " . $stmt_update->error . "</p>";
-                    error_log("Fallo al actualizar wp_post_id para vehiculo_local_id " . $vehiculo_local_id . " en " . $source_table . ": " . $stmt_update->error);
+                    echo "<p class='message error'>❌ ERROR: No se pudo actualizar el ID en la DB local: " . $stmt_update->error . "</p>";
                 }
                 $stmt_update->close();
-            } else {
-                echo "<p style='color: red;'>❌ ERROR: No se pudo preparar la consulta para actualizar wp_post_id en " . $source_table . ": " . $conn->error . "</p>";
-                error_log("Error al preparar update wp_post_id para coche ID " . $vehiculo_local_id . " en " . $source_table . ": " . $conn->error);
             }
-
         } else {
-            echo "<p style='color: red;'>❌ ERROR: No se pudo crear el producto en WordPress para vehículo local ID " . $vehiculo_local_id . " de " . $source_table . ".</p>";
-            error_log("Fallo al crear producto WP para coche ID " . $vehiculo_local_id . " de " . $source_table . ".");
+            echo "<p class='message error'>❌ ERROR: No se pudo crear el producto en WordPress para el vehículo.</p>";
         }
     }
 } else {
-    echo "<p>No se encontraron vehículos sin ID de WordPress para migrar en tus bases de datos.</p>";
+    echo "<p>No se encontraron vehículos en tus bases de datos.</p>";
 }
 
 $conn->close();
-echo "<h2>Proceso de migración finalizado.</h2>";
+
+echo "<h2>Proceso de migración/verificación finalizado.</h2>";
 ?>
+<a href="adminDashboard.php" class="btn" role="button">← Volver al Panel</a>
+</body>
+</html>

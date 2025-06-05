@@ -1,103 +1,134 @@
 <?php
-// sincronizar_eliminar_wp.php
-
-// Iniciar sesión (opcional para scripts de limpieza, pero no hace daño)
 session_start();
 
-// --- Incluir la configuración de tu base de datos local ---
 require_once __DIR__ . '/config/configBD.php';
-
-// --- Incluir el núcleo de WordPress ---
 require_once __DIR__ . '/tienda/wp-load.php';
 
-// --- Cargar funciones de WordPress necesarias para la eliminación ---
 require_once ABSPATH . 'wp-admin/includes/post.php';
 require_once ABSPATH . 'wp-admin/includes/media.php';
 
-// Activar la visualización de errores solo para depuración. ¡Desactiva esto en producción!
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-echo "<h1>Iniciando sincronización de limpieza de WordPress...</h1>";
+echo "<h1>Iniciando limpieza de vehículos huérfanos en WordPress...</h1>";
 
-// 1. Conectar a tu base de datos phpMyAdmin (local)
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 if ($conn->connect_error) {
-    die("<p style='color: red;'>Error de conexión a la base de datos local: " . $conn->connect_error . "</p>");
+    die("<p style='color:red;'>Error conexión DB local: " . $conn->connect_error . "</p>");
 }
 
-// 2. Obtener todos los wp_post_id que tienes registrados en tu tabla 'vehiculos_km0'
+// 1) IDs en base local (vehiculos_km0 + coche_usuario)
 $ids_en_db_local = [];
-// Solo seleccionamos los wp_post_id que NO son NULL, porque solo esos son los que se han subido a WordPress.
-$sql_get_local_ids = "SELECT wp_post_id FROM vehiculos_km0 WHERE wp_post_id IS NOT NULL";
-if ($result = $conn->query($sql_get_local_ids)) {
+
+// Obtener IDs vehiculos_km0
+$sql_km0 = "SELECT wp_post_id FROM vehiculos_km0 WHERE wp_post_id IS NOT NULL AND wp_post_id != 0";
+if ($result = $conn->query($sql_km0)) {
     while ($row = $result->fetch_assoc()) {
-        $ids_en_db_local[] = $row['wp_post_id'];
+        $ids_en_db_local[] = (int)$row['wp_post_id'];
     }
     $result->free();
 } else {
-    die("<p style='color: red;'>Error al obtener IDs de vehículos KM0 de tu base de datos: " . $conn->error . "</p>");
+    die("<p style='color:red;'>Error SQL KM0: " . $conn->error . "</p>");
 }
-$conn->close();
-echo "<p>Total de vehículos KM0 con ID de WordPress en tu DB local: " . count($ids_en_db_local) . "</p>";
 
-// 3. Obtener todos los IDs de productos de WooCommerce
-$ids_en_wordpress = [];
-$args = array(
-    'post_type'      => 'product', // Solo productos
-    'post_status'    => array('publish', 'pending', 'draft', 'private', 'inherit', 'trash'), // Incluir los estados más comunes (auto-draft y future no suelen ser necesarios para limpieza)
-    'posts_per_page' => -1,        // Obtener todos los productos
-    'fields'         => 'ids',     // Solo obtener los IDs
-    // Opcional: Si solo quieres eliminar productos de una categoría específica, por ejemplo 'vehiculos-km0'.
-    // Descomenta y ajusta si usas categorías específicas para tus coches KM0.
-    /*
-    'tax_query'      => array(
-        array(
-            'taxonomy' => 'product_cat',
-            'field'    => 'slug',
-            'terms'    => 'coches-km0', // Cambia 'coches-km0' por la slug real de tu categoría de productos KM0
-        )
-    )
-    */
-);
-$products_query = new WP_Query($args);
-$ids_en_wordpress = $products_query->posts;
-
-echo "<p>Total de productos encontrados en WordPress: " . count($ids_en_wordpress) . "</p>";
-
-// 4. Identificar productos en WordPress que NO están en tu base de datos local
-$ids_a_eliminar_de_wp = array_diff($ids_en_wordpress, $ids_en_db_local);
-
-echo "<p>Productos de WordPress encontrados para eliminar (huérfanos): " . count($ids_a_eliminar_de_wp) . "</p>";
-
-if (empty($ids_a_eliminar_de_wp)) {
-    echo "<p style='color: green;'>¡Felicidades! No se encontraron productos huérfanos en WordPress que necesiten ser eliminados.</p>";
+// Obtener IDs coche_usuario
+$sql_usuario = "SELECT wp_post_id FROM coche_usuario WHERE wp_post_id IS NOT NULL AND wp_post_id != 0";
+if ($result = $conn->query($sql_usuario)) {
+    while ($row = $result->fetch_assoc()) {
+        $ids_en_db_local[] = (int)$row['wp_post_id'];
+    }
+    $result->free();
 } else {
-    echo "<p style='color: orange;'>Iniciando eliminación de productos huérfanos de WordPress...</p>";
-    foreach ($ids_a_eliminar_de_wp as $wp_id_a_eliminar) {
-        $product_title = get_the_title($wp_id_a_eliminar); // Obtener título para el log
+    die("<p style='color:red;'>Error SQL Usuario: " . $conn->error . "</p>");
+}
 
-        // Obtener el ID de la imagen destacada (thumbnail) si existe
-        $thumbnail_id = get_post_thumbnail_id($wp_id_a_eliminar);
+$ids_en_db_local = array_unique($ids_en_db_local);
 
-        // Eliminar el producto de WordPress de forma permanente
-        $deleted = wp_delete_post($wp_id_a_eliminar, true); // 'true' para eliminación permanente
+// Ordenar de mayor a menor
+rsort($ids_en_db_local);
 
-        if ($deleted) {
-            // Si el producto se eliminó, también elimina la imagen destacada de la biblioteca de medios
-            if ($thumbnail_id) {
-                wp_delete_attachment($thumbnail_id, true); // Eliminar la imagen permanentemente
-                echo "<p style='color: green;'>✔️ Producto '" . esc_html($product_title) . "' (ID WP: " . $wp_id_a_eliminar . ") eliminado de WordPress y su imagen destacada.</p>";
+echo "<p><b>IDs en base local (orden descendente):</b> (" . count($ids_en_db_local) . ") " . implode(', ', $ids_en_db_local) . "</p>";
+
+// 2) IDs en WordPress WooCommerce (post_type=product)
+$args = [
+    'post_type'      => 'product',
+    'post_status'    => ['publish', 'pending', 'draft', 'private', 'inherit', 'trash'],
+    'posts_per_page' => -1,
+    'fields'         => 'ids',
+];
+$query = new WP_Query($args);
+$ids_en_wordpress = $query->posts;
+
+// Ordenar de mayor a menor
+rsort($ids_en_wordpress);
+
+echo "<p><b>IDs en WordPress (productos, orden descendente):</b> (" . count($ids_en_wordpress) . ") " . implode(', ', $ids_en_wordpress) . "</p>";
+
+// 3) Detectar IDs en WP que NO estén en la base local
+$ids_huerfanos = array_diff($ids_en_wordpress, $ids_en_db_local);
+
+// Ordenar huérfanos también para visualización
+rsort($ids_huerfanos);
+
+echo "<p><b>IDs huérfanos (en WP pero NO en BD local, orden descendente):</b> (" . count($ids_huerfanos) . ") " . implode(', ', $ids_huerfanos) . "</p>";
+
+if (empty($ids_huerfanos)) {
+    echo "<p style='color:green;'>No hay vehículos huérfanos para eliminar.</p>";
+} else {
+    echo "<p style='color:orange;'>Eliminando vehículos huérfanos...</p>";
+    foreach ($ids_huerfanos as $post_id) {
+        $titulo = get_the_title($post_id);
+        if (!$titulo) $titulo = "(sin título)";
+
+        // Borrar imagen destacada
+        $thumbnail_id = get_post_thumbnail_id($post_id);
+        if ($thumbnail_id) {
+            if (wp_delete_attachment($thumbnail_id, true)) {
+                echo "<p>Imagen destacada del vehículo '$titulo' (ID $thumbnail_id) eliminada.</p>";
             } else {
-                echo "<p style='color: green;'>✔️ Producto '" . esc_html($product_title) . "' (ID WP: " . $wp_id_a_eliminar . ") eliminado de WordPress (sin imagen destacada).</p>";
+                echo "<p style='color:red;'>Error eliminando imagen destacada ID $thumbnail_id para '$titulo'</p>";
             }
+        }
+
+        // Borrar el producto de WordPress
+        $resultado = wp_delete_post($post_id, true);
+        if ($resultado) {
+            echo "<p style='color:green;'>✔️ Vehículo '$titulo' (ID $post_id) eliminado correctamente.</p>";
         } else {
-            echo "<p style='color: red;'>❌ ERROR: No se pudo eliminar el producto '" . esc_html($product_title) . "' (ID WP: " . $wp_id_a_eliminar . ") de WordPress.</p>";
+            echo "<p style='color:red;'>❌ Error eliminando vehículo '$titulo' (ID $post_id).</p>";
         }
     }
-    echo "<p style='color: green;'>Proceso de limpieza completado.</p>";
+    echo "<p style='color:green;'>Eliminación completada.</p>";
 }
 
+$conn->close();
+
 echo "<h2>Proceso finalizado.</h2>";
+
+// Botón para volver al panel admin con estilo CSS inline
+echo <<<HTML
+<style>
+  .btn-volver {
+    display: inline-block;
+    background-color: #0073aa; /* color azul WP admin */
+    color: #fff;
+    padding: 10px 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 1px 0 #006799;
+    transition: background-color 0.3s ease;
+  }
+  .btn-volver:hover {
+    background-color: #005177;
+    text-decoration: none;
+    color: #fff;
+  }
+</style>
+
+<a href="adminDashboard.php" class="btn-volver">← Volver al Panel Admin</a>
+HTML;
 ?>

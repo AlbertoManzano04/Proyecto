@@ -18,8 +18,13 @@ $coche_descripcion = $_GET['descripcion'] ?? '';
 $coche_precio = floatval($_GET['precio'] ?? 0);
 $coche_imagen_url = $_GET['imagen_url'] ?? ''; // La ruta relativa de la imagen local
 
+// Poner título por defecto si no se envía nombre válido
+if (empty(trim($coche_nombre))) {
+    $coche_nombre = '(vehículo de usuario)';
+}
+
 // Validación básica de los datos recibidos. Si algo falla, redirige.
-if ($vehiculo_local_id === 0 || empty($coche_nombre) || empty($coche_descripcion) || $coche_precio <= 0) {
+if ($vehiculo_local_id === 0 || empty($coche_descripcion) || $coche_precio <= 0) {
     header("Location: adminDashboard.php?error=Datos inválidos o incompletos para subir a WordPress.");
     exit();
 }

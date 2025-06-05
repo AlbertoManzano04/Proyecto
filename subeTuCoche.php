@@ -5,7 +5,6 @@ require_once __DIR__ . '/config/configBD.php';
 
 // Verificar que el usuario esté logueado
 if (!isset($_SESSION['usuario_id'])) {
-    // Redirige al usuario al login si no está logueado
     header("Location: login.php?error=Debes iniciar sesión para subir un coche.");
     exit();
 }
@@ -15,13 +14,10 @@ $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
 // Verificar conexión
 if ($conn->connect_error) {
-    // Manejo de error de conexión más robusto
     die("Error de conexión a la base de datos: " . $conn->connect_error);
 }
 
-// Manejo del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recoger y sanear los datos del formulario
     $marca = trim($_POST['marca'] ?? '');
     $modelo = trim($_POST['modelo'] ?? '');
     $anio = intval($_POST['anio'] ?? 0);
@@ -29,32 +25,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipo = trim($_POST['tipo'] ?? '');
     $presupuesto = floatval($_POST['presupuesto'] ?? 0);
     $kilometros = intval($_POST['kilometros'] ?? 0);
-    $telefono = trim($_POST['contacto'] ?? ''); // 'contacto' es el nombre del campo en tu formulario
+    $telefono = trim($_POST['contacto'] ?? '');
     $potencia_cv = intval($_POST['potencia_cv'] ?? 0);
     $combustible = trim($_POST['combustible'] ?? '');
     
-    $usuario_id = $_SESSION['usuario_id']; // Obtener el usuario_id de la sesión
+    $usuario_id = $_SESSION['usuario_id'];
 
-    // --- Validación de campos obligatorios ---
     if (empty($marca) || empty($modelo) || $anio === 0 || $presupuesto <= 0 || $kilometros < 0 || empty($combustible) || empty($telefono) || $potencia_cv === 0) {
         echo "<script>alert('Error: Por favor, completa todos los campos obligatorios.'); window.location.href='subeTuCoche.php';</script>";
         exit();
     }
 
-    // --- Validación específica del tipo de combustible para coche_usuario ---
-    // (Asegúrate de que esta validación coincida con el ENUM de tu tabla coche_usuario)
-    $combustibles_validos_usuario = ['Gasolina', 'Diesel']; // Revisa si los valores en tu DB son 'Gasolina'/'Diesel' o 'gasolina'/'diesel'
+    $combustibles_validos_usuario = ['Gasolina', 'Diesel'];
     if (!in_array($combustible, $combustibles_validos_usuario)) {
         echo "<script>alert('Error: Tipo de combustible no válido. Solo Gasolina o Diesel.'); window.location.href='subeTuCoche.php';</script>";
         exit();
     }
 
-    // --- Manejo de la imagen ---
-    $imagenRutaRelativa = '';
-    $directorio = "images/"; // Ruta donde guardas las imágenes. Asegúrate de que sea accesible desde subir_coche_wp.php
-    
+    $directorio = "images/";
+
     if (!is_dir($directorio)) {
-        mkdir($directorio, 0777, true); // Crea el directorio si no existe con permisos de escritura
+        mkdir($directorio, 0777, true);
     }
 
     if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === 0) {
@@ -64,74 +55,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        $nombreSeguro = time() . "_" . basename($_FILES["imagen"]["name"]);
-        $archivoImagen = $directorio . $nombreSeguro;
-        
-        // Evitar sobrescritura de archivos con el mismo nombre si time() no es suficiente
-        $contador = 1;
-        while (file_exists($archivoImagen)) {
-            $nombreSeguro = time() . "_" . $contador . "_" . basename($_FILES["imagen"]["name"]);
-            $archivoImagen = $directorio . $nombreSeguro;
-            $contador++;
-        }
+        $nombreSeguro = basename($_FILES["imagen"]["name"]);
+        $rutaArchivo = $directorio . $nombreSeguro;
 
-        if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $archivoImagen)) {
-            $imagenRutaRelativa = $directorio . $nombreSeguro; // Guarda la ruta relativa para la DB y para WP
-        } else {
-            echo "<script>alert('Error: No se pudo guardar la imagen.'); window.location.href='subeTuCoche.php';</script>";
-            exit();
+        if (!file_exists($rutaArchivo)) {
+            if (!move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaArchivo)) {
+                echo "<script>alert('Error: No se pudo guardar la imagen.'); window.location.href='subeTuCoche.php';</script>";
+                exit();
+            }
         }
+        
+        // Guardar la ruta relativa SIN la barra '/' al inicio
+        $imagenRutaRelativa = $rutaArchivo;
     } else {
         echo "<script>alert('Error: No se ha subido ninguna imagen o hubo un error en la subida.'); window.location.href='subeTuCoche.php';</script>";
         exit();
     }
 
-
-    // --- Insertar en la base de datos local (coche_usuario) ---
     $stmt = $conn->prepare("INSERT INTO coche_usuario (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen, telefono, usuario_id, potencia_cv, combustible) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    // El tipo de los parámetros debe ser: ssissdisssss
-    // s: string (marca), s: string (modelo), i: int (anio), s: string (color), s: string (tipo), d: double (presupuesto), i: int (kilometros), s: string (imagen), s: string (telefono), i: int (usuario_id), s: string (potencia_cv), s: string (combustible)
-    // ¡Asegúrate de que los tipos de datos en la BD coincidan con estos! Especialmente el telefono puede ser VARCHAR
     $stmt->bind_param("ssissdisssss", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $imagenRutaRelativa, $telefono, $usuario_id, $potencia_cv, $combustible);
 
     if ($stmt->execute()) {
-        $vehiculo_local_id = $stmt->insert_id; // Obtiene el ID del coche recién insertado
-        
-        // Cierra el statement y la conexión a la DB local
+        $vehiculo_local_id = $stmt->insert_id;
         $stmt->close();
         $conn->close();
 
-        // --- Preparar datos para la migración a WordPress ---
-        $wp_coche_nombre = $marca . ' ' . $modelo . ' ' . $anio . ' (Vehículo de Usuario)'; 
+        $wp_coche_nombre = $marca . ' ' . $modelo . ' ' . $anio . ' (Vehículo de Usuario)';
         $wp_coche_descripcion = 'Color: ' . $color . '<br>' .
                                 'Combustible: ' . $combustible . '<br>' .
                                 'Potencia: ' . $potencia_cv . ' CV<br>' .
                                 'Tipo: ' . $tipo . '<br>' .
                                 'Kilómetros: ' . $kilometros . ' km<br>' .
-                                'Teléfono de Contacto: ' . $telefono; // Incluir teléfono de contacto
+                                'Teléfono de Contacto: ' . $telefono;
         $wp_coche_precio = $presupuesto;
 
-        // Redirigir a subir_coche_wp.php para crear el producto en WordPress
-        // y actualizar el wp_post_id en tu base de datos local.
-        header("Location: /php/Proyecto/subir_coche_wp.php?" . // Ajusta la ruta a tu subir_coche_wp.php
+        header("Location: /php/Proyecto/subir_coche_wp.php?" .
                "vehiculo_id=" . urlencode($vehiculo_local_id) . "&" .
-               "tipo_coche=" . urlencode('usuario') . "&" . // Indica que es un coche de usuario
+               "tipo_coche=" . urlencode('usuario') . "&" .
                "nombre=" . urlencode($wp_coche_nombre) . "&" .
                "descripcion=" . urlencode($wp_coche_descripcion) . "&" .
                "precio=" . urlencode($wp_coche_precio) . "&" .
                "imagen_url=" . urlencode($imagenRutaRelativa));
-        exit(); // Es crucial salir después de la redirección
+        exit();
     } else {
         echo "<script>alert('Error al subir el coche a la base de datos: " . $stmt->error . "'); window.location.href='subeTuCoche.php';</script>";
     }
 
-    $conn->close(); // Esta línea puede no ejecutarse si hay un exit() antes
+    $conn->close();
 }
-
-// --- HTML del formulario (sin cambios, excepto que ahora el PHP lo procesa completamente) ---
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

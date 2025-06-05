@@ -5,6 +5,9 @@ session_start();
 // Incluir archivo de configuración de base de datos
 require_once './config/configBD.php';
 
+// Incluir WordPress si necesitas usar wp_delete_post()
+require_once __DIR__ . '/tienda/wp-load.php'; // Ajusta la ruta según la estructura de tu proyecto
+
 // Crear conexión a la base de datos
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
@@ -23,7 +26,9 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
     try {
         // Verificar si el vehículo pertenece al concesionario o al usuario
-        $sqlVerificarTipo = "SELECT kilometros FROM vehiculos_km0 WHERE id = ? UNION SELECT kilometros FROM coche_usuario WHERE id = ?";
+        $sqlVerificarTipo = "SELECT kilometros FROM vehiculos_km0 WHERE id = ? 
+                             UNION 
+                             SELECT kilometros FROM coche_usuario WHERE id = ?";
         if ($stmt = $conn->prepare($sqlVerificarTipo)) {
             $stmt->bind_param("ii", $id, $id); // Verificar en ambas tablas
             $stmt->execute();
@@ -54,8 +59,21 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                     throw new Exception("Error al eliminar el vehículo del concesionario: " . $conn->error);
                 }
             } else {
-                // Si el vehículo tiene más de 0 km, es de un usuario
-                // Eliminar el vehículo de la tabla coche_usuario
+                // Vehículo con kilometraje > 0 es de un usuario
+
+                // 1️⃣ Obtener el wp_post_id antes de eliminarlo
+                $sqlGetWpPostId = "SELECT wp_post_id FROM coche_usuario WHERE id = ?";
+                if ($stmt = $conn->prepare($sqlGetWpPostId)) {
+                    $stmt->bind_param("i", $id);
+                    $stmt->execute();
+                    $stmt->bind_result($wp_post_id);
+                    $stmt->fetch();
+                    $stmt->close();
+                } else {
+                    throw new Exception("Error al obtener el wp_post_id: " . $conn->error);
+                }
+
+                // 2️⃣ Eliminar el vehículo de la tabla coche_usuario
                 $sqlEliminarVehiculo = "DELETE FROM coche_usuario WHERE id = ?";
                 if ($stmt = $conn->prepare($sqlEliminarVehiculo)) {
                     $stmt->bind_param("i", $id);
@@ -63,6 +81,15 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                     $stmt->close();
                 } else {
                     throw new Exception("Error al eliminar el vehículo del usuario: " . $conn->error);
+                }
+
+                // 3️⃣ Eliminar el producto de WooCommerce (si existe)
+                if (!empty($wp_post_id)) {
+                    if (function_exists('wp_delete_post')) {
+                        wp_delete_post($wp_post_id, true); // true => borrar permanentemente
+                    } else {
+                        throw new Exception("wp_delete_post() no está disponible.");
+                    }
                 }
             }
 
@@ -90,9 +117,3 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 // Cerrar la conexión a la base de datos
 $conn->close();
 ?>
-
-
-
-
-
-

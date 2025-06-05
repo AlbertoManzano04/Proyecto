@@ -40,12 +40,31 @@ if (!empty($_FILES['imagen']['name'])) {
     if (!is_dir($carpetaDestino)) {
         mkdir($carpetaDestino, 0777, true);
     }
-    $nombreArchivo = basename($_FILES["imagen"]["name"]);
-    $rutaArchivo = $carpetaDestino . $nombreArchivo;
 
-    // Mover archivo si hay permisos
-    if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaArchivo)) {
-        $imagen = $rutaArchivo;
+    // Obtener el nombre original del archivo y limpiarlo
+    $nombreOriginal = basename($_FILES["imagen"]["name"]);
+    $nombreLimpio = preg_replace('/[^A-Za-z0-9.\-_]/', '_', $nombreOriginal);
+
+    // Comprobar si el archivo ya existe y renombrarlo
+    $rutaArchivo = $carpetaDestino . $nombreLimpio;
+    $contador = 1;
+    while (file_exists($rutaArchivo)) {
+        $nombreSinExtension = pathinfo($nombreLimpio, PATHINFO_FILENAME);
+        $extension = pathinfo($nombreLimpio, PATHINFO_EXTENSION);
+        $rutaArchivo = $carpetaDestino . $nombreSinExtension . "_" . $contador . "." . $extension;
+        $contador++;
+    }
+
+    // Validar tipo de archivo permitido
+    $tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (in_array($_FILES["imagen"]["type"], $tiposPermitidos)) {
+        if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaArchivo)) {
+            $imagen = $rutaArchivo;
+        } else {
+            die("Error: No se pudo mover la imagen al destino. Verifica permisos de la carpeta.");
+        }
+    } else {
+        die("Error: Formato de imagen no permitido.");
     }
 }
 
@@ -66,5 +85,3 @@ if ($stmt->execute()) {
     echo "Error al guardar: " . $stmt->error;
 }
 ?>
-
-
