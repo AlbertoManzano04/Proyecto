@@ -93,6 +93,45 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 }
             }
 
+            // 🚨 Aquí añadimos la limpieza de huérfanos
+            // 1️⃣ Obtener todos los IDs de productos en WordPress
+            $sqlProductos = "SELECT ID FROM wp_posts WHERE post_type = 'product'";
+            $result = $conn->query($sqlProductos);
+
+            if (!$result) {
+                throw new Exception("Error al obtener productos: " . $conn->error);
+            }
+
+            while ($row = $result->fetch_assoc()) {
+                $wp_post_id = $row['ID'];
+
+                // Verificar si está en vehiculos_km0
+                $sqlCheckKm0 = "SELECT id FROM vehiculos_km0 WHERE wp_post_id = ?";
+                $stmtKm0 = $conn->prepare($sqlCheckKm0);
+                $stmtKm0->bind_param("i", $wp_post_id);
+                $stmtKm0->execute();
+                $stmtKm0->store_result();
+
+                // Verificar si está en coche_usuario
+                $sqlCheckUsuario = "SELECT id FROM coche_usuario WHERE wp_post_id = ?";
+                $stmtUsuario = $conn->prepare($sqlCheckUsuario);
+                $stmtUsuario->bind_param("i", $wp_post_id);
+                $stmtUsuario->execute();
+                $stmtUsuario->store_result();
+
+                // Si no está en ninguna tabla, lo eliminamos de WordPress
+                if ($stmtKm0->num_rows == 0 && $stmtUsuario->num_rows == 0) {
+                    if (function_exists('wp_delete_post')) {
+                        wp_delete_post($wp_post_id, true);
+                    }
+                }
+
+                $stmtKm0->close();
+                $stmtUsuario->close();
+            }
+
+            $result->free();
+
         } else {
             throw new Exception("Error al verificar el vehículo: " . $conn->error);
         }
@@ -107,7 +146,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     } catch (Exception $e) {
         // Si hubo un error, deshacer la transacción y mostrar el error
         $conn->rollback();
-        echo "Error al eliminar el vehículo: " . $e->getMessage();
+        echo "Error al eliminar el vehículo: " . htmlspecialchars($e->getMessage());
     }
 } else {
     // Si no se pasa el id en la URL

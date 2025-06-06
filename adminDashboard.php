@@ -217,12 +217,6 @@ $Contacto = $conn->query("SELECT * FROM Contacto");
         <?php endwhile; ?>
     </div>
 </div>
-<div class="d-flex align-items-center gap-2 mb-3">
-    <form method="post" action="limpiarProductosHuerfanos.php" class="m-0">
-        <button type="submit" class="btn btn-danger">Eliminar Productos Huérfanos de WordPress</button>
-    </form>
-    <a href="migrar_coches_existentes_a_wp.php" class="btn btn-primary">Actualizar Coches Existentes en WP</a>
-</div>
     <!-- Tabla de vehículos del concesionario -->
     <div class="seccion-formulario">
         <h3><i class="bi bi-car-front-fill"></i> Vehículos del Concesionario</h3>
