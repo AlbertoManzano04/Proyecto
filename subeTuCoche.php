@@ -1,87 +1,76 @@
 <?php
 session_start();
-// Incluir configuración de base de datos
-require_once __DIR__ . '/config/configBD.php';
+require_once './config/configBD.php';
 
-// Verificar que el usuario esté logueado
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php?error=Debes iniciar sesión para subir un coche.");
-    exit();
+// Asegúrate de que el usuario está autenticado
+$usuario_id = $_SESSION['usuario_id'] ?? null;
+if (!$usuario_id) {
+    die("Usuario no autenticado.");
 }
 
-// Conectar a la base de datos
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recuperar datos del formulario
+    $marca = $_POST['marca'] ?? '';
+    $modelo = $_POST['modelo'] ?? '';
+    $anio = (int)($_POST['anio'] ?? 0);
+    $color = $_POST['color'] ?? '';
+    $tipo = $_POST['tipo'] ?? '';
+    $presupuesto = (float)($_POST['presupuesto'] ?? 0);
+    $kilometros = (int)($_POST['kilometros'] ?? 0);
+    $potencia_cv = (int)($_POST['potencia_cv'] ?? 0);
+    $combustible = $_POST['combustible'] ?? '';
+    $telefono = $_POST['contacto'] ?? '';
 
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Error de conexión a la base de datos: " . $conn->connect_error);
-}
+    // Procesar imagen
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $nombreImagen = basename($_FILES['imagen']['name']);
+        $rutaDestino = 'images/' . $nombreImagen;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $marca = trim($_POST['marca'] ?? '');
-    $modelo = trim($_POST['modelo'] ?? '');
-    $anio = intval($_POST['anio'] ?? 0);
-    $color = trim($_POST['color'] ?? '');
-    $tipo = trim($_POST['tipo'] ?? '');
-    $presupuesto = floatval($_POST['presupuesto'] ?? 0);
-    $kilometros = intval($_POST['kilometros'] ?? 0);
-    $telefono = trim($_POST['contacto'] ?? '');
-    $potencia_cv = intval($_POST['potencia_cv'] ?? 0);
-    $combustible = trim($_POST['combustible'] ?? '');
-    
-    $usuario_id = $_SESSION['usuario_id'];
-
-    if (empty($marca) || empty($modelo) || $anio === 0 || $presupuesto <= 0 || $kilometros < 0 || empty($combustible) || empty($telefono) || $potencia_cv === 0) {
-        echo "<script>alert('Error: Por favor, completa todos los campos obligatorios.'); window.location.href='subeTuCoche.php';</script>";
-        exit();
-    }
-
-    $combustibles_validos_usuario = ['Gasolina', 'Diesel'];
-    if (!in_array($combustible, $combustibles_validos_usuario)) {
-        echo "<script>alert('Error: Tipo de combustible no válido. Solo Gasolina o Diesel.'); window.location.href='subeTuCoche.php';</script>";
-        exit();
-    }
-
-    $directorio = "images/";
-
-    if (!is_dir($directorio)) {
-        mkdir($directorio, 0777, true);
-    }
-
-    if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === 0) {
-        $tiposValidos = ['image/jpeg', 'image/png', 'image/webp'];
-        if (!in_array($_FILES["imagen"]["type"], $tiposValidos)) {
-            echo "<script>alert('Error: Tipo de archivo de imagen no válido. Solo JPG, PNG o WEBP.'); window.location.href='subeTuCoche.php';</script>";
-            exit();
-        }
-
-        $nombreSeguro = basename($_FILES["imagen"]["name"]);
-        $rutaArchivo = $directorio . $nombreSeguro;
-
-        if (!file_exists($rutaArchivo)) {
-            if (!move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaArchivo)) {
-                echo "<script>alert('Error: No se pudo guardar la imagen.'); window.location.href='subeTuCoche.php';</script>";
-                exit();
+        // Mueve la imagen solo si no existe ya en la carpeta images/
+        if (!file_exists($rutaDestino)) {
+            if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino)) {
+                die("Error al mover la imagen.");
             }
         }
-        
-        // Guardar la ruta relativa SIN la barra '/' al inicio
-        $imagenRutaRelativa = $rutaArchivo;
+        // Si ya existe, no se renombra y se mantiene el nombre original
     } else {
-        echo "<script>alert('Error: No se ha subido ninguna imagen o hubo un error en la subida.'); window.location.href='subeTuCoche.php';</script>";
-        exit();
+        die("Error al subir la imagen.");
     }
 
-    $stmt = $conn->prepare("INSERT INTO coche_usuario (marca, modelo, anio, color, tipo, presupuesto, kilometros, imagen, telefono, usuario_id, potencia_cv, combustible) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssissdisssss", $marca, $modelo, $anio, $color, $tipo, $presupuesto, $kilometros, $imagenRutaRelativa, $telefono, $usuario_id, $potencia_cv, $combustible);
+    // Insertar datos en la base de datos
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    $rutaRelativaImagen = 'images/' . $nombreImagen;
+
+    $stmt = $conn->prepare("INSERT INTO coche_usuario 
+        (usuario_id, marca, modelo, anio, color, tipo, presupuesto, kilometros, potencia_cv, combustible, imagen, telefono) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param(
+        "ississdiisss",
+        $usuario_id,
+        $marca,
+        $modelo,
+        $anio,
+        $color,
+        $tipo,
+        $presupuesto,
+        $kilometros,
+        $potencia_cv,
+        $combustible,
+        $rutaRelativaImagen,
+        $telefono
+    );
 
     if ($stmt->execute()) {
         $vehiculo_local_id = $stmt->insert_id;
         $stmt->close();
         $conn->close();
 
-        $wp_coche_nombre = $marca . ' ' . $modelo . ' ' . $anio . ' (Vehículo de Usuario)';
+        // Preparar datos para redireccionar a WordPress
+        $wp_coche_nombre = $marca . ' ' . $modelo . ' ' . $anio . ' Vehículo Usuario';
         $wp_coche_descripcion = 'Color: ' . $color . '<br>' .
                                 'Combustible: ' . $combustible . '<br>' .
                                 'Potencia: ' . $potencia_cv . ' CV<br>' .
@@ -96,15 +85,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                "nombre=" . urlencode($wp_coche_nombre) . "&" .
                "descripcion=" . urlencode($wp_coche_descripcion) . "&" .
                "precio=" . urlencode($wp_coche_precio) . "&" .
-               "imagen_url=" . urlencode($imagenRutaRelativa));
+               "imagen_url=" . urlencode($rutaRelativaImagen));
         exit();
     } else {
         echo "<script>alert('Error al subir el coche a la base de datos: " . $stmt->error . "'); window.location.href='subeTuCoche.php';</script>";
     }
 
+    $stmt->close();
     $conn->close();
 }
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
